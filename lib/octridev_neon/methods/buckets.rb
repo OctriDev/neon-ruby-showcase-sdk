@@ -25,7 +25,6 @@ module OctridevNeon
         access_level: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -35,22 +34,22 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/buckets"
+            '/buckets'
           ].join,
           config: config,
           body: {
             'name' => name,
-            'access_level' => access_level,
+            'access_level' => access_level
           },
           return_type: ::OctridevNeon::BucketResponse,
           decoder: :json,
           operation_id: 'create_buckets',
           request_options: request_options,
-          errors: { '410' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError },
+          errors: { '410' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -64,7 +63,6 @@ module OctridevNeon
         branch_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -72,18 +70,18 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/buckets"
+            '/buckets'
           ].join,
           config: config,
           return_type: ::OctridevNeon::BucketsListResponse,
           decoder: :json,
           operation_id: 'list_buckets',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -99,7 +97,6 @@ module OctridevNeon
         bucket_name:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -109,18 +106,18 @@ module OctridevNeon
         SdkClient.request(
           'DELETE',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/buckets/",
+            '/buckets/',
             SdkClient.encode_path_segment(bucket_name)
           ].join,
           config: config,
           decoder: :empty,
           operation_id: 'delete_buckets',
           request_options: request_options,
-          errors: { '404' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError },
+          errors: { '404' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -147,7 +144,6 @@ module OctridevNeon
         limit: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -159,30 +155,30 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/buckets/",
+            '/buckets/',
             SdkClient.encode_path_segment(bucket_name),
-            "/objects"
+            '/objects'
           ].join,
           config: config,
           query: {
             'prefix' => QueryValue.new(prefix, style: 'form', explode: true),
             'delimiter' => QueryValue.new(delimiter, style: 'form', explode: true),
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
-            'limit' => QueryValue.new(limit, style: 'form', explode: true),
+            'limit' => QueryValue.new(limit, style: 'form', explode: true)
           },
           return_type: ::OctridevNeon::BucketObjectsListResponse,
           decoder: :json,
           operation_id: 'list_buckets_objects',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
-    ListBucketsObjectsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListBucketsObjectsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists objects visible in the named bucket on the specified branch, including those inherited from ancestor branches. Listing is served by the user's session (no customer S3 credentials required). When `delimiter` is supplied (typically `/`), keys are collapsed into common prefixes (`folders`) so callers can render a folder-style browser; keys that do not contain the delimiter after `prefix` are returned as `objects`. **Note**: This endpoint is currently in Beta.
       #
@@ -222,9 +218,11 @@ module OctridevNeon
             )
             items = page.objects || []
             break if items.empty?
+
             items.each { |item| y << item }
             next_cursor = page.next_cursor
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -256,10 +254,12 @@ module OctridevNeon
             )
             items = page.objects || []
             break if items.empty?
+
             next_cursor = page.next_cursor
             has_more = !next_cursor.nil?
             y << ListBucketsObjectsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -281,7 +281,6 @@ module OctridevNeon
         object_key:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -293,20 +292,20 @@ module OctridevNeon
         SdkClient.request(
           'DELETE',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/buckets/",
+            '/buckets/',
             SdkClient.encode_path_segment(bucket_name),
-            "/objects/",
+            '/objects/',
             SdkClient.encode_path_segment(object_key)
           ].join,
           config: config,
           decoder: :empty,
           operation_id: 'delete_buckets_object',
           request_options: request_options,
-          errors: { '404' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError },
+          errors: { '404' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -318,15 +317,7 @@ module OctridevNeon
       # @param object_key [String] The object key. Keys may contain `/`; the `/`
       #   characters of nested keys must be percent-encoded (`%2F`) in the path
       #   segment.
-      singleton_class.define_method(:get_buckets_object) do |
-        config:,
-        project_id:,
-        branch_id:,
-        bucket_name:,
-        object_key:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_buckets_object) do |config:, project_id:, branch_id:, bucket_name:, object_key:, request_options: nil|
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -338,21 +329,21 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/buckets/",
+            '/buckets/',
             SdkClient.encode_path_segment(bucket_name),
-            "/objects/",
+            '/objects/',
             SdkClient.encode_path_segment(object_key),
-            "/download"
+            '/download'
           ].join,
           config: config,
           decoder: :bytes,
           operation_id: 'get_buckets_object',
           request_options: request_options,
-          errors: { '404' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError },
+          errors: { '404' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -372,7 +363,6 @@ module OctridevNeon
         prefix:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -384,23 +374,23 @@ module OctridevNeon
         SdkClient.request(
           'DELETE',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/buckets/",
+            '/buckets/',
             SdkClient.encode_path_segment(bucket_name),
-            "/objects-by-prefix"
+            '/objects-by-prefix'
           ].join,
           config: config,
           query: {
-            'prefix' => QueryValue.new(prefix, style: 'form', explode: true),
+            'prefix' => QueryValue.new(prefix, style: 'form', explode: true)
           },
           return_type: ::OctridevNeon::BucketObjectsDeletePrefixResponse,
           decoder: :json,
           operation_id: 'delete_buckets_objects_by_prefix',
           request_options: request_options,
-          errors: { '404' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError },
+          errors: { '404' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -431,7 +421,6 @@ module OctridevNeon
         expires_in_seconds: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -441,33 +430,33 @@ module OctridevNeon
         Validation.validate_length('object_key', object_key, min: 1, max: 1024)
 
         Validation.if_given(expires_in_seconds) do
-          Validation.validate_range('expires_in_seconds', expires_in_seconds, min: 1, max: 604800)
+          Validation.validate_range('expires_in_seconds', expires_in_seconds, min: 1, max: 604_800)
         end
 
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/buckets/",
+            '/buckets/',
             SdkClient.encode_path_segment(bucket_name),
-            "/objects/",
+            '/objects/',
             SdkClient.encode_path_segment(object_key),
-            "/presign"
+            '/presign'
           ].join,
           config: config,
           body: {
             'operation' => operation,
             'content_type' => content_type,
-            'expires_in_seconds' => expires_in_seconds,
+            'expires_in_seconds' => expires_in_seconds
           },
           return_type: ::OctridevNeon::PresignResponse,
           decoder: :json,
           operation_id: 'presign_buckets_object',
           request_options: request_options,
-          errors: { '404' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError },
+          errors: { '404' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

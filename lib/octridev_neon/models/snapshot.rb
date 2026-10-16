@@ -5,276 +5,271 @@
 
 # snapshot domain models
 module OctridevNeon
-# Internal model hydration metadata.
-class SdkInternalBackupScheduleMetadata
-  FIELDS = {
-    schedule: "schedule",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    schedule
-  ].freeze
-  DECODERS = {
-    schedule: lambda do |value|
-      value&.map { |item| ::OctridevNeon::BackupScheduleItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for BackupSchedule.
-# Typed representation of the `BackupSchedule` API schema.
-class BackupSchedule
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBackupScheduleMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBackupScheduleMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBackupScheduleMetadata::DECODERS
-
-  # @return [Array_of_BackupScheduleItem] List of schedule entries defining the backup frequency. At least one entry is required.
-  attr_reader :schedule
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBackupScheduleMetadata
+    FIELDS = {
+      schedule: 'schedule'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      schedule
+    ].freeze
+    DECODERS = {
+      schedule: lambda do |value|
+        value&.map { |item| ::OctridevNeon::BackupScheduleItem.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BackupSchedule.
+  # Typed representation of the `BackupSchedule` API schema.
+  class BackupSchedule
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBackupScheduleMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBackupScheduleMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBackupScheduleMetadata::DECODERS
+
+    # @return [Array_of_BackupScheduleItem] List of schedule entries defining the backup frequency. At least one entry is required.
+    attr_reader :schedule
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBackupScheduleItemMetadata
-  FIELDS = {
-    frequency: "frequency",
-    hour: "hour",
-    day: "day",
-    month: "month",
-    retention_seconds: "retention_seconds",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    frequency
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for BackupScheduleItem.
-# Typed representation of the `BackupScheduleItem` API schema.
-class BackupScheduleItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBackupScheduleItemMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBackupScheduleItemMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBackupScheduleItemMetadata::DECODERS
-
-  # @return [String] How often to take snapshots. Known values: `daily`, `weekly`, `monthly`.
-  attr_reader :frequency
-  # @return [Integer] The hour of the day to take the snapshot (if applicable).
-  attr_reader :hour
-  # @return [Integer] The day of the week or month to take the snapshot (if applicable).
-  attr_reader :day
-  # @return [Integer] The month of the year to take the snapshot (if applicable).
-  attr_reader :month
-  # @return [Integer] How long to keep a scheduled snapshot (in seconds) before it's automatically deleted. The default is 3024000 seconds (35 days), which is also the maximum. Manually created snapshots have no maximum retention: set their `expires_at` instead.
-  attr_reader :retention_seconds
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBackupScheduleItemMetadata
+    FIELDS = {
+      frequency: 'frequency',
+      hour: 'hour',
+      day: 'day',
+      month: 'month',
+      retention_seconds: 'retention_seconds'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      frequency
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BackupScheduleItem.
+  # Typed representation of the `BackupScheduleItem` API schema.
+  class BackupScheduleItem
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBackupScheduleItemMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBackupScheduleItemMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBackupScheduleItemMetadata::DECODERS
+
+    # @return [String] How often to take snapshots. Known values: `daily`, `weekly`, `monthly`.
+    attr_reader :frequency
+    # @return [Integer] The hour of the day to take the snapshot (if applicable).
+    attr_reader :hour
+    # @return [Integer] The day of the week or month to take the snapshot (if applicable).
+    attr_reader :day
+    # @return [Integer] The month of the year to take the snapshot (if applicable).
+    attr_reader :month
+    # @return [Integer] How long to keep a scheduled snapshot (in seconds) before it's automatically deleted. The default is 3024000 seconds (35 days), which is also the maximum. Manually created snapshots have no maximum retention: set their `expires_at` instead.
+    attr_reader :retention_seconds
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalEndpointsOptionalResponseMetadata
-  FIELDS = {
-    endpoints: "endpoints",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    endpoints: lambda do |value|
-      value&.map { |item| ::OctridevNeon::Endpoint.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for EndpointsOptionalResponse.
-# Typed representation of the `EndpointsOptionalResponse` API schema.
-class EndpointsOptionalResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalEndpointsOptionalResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalEndpointsOptionalResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalEndpointsOptionalResponseMetadata::DECODERS
-
-  # @return [Array_of_Endpoint] Compute endpoints associated with the project.
-  attr_reader :endpoints
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalEndpointsOptionalResponseMetadata
+    FIELDS = {
+      endpoints: 'endpoints'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      endpoints: lambda do |value|
+        value&.map { |item| ::OctridevNeon::Endpoint.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for EndpointsOptionalResponse.
+  # Typed representation of the `EndpointsOptionalResponse` API schema.
+  class EndpointsOptionalResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalEndpointsOptionalResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalEndpointsOptionalResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalEndpointsOptionalResponseMetadata::DECODERS
+
+    # @return [Array_of_Endpoint] Compute endpoints associated with the project.
+    attr_reader :endpoints
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSnapshotMetadata
-  FIELDS = {
-    id: "id",
-    name: "name",
-    lsn: "lsn",
-    timestamp: "timestamp",
-    source_branch_id: "source_branch_id",
-    created_at: "created_at",
-    expires_at: "expires_at",
-    manual: "manual",
-    full_size: "full_size",
-    diff_size: "diff_size",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    name
-    created_at
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for Snapshot.
-# Typed representation of the `Snapshot` API schema.
-class Snapshot
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSnapshotMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSnapshotMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSnapshotMetadata::DECODERS
-
-  # @return [String] The snapshot ID.
-  attr_reader :id
-  # @return [String] Human-readable label for the snapshot.
-  attr_reader :name
-  # @return [String] WAL position (Log Sequence Number) at which the snapshot was captured, in Postgres LSN format (for example, `0/3000000`).
-  attr_reader :lsn
-  # @return [String] Point in time captured by the snapshot, in RFC 3339 format (UTC).
-  attr_reader :timestamp
-  # @return [String] Branch from which this snapshot was created.
-  attr_reader :source_branch_id
-  # @return [String] Timestamp when the snapshot was created, in RFC 3339 format (UTC).
-  attr_reader :created_at
-  # @return [String] RFC 3339 timestamp when the snapshot expires and is eligible for deletion. Null if the snapshot does not have an expiry.
-  attr_reader :expires_at
-  # @return [Boolean] True if the snapshot was created manually rather than by a schedule.
-  attr_reader :manual
-  # @return [Integer] Full logical size of the snapshot in bytes at the time it was taken. When absent, the logical size has not been calculated yet and the snapshot is not being charged. When present, a value of 0 means the snapshot is not being charged.
-  attr_reader :full_size
-  # @return [Integer] Incremental Postgres storage size in bytes since the previous scheduled snapshot, when the snapshot is billed on incremental (diff) usage. When absent, either the incremental size has not been calculated yet and the snapshot is not being charged, or the snapshot is charged at full logical size (in that case `full_size` is set).
-  attr_reader :diff_size
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalSnapshotMetadata
+    FIELDS = {
+      id: 'id',
+      name: 'name',
+      lsn: 'lsn',
+      timestamp: 'timestamp',
+      source_branch_id: 'source_branch_id',
+      created_at: 'created_at',
+      expires_at: 'expires_at',
+      manual: 'manual',
+      full_size: 'full_size',
+      diff_size: 'diff_size'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      name
+      created_at
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for Snapshot.
+  # Typed representation of the `Snapshot` API schema.
+  class Snapshot
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSnapshotMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSnapshotMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSnapshotMetadata::DECODERS
+
+    # @return [String] The snapshot ID.
+    attr_reader :id
+    # @return [String] Human-readable label for the snapshot.
+    attr_reader :name
+    # @return [String] WAL position (Log Sequence Number) at which the snapshot was captured, in Postgres LSN format (for example, `0/3000000`).
+    attr_reader :lsn
+    # @return [String] Point in time captured by the snapshot, in RFC 3339 format (UTC).
+    attr_reader :timestamp
+    # @return [String] Branch from which this snapshot was created.
+    attr_reader :source_branch_id
+    # @return [String] Timestamp when the snapshot was created, in RFC 3339 format (UTC).
+    attr_reader :created_at
+    # @return [String] RFC 3339 timestamp when the snapshot expires and is eligible for deletion. Null if the snapshot does not have an expiry.
+    attr_reader :expires_at
+    # @return [Boolean] True if the snapshot was created manually rather than by a schedule.
+    attr_reader :manual
+    # @return [Integer] Full logical size of the snapshot in bytes at the time it was taken. When absent, the logical size has not been calculated yet and the snapshot is not being charged. When present, a value of 0 means the snapshot is not being charged.
+    attr_reader :full_size
+    # @return [Integer] Incremental Postgres storage size in bytes since the previous scheduled snapshot, when the snapshot is billed on incremental (diff) usage. When absent, either the incremental size has not been calculated yet and the snapshot is not being charged, or the snapshot is charged at full logical size (in that case `full_size` is set).
+    attr_reader :diff_size
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSnapshotUpdateRequestSnapshotMetadata
-  FIELDS = {
-    name: "name",
-    expires_at: "expires_at",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for SnapshotUpdateRequestSnapshot.
-# Fields to update on the snapshot. Updatable fields include `name` and `expires_at`.
-class SnapshotUpdateRequestSnapshot
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSnapshotUpdateRequestSnapshotMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSnapshotUpdateRequestSnapshotMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSnapshotUpdateRequestSnapshotMetadata::DECODERS
-
-  # @return [String] Human-readable label for the snapshot.
-  attr_reader :name
-  # @return [String] The date and time when the snapshot will expire. Omit to leave the current expiration unchanged. Send `null` to clear the expiration so the snapshot never expires. A future timestamp sets the absolute expiration.
-  attr_reader :expires_at
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalSnapshotUpdateRequestSnapshotMetadata
+    FIELDS = {
+      name: 'name',
+      expires_at: 'expires_at'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for SnapshotUpdateRequestSnapshot.
+  # Fields to update on the snapshot. Updatable fields include `name` and `expires_at`.
+  class SnapshotUpdateRequestSnapshot
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSnapshotUpdateRequestSnapshotMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSnapshotUpdateRequestSnapshotMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSnapshotUpdateRequestSnapshotMetadata::DECODERS
+
+    # @return [String] Human-readable label for the snapshot.
+    attr_reader :name
+    # @return [String] The date and time when the snapshot will expire. Omit to leave the current expiration unchanged. Send `null` to clear the expiration so the snapshot never expires. A future timestamp sets the absolute expiration.
+    attr_reader :expires_at
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSnapshotUpdateRequestMetadata
-  FIELDS = {
-    snapshot: "snapshot",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    snapshot
-  ].freeze
-  DECODERS = {
-    snapshot: lambda do |value|
-      ::OctridevNeon::SnapshotUpdateRequestSnapshot.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for SnapshotUpdateRequest.
-# Typed representation of the `SnapshotUpdateRequest` API schema.
-class SnapshotUpdateRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSnapshotUpdateRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSnapshotUpdateRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSnapshotUpdateRequestMetadata::DECODERS
-
-  # @return [SnapshotUpdateRequestSnapshot] Fields to update on the snapshot. Updatable fields include `name` and `expires_at`.
-  attr_reader :snapshot
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalSnapshotUpdateRequestMetadata
+    FIELDS = {
+      snapshot: 'snapshot'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      snapshot
+    ].freeze
+    DECODERS = {
+      snapshot: lambda do |value|
+        ::OctridevNeon::SnapshotUpdateRequestSnapshot.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # API model for SnapshotUpdateRequest.
+  # Typed representation of the `SnapshotUpdateRequest` API schema.
+  class SnapshotUpdateRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSnapshotUpdateRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSnapshotUpdateRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSnapshotUpdateRequestMetadata::DECODERS
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+    # @return [SnapshotUpdateRequestSnapshot] Fields to update on the snapshot. Updatable fields include `name` and `expires_at`.
+    attr_reader :snapshot
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

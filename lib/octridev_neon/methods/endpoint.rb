@@ -20,25 +20,24 @@ module OctridevNeon
         endpoint:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/endpoints"
+            '/endpoints'
           ].join,
           config: config,
           body: {
-            'endpoint' => endpoint,
+            'endpoint' => endpoint
           },
           return_type: ::OctridevNeon::EndpointOperations,
           decoder: :json,
           operation_id: 'create_endpoint',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -50,22 +49,21 @@ module OctridevNeon
         project_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/endpoints"
+            '/endpoints'
           ].join,
           config: config,
           return_type: ::OctridevNeon::EndpointsResponse,
           decoder: :json,
           operation_id: 'list_endpoint',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -73,13 +71,7 @@ module OctridevNeon
       #
       # @param project_id [String] The Neon project ID
       # @param endpoint_id [String] The endpoint ID
-      singleton_class.define_method(:get_endpoint) do |
-        config:,
-        project_id:,
-        endpoint_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_endpoint) do |config:, project_id:, endpoint_id:, request_options: nil|
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('endpoint_id', endpoint_id, '^[a-z0-9-]{1,60}$')
@@ -87,9 +79,9 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/endpoints/",
+            '/endpoints/',
             SdkClient.encode_path_segment(endpoint_id)
           ].join,
           config: config,
@@ -97,7 +89,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'get_endpoint',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -111,7 +103,6 @@ module OctridevNeon
         endpoint_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('endpoint_id', endpoint_id, '^[a-z0-9-]{1,60}$')
@@ -119,9 +110,9 @@ module OctridevNeon
         SdkClient.request(
           'DELETE',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/endpoints/",
+            '/endpoints/',
             SdkClient.encode_path_segment(endpoint_id)
           ].join,
           config: config,
@@ -129,7 +120,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'delete_endpoint',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -146,7 +137,6 @@ module OctridevNeon
         endpoint:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('endpoint_id', endpoint_id, '^[a-z0-9-]{1,60}$')
@@ -154,20 +144,20 @@ module OctridevNeon
         SdkClient.request(
           'PATCH',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/endpoints/",
+            '/endpoints/',
             SdkClient.encode_path_segment(endpoint_id)
           ].join,
           config: config,
           body: {
-            'endpoint' => endpoint,
+            'endpoint' => endpoint
           },
           return_type: ::OctridevNeon::EndpointOperations,
           decoder: :json,
           operation_id: 'update_endpoint',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -181,7 +171,6 @@ module OctridevNeon
         endpoint_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('endpoint_id', endpoint_id, '^[a-z0-9-]{1,60}$')
@@ -189,18 +178,18 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/endpoints/",
+            '/endpoints/',
             SdkClient.encode_path_segment(endpoint_id),
-            "/start"
+            '/start'
           ].join,
           config: config,
           return_type: ::OctridevNeon::EndpointOperations,
           decoder: :json,
           operation_id: 'start_endpoint',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -214,7 +203,6 @@ module OctridevNeon
         endpoint_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('endpoint_id', endpoint_id, '^[a-z0-9-]{1,60}$')
@@ -222,18 +210,18 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/endpoints/",
+            '/endpoints/',
             SdkClient.encode_path_segment(endpoint_id),
-            "/suspend"
+            '/suspend'
           ].join,
           config: config,
           return_type: ::OctridevNeon::EndpointOperations,
           decoder: :json,
           operation_id: 'suspend_endpoint',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -247,7 +235,6 @@ module OctridevNeon
         endpoint_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('endpoint_id', endpoint_id, '^[a-z0-9-]{1,60}$')
@@ -255,18 +242,18 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/endpoints/",
+            '/endpoints/',
             SdkClient.encode_path_segment(endpoint_id),
-            "/restart"
+            '/restart'
           ].join,
           config: config,
           return_type: ::OctridevNeon::EndpointOperations,
           decoder: :json,
           operation_id: 'restart_endpoint',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

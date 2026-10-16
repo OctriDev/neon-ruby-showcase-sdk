@@ -5,669 +5,659 @@
 
 # project domain models
 module OctridevNeon
-# Internal model hydration metadata.
-class SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorReasonsItemMetadata
-  FIELDS = {
-    message: "message",
-    code: "code",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    message
-    code
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AcceptProjectTransferRequestSatisfiesPlanErrorReasonsItem.
-# Required object value serialized in the `reasons[]` wire field.
-class AcceptProjectTransferRequestSatisfiesPlanErrorReasonsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorReasonsItemMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorReasonsItemMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorReasonsItemMetadata::DECODERS
-
-  # @return [String] Description of why the plan is not satisfied
-  attr_reader :message
-  # @return [String] A short code identifying the reason
-  attr_reader :code
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorReasonsItemMetadata
+    FIELDS = {
+      message: 'message',
+      code: 'code'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      message
+      code
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AcceptProjectTransferRequestSatisfiesPlanErrorReasonsItem.
+  # Required object value serialized in the `reasons[]` wire field.
+  class AcceptProjectTransferRequestSatisfiesPlanErrorReasonsItem
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorReasonsItemMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorReasonsItemMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorReasonsItemMetadata::DECODERS
+
+    # @return [String] Description of why the plan is not satisfied
+    attr_reader :message
+    # @return [String] A short code identifying the reason
+    attr_reader :code
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorMetadata
-  FIELDS = {
-    reasons: "reasons",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    reasons
-  ].freeze
-  DECODERS = {
-    reasons: lambda do |value|
-      value&.map { |item| ::OctridevNeon::AcceptProjectTransferRequestSatisfiesPlanErrorReasonsItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for AcceptProjectTransferRequestSatisfiesPlanError.
-# Typed representation of the `AcceptProjectTransferRequestSatisfiesPlanError` API schema.
-class AcceptProjectTransferRequestSatisfiesPlanError
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorMetadata::DECODERS
-
-  # @return [Array_of_AcceptProjectTransferRequestSatisfiesPlanErrorReasonsItem] List of reasons why the target account's plan cannot satisfy the transfer requirements. Each item contains a `code` identifying the constraint and a `message` with a human-readable explanation.
-  attr_reader :reasons
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorMetadata
+    FIELDS = {
+      reasons: 'reasons'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      reasons
+    ].freeze
+    DECODERS = {
+      reasons: lambda do |value|
+        value&.map { |item| ::OctridevNeon::AcceptProjectTransferRequestSatisfiesPlanErrorReasonsItem.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AcceptProjectTransferRequestSatisfiesPlanError.
+  # Typed representation of the `AcceptProjectTransferRequestSatisfiesPlanError` API schema.
+  class AcceptProjectTransferRequestSatisfiesPlanError
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAcceptProjectTransferRequestSatisfiesPlanErrorMetadata::DECODERS
+
+    # @return [Array_of_AcceptProjectTransferRequestSatisfiesPlanErrorReasonsItem] List of reasons why the target account's plan cannot satisfy the transfer requirements. Each item contains a `code` identifying the constraint and a `message` with a human-readable explanation.
+    attr_reader :reasons
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAddProjectJWKSRequestMetadata
-  FIELDS = {
-    jwks_url: "jwks_url",
-    provider_name: "provider_name",
-    branch_id: "branch_id",
-    jwt_audience: "jwt_audience",
-    role_names: "role_names",
-    skip_role_creation: "skip_role_creation",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    jwks_url
-    provider_name
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AddProjectJWKSRequest.
-# Add a new JWKS to a specific endpoint of a project
-class AddProjectJWKSRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAddProjectJWKSRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAddProjectJWKSRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAddProjectJWKSRequestMetadata::DECODERS
-
-  # @return [String] URL of the provider's JWKS endpoint used to verify JWTs.
-  attr_reader :jwks_url
-  # @return [String] The name of the authentication provider (e.g., Clerk, Stytch, Auth0)
-  attr_reader :provider_name
-  # @return [String] The Neon branch ID. Returned as `id` from `GET /projects/{project_id}/branches`.
-  attr_reader :branch_id
-  # @return [String] Expected `aud` claim in incoming JWTs. When set, tokens with a different audience are rejected; tokens with no audience are still accepted. Omit to skip audience validation.
-  attr_reader :jwt_audience
-  # @return [Array_of_String] Deprecated. The roles the JWKS should be mapped to. By default, the JWKS is mapped to the `authenticator`, `authenticated`, and `anonymous` roles.
-  attr_reader :role_names
-  # @return [Boolean] Deprecated. Only used with Neon RLS. If true, role creation is skipped.
-  attr_reader :skip_role_creation
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAddProjectJWKSRequestMetadata
+    FIELDS = {
+      jwks_url: 'jwks_url',
+      provider_name: 'provider_name',
+      branch_id: 'branch_id',
+      jwt_audience: 'jwt_audience',
+      role_names: 'role_names',
+      skip_role_creation: 'skip_role_creation'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      jwks_url
+      provider_name
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AddProjectJWKSRequest.
+  # Add a new JWKS to a specific endpoint of a project
+  class AddProjectJWKSRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAddProjectJWKSRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAddProjectJWKSRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAddProjectJWKSRequestMetadata::DECODERS
+
+    # @return [String] URL of the provider's JWKS endpoint used to verify JWTs.
+    attr_reader :jwks_url
+    # @return [String] The name of the authentication provider (e.g., Clerk, Stytch, Auth0)
+    attr_reader :provider_name
+    # @return [String] The Neon branch ID. Returned as `id` from `GET /projects/{project_id}/branches`.
+    attr_reader :branch_id
+    # @return [String] Expected `aud` claim in incoming JWTs. When set, tokens with a different audience are rejected; tokens with no audience are still accepted. Omit to skip audience validation.
+    attr_reader :jwt_audience
+    # @return [Array_of_String] Deprecated. The roles the JWKS should be mapped to. By default, the JWKS is mapped to the `authenticator`, `authenticated`, and `anonymous` roles.
+    attr_reader :role_names
+    # @return [Boolean] Deprecated. Only used with Neon RLS. If true, role creation is skipped.
+    attr_reader :skip_role_creation
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the AdvisorCategory SDK namespace.
-module AdvisorCategory
-  SECURITY = 'SECURITY'
-  PERFORMANCE = 'PERFORMANCE'
-  VALUES = ['SECURITY', 'PERFORMANCE'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAdvisorIssueMetadata
-  FIELDS = {
-    name: "name",
-    title: "title",
-    level: "level",
-    facing: "facing",
-    categories: "categories",
-    description: "description",
-    detail: "detail",
-    remediation: "remediation",
-    metadata: "metadata",
-    cache_key: "cache_key",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    name
-    title
-    level
-    facing
-    categories
-    description
-    detail
-    remediation
-    metadata
-    cache_key
-  ].freeze
-  DECODERS = {
-    facing: lambda do |value|
-      ::OctridevNeon::AdvisorIssueFacing.from_value(value)
-    end,
-    categories: lambda do |value|
-      value&.map { |item| ::OctridevNeon::AdvisorCategory.from_value(item) }
-    end,
-  }.freeze
-end
-
-# API model for AdvisorIssue.
-# Typed representation of the `AdvisorIssue` API schema.
-class AdvisorIssue
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAdvisorIssueMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAdvisorIssueMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAdvisorIssueMetadata::DECODERS
-
-  # @return [String] Unique identifier for the issue type
-  attr_reader :name
-  # @return [String] Human-readable title
-  attr_reader :title
-  # @return [String] Severity level of the issue
-  attr_reader :level
-  # @return [AdvisorIssueFacing] Whether this issue affects external API exposure or is internal only
-  attr_reader :facing
-  # @return [Array_of_AdvisorCategory] Categories this issue belongs to
-  attr_reader :categories
-  # @return [String] Detailed description of what this check detects
-  attr_reader :description
-  # @return [String] Specific details about this instance of the issue
-  attr_reader :detail
-  # @return [String] URL to documentation on how to fix this issue
-  attr_reader :remediation
-  # @return [Hash] Additional context-specific metadata
-  attr_reader :metadata
-  # @return [String] Unique key for caching this issue result
-  attr_reader :cache_key
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the AdvisorCategory SDK namespace.
+  module AdvisorCategory
+    SECURITY = 'SECURITY'
+    PERFORMANCE = 'PERFORMANCE'
+    VALUES = %w[SECURITY PERFORMANCE].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalAdvisorIssueMetadata
+    FIELDS = {
+      name: 'name',
+      title: 'title',
+      level: 'level',
+      facing: 'facing',
+      categories: 'categories',
+      description: 'description',
+      detail: 'detail',
+      remediation: 'remediation',
+      metadata: 'metadata',
+      cache_key: 'cache_key'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      name
+      title
+      level
+      facing
+      categories
+      description
+      detail
+      remediation
+      metadata
+      cache_key
+    ].freeze
+    DECODERS = {
+      facing: lambda do |value|
+        ::OctridevNeon::AdvisorIssueFacing.from_value(value)
+      end,
+      categories: lambda do |value|
+        value&.map { |item| ::OctridevNeon::AdvisorCategory.from_value(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for AdvisorIssue.
+  # Typed representation of the `AdvisorIssue` API schema.
+  class AdvisorIssue
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAdvisorIssueMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAdvisorIssueMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAdvisorIssueMetadata::DECODERS
 
-# Defines the AdvisorIssueFacing SDK namespace.
-module AdvisorIssueFacing
-  EXTERNAL = 'EXTERNAL'
-  INTERNAL = 'INTERNAL'
-  VALUES = ['EXTERNAL', 'INTERNAL'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] Unique identifier for the issue type
+    attr_reader :name
+    # @return [String] Human-readable title
+    attr_reader :title
+    # @return [String] Severity level of the issue
+    attr_reader :level
+    # @return [AdvisorIssueFacing] Whether this issue affects external API exposure or is internal only
+    attr_reader :facing
+    # @return [Array_of_AdvisorCategory] Categories this issue belongs to
+    attr_reader :categories
+    # @return [String] Detailed description of what this check detects
+    attr_reader :description
+    # @return [String] Specific details about this instance of the issue
+    attr_reader :detail
+    # @return [String] URL to documentation on how to fix this issue
+    attr_reader :remediation
+    # @return [Hash] Additional context-specific metadata
+    attr_reader :metadata
+    # @return [String] Unique key for caching this issue result
+    attr_reader :cache_key
 
-# Internal model hydration metadata.
-class SdkInternalAllowedIpsMetadata
-  FIELDS = {
-    ips: "ips",
-    protected_branches_only: "protected_branches_only",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for AllowedIps.
-# A list of IP addresses that are allowed to connect to the compute endpoint. If the list is empty or not set, all IP addresses are allowed. If protected_branches_only is true, the list will be applied only to protected branches.
-class AllowedIps
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAllowedIpsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAllowedIpsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAllowedIpsMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [Array_of_String] A list of IP addresses that are allowed to connect to the endpoint.
-  attr_reader :ips
-  # @return [Boolean] If true, the list will be applied only to protected branches.
-  attr_reader :protected_branches_only
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the AdvisorIssueFacing SDK namespace.
+  module AdvisorIssueFacing
+    EXTERNAL = 'EXTERNAL'
+    INTERNAL = 'INTERNAL'
+    VALUES = %w[EXTERNAL INTERNAL].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ApplicationType SDK namespace.
-module ApplicationType
-  VERCEL = 'vercel'
-  GITHUB = 'github'
-  DATADOG = 'datadog'
-  OPENTELEMETRY = 'opentelemetry'
-  VALUES = ['vercel', 'github', 'datadog', 'opentelemetry'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAvailablePreloadLibrariesMetadata
-  FIELDS = {
-    libraries: "libraries",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    libraries: lambda do |value|
-      value&.map { |item| ::OctridevNeon::AvailablePreloadLibrary.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for AvailablePreloadLibraries.
-# Typed representation of the `AvailablePreloadLibraries` API schema.
-class AvailablePreloadLibraries
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAvailablePreloadLibrariesMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAvailablePreloadLibrariesMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAvailablePreloadLibrariesMetadata::DECODERS
-
-  # @return [Array_of_AvailablePreloadLibrary] Preload libraries available for the project's Postgres version. Each entry includes `library_name`, `description`, `is_default`, `is_experimental`, and `version`.
-  attr_reader :libraries
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAllowedIpsMetadata
+    FIELDS = {
+      ips: 'ips',
+      protected_branches_only: 'protected_branches_only'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AllowedIps.
+  # A list of IP addresses that are allowed to connect to the compute endpoint. If the list is empty or not set, all IP addresses are allowed. If protected_branches_only is true, the list will be applied only to protected branches.
+  class AllowedIps
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAllowedIpsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAllowedIpsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAllowedIpsMetadata::DECODERS
+
+    # @return [Array_of_String] A list of IP addresses that are allowed to connect to the endpoint.
+    attr_reader :ips
+    # @return [Boolean] If true, the list will be applied only to protected branches.
+    attr_reader :protected_branches_only
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAvailablePreloadLibraryMetadata
-  FIELDS = {
-    library_name: "library_name",
-    description: "description",
-    is_default: "is_default",
-    is_experimental: "is_experimental",
-    version: "version",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    library_name
-    description
-    is_default
-    is_experimental
-    version
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AvailablePreloadLibrary.
-# Typed representation of the `AvailablePreloadLibrary` API schema.
-class AvailablePreloadLibrary
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAvailablePreloadLibraryMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAvailablePreloadLibraryMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAvailablePreloadLibraryMetadata::DECODERS
-
-  # @return [String] Name of the Postgres shared preload library as it appears in the `shared_preload_libraries` parameter (for example, `pg_stat_statements`).
-  attr_reader :library_name
-  # @return [String] Human-readable explanation of the library's purpose and behavior.
-  attr_reader :description
-  # @return [Boolean] Whether this library is loaded by default in the `shared_preload_libraries` configuration for new compute endpoints.
-  attr_reader :is_default
-  # @return [Boolean] Marks the library as experimental. Experimental libraries may be unstable, subject to breaking changes, or not recommended for production use.
-  attr_reader :is_experimental
-  # @return [String] Version of the preload library.
-  attr_reader :version
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ApplicationType SDK namespace.
+  module ApplicationType
+    VERCEL = 'vercel'
+    GITHUB = 'github'
+    DATADOG = 'datadog'
+    OPENTELEMETRY = 'opentelemetry'
+    VALUES = %w[vercel github datadog opentelemetry].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalAvailablePreloadLibrariesMetadata
+    FIELDS = {
+      libraries: 'libraries'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      libraries: lambda do |value|
+        value&.map { |item| ::OctridevNeon::AvailablePreloadLibrary.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for AvailablePreloadLibraries.
+  # Typed representation of the `AvailablePreloadLibraries` API schema.
+  class AvailablePreloadLibraries
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAvailablePreloadLibrariesMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAvailablePreloadLibrariesMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAvailablePreloadLibrariesMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalConnectionURIResponseMetadata
-  FIELDS = {
-    uri: "uri",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    uri
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [Array_of_AvailablePreloadLibrary] Preload libraries available for the project's Postgres version. Each entry includes `library_name`, `description`, `is_default`, `is_experimental`, and `version`.
+    attr_reader :libraries
 
-# API model for ConnectionURIResponse.
-# Typed representation of the `ConnectionURIResponse` API schema.
-class ConnectionURIResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalConnectionURIResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalConnectionURIResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalConnectionURIResponseMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The connection URI.
-  attr_reader :uri
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalAvailablePreloadLibraryMetadata
+    FIELDS = {
+      library_name: 'library_name',
+      description: 'description',
+      is_default: 'is_default',
+      is_experimental: 'is_experimental',
+      version: 'version'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      library_name
+      description
+      is_default
+      is_experimental
+      version
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for AvailablePreloadLibrary.
+  # Typed representation of the `AvailablePreloadLibrary` API schema.
+  class AvailablePreloadLibrary
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAvailablePreloadLibraryMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAvailablePreloadLibraryMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAvailablePreloadLibraryMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalConnectionURIsResponseMetadata
-  FIELDS = {
-    connection_uris: "connection_uris",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    connection_uris
-  ].freeze
-  DECODERS = {
-    connection_uris: lambda do |value|
-      value&.map { |item| ::OctridevNeon::ConnectionDetails.from_hash(item) }
-    end,
-  }.freeze
-end
+    # @return [String] Name of the Postgres shared preload library as it appears in the `shared_preload_libraries` parameter (for example, `pg_stat_statements`).
+    attr_reader :library_name
+    # @return [String] Human-readable explanation of the library's purpose and behavior.
+    attr_reader :description
+    # @return [Boolean] Whether this library is loaded by default in the `shared_preload_libraries` configuration for new compute endpoints.
+    attr_reader :is_default
+    # @return [Boolean] Marks the library as experimental. Experimental libraries may be unstable, subject to breaking changes, or not recommended for production use.
+    attr_reader :is_experimental
+    # @return [String] Version of the preload library.
+    attr_reader :version
 
-# API model for ConnectionURIsResponse.
-# Typed representation of the `ConnectionURIsResponse` API schema.
-class ConnectionURIsResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalConnectionURIsResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalConnectionURIsResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalConnectionURIsResponseMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Array_of_ConnectionDetails] Connection URIs for the project. Each entry contains credentials and should be treated as sensitive.
-  attr_reader :connection_uris
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalConnectionURIResponseMetadata
+    FIELDS = {
+      uri: 'uri'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      uri
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ConnectionURIResponse.
+  # Typed representation of the `ConnectionURIResponse` API schema.
+  class ConnectionURIResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalConnectionURIResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalConnectionURIResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalConnectionURIResponseMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalDefaultEndpointSettingsMetadata
-  FIELDS = {
-    pg_settings: "pg_settings",
-    pgbouncer_settings: "pgbouncer_settings",
-    autoscaling_limit_min_cu: "autoscaling_limit_min_cu",
-    autoscaling_limit_max_cu: "autoscaling_limit_max_cu",
-    suspend_timeout_seconds: "suspend_timeout_seconds",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    pg_settings: lambda do |value|
-      ::OctridevNeon::PgSettingsData.from_hash(value)
-    end,
-    pgbouncer_settings: lambda do |value|
-      ::OctridevNeon::PgbouncerSettingsData.from_hash(value)
-    end,
-    autoscaling_limit_min_cu: lambda do |value|
-      ::OctridevNeon::ComputeUnit.from_value(value)
-    end,
-    autoscaling_limit_max_cu: lambda do |value|
-      ::OctridevNeon::ComputeUnit.from_value(value)
-    end,
-    suspend_timeout_seconds: lambda do |value|
-      ::OctridevNeon::SuspendTimeoutSeconds.from_value(value)
-    end,
-  }.freeze
-end
+    # @return [String] The connection URI.
+    attr_reader :uri
 
-# API model for DefaultEndpointSettings.
-# A collection of settings for a Neon endpoint
-class DefaultEndpointSettings
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDefaultEndpointSettingsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDefaultEndpointSettingsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDefaultEndpointSettingsMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [PgSettingsData] A raw representation of Postgres settings
-  attr_reader :pg_settings
-  # @return [PgbouncerSettingsData] Deprecated. Use the endpoint-level connection pooler configuration instead. Removal scheduled for June 20, 2026.
-  attr_reader :pgbouncer_settings
-  # @return [ComputeUnit] Minimum number of Compute Units for this endpoint. At least 0.25 and no greater than `autoscaling_limit_max_cu`.
-  attr_reader :autoscaling_limit_min_cu
-  # @return [ComputeUnit] Default maximum number of Compute Units for endpoints created under this account. At least 0.25.
-  attr_reader :autoscaling_limit_max_cu
-  # @return [SuspendTimeoutSeconds] Scale-to-zero idle timeout, in seconds, before the compute suspends. `0` uses the plan default; `-1` disables scale-to-zero (never suspends). Minimum is plan-dependent (Scale: 60); maximum 604800 (one week). Free cannot change it; Launch can only enable or disable; Scale can set any value.
-  attr_reader :suspend_timeout_seconds
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalConnectionURIsResponseMetadata
+    FIELDS = {
+      connection_uris: 'connection_uris'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      connection_uris
+    ].freeze
+    DECODERS = {
+      connection_uris: lambda do |value|
+        value&.map { |item| ::OctridevNeon::ConnectionDetails.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ConnectionURIsResponse.
+  # Typed representation of the `ConnectionURIsResponse` API schema.
+  class ConnectionURIsResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalConnectionURIsResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalConnectionURIsResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalConnectionURIsResponseMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalGrantPermissionToProjectRequestMetadata
-  FIELDS = {
-    email: "email",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    email
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [Array_of_ConnectionDetails] Connection URIs for the project. Each entry contains credentials and should be treated as sensitive.
+    attr_reader :connection_uris
 
-# API model for GrantPermissionToProjectRequest.
-# Typed representation of the `GrantPermissionToProjectRequest` API schema.
-class GrantPermissionToProjectRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalGrantPermissionToProjectRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalGrantPermissionToProjectRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalGrantPermissionToProjectRequestMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] Email address of the user to grant project access to.
-  attr_reader :email
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalDefaultEndpointSettingsMetadata
+    FIELDS = {
+      pg_settings: 'pg_settings',
+      pgbouncer_settings: 'pgbouncer_settings',
+      autoscaling_limit_min_cu: 'autoscaling_limit_min_cu',
+      autoscaling_limit_max_cu: 'autoscaling_limit_max_cu',
+      suspend_timeout_seconds: 'suspend_timeout_seconds'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      pg_settings: lambda do |value|
+        ::OctridevNeon::PgSettingsData.from_hash(value)
+      end,
+      pgbouncer_settings: lambda do |value|
+        ::OctridevNeon::PgbouncerSettingsData.from_hash(value)
+      end,
+      autoscaling_limit_min_cu: lambda do |value|
+        ::OctridevNeon::ComputeUnit.from_value(value)
+      end,
+      autoscaling_limit_max_cu: lambda do |value|
+        ::OctridevNeon::ComputeUnit.from_value(value)
+      end,
+      suspend_timeout_seconds: lambda do |value|
+        ::OctridevNeon::SuspendTimeoutSeconds.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for DefaultEndpointSettings.
+  # A collection of settings for a Neon endpoint
+  class DefaultEndpointSettings
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDefaultEndpointSettingsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDefaultEndpointSettingsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDefaultEndpointSettingsMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalJWKSMetadata
-  FIELDS = {
-    id: "id",
-    project_id: "project_id",
-    branch_id: "branch_id",
-    jwks_url: "jwks_url",
-    provider_name: "provider_name",
-    created_at: "created_at",
-    updated_at: "updated_at",
-    jwt_audience: "jwt_audience",
-    role_names: "role_names",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    project_id
-    jwks_url
-    provider_name
-    created_at
-    updated_at
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [PgSettingsData] A raw representation of Postgres settings
+    attr_reader :pg_settings
+    # @return [PgbouncerSettingsData] Deprecated. Use the endpoint-level connection pooler configuration instead. Removal scheduled for June 20, 2026.
+    attr_reader :pgbouncer_settings
+    # @return [ComputeUnit] Minimum number of Compute Units for this endpoint. At least 0.25 and no greater than `autoscaling_limit_max_cu`.
+    attr_reader :autoscaling_limit_min_cu
+    # @return [ComputeUnit] Default maximum number of Compute Units for endpoints created under this account. At least 0.25.
+    attr_reader :autoscaling_limit_max_cu
+    # @return [SuspendTimeoutSeconds] Scale-to-zero idle timeout, in seconds, before the compute suspends. `0` uses the plan default; `-1` disables scale-to-zero (never suspends). Minimum is plan-dependent (Scale: 60); maximum 604800 (one week). Free cannot change it; Launch can only enable or disable; Scale can set any value.
+    attr_reader :suspend_timeout_seconds
 
-# API model for JWKS.
-# Typed representation of the `JWKS` API schema.
-class JWKS
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalJWKSMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalJWKSMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalJWKSMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The JWKS configuration's ID.
-  attr_reader :id
-  # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
-  attr_reader :project_id
-  # @return [String] The Neon branch ID. Returned as `id` from `GET /projects/{project_id}/branches`.
-  attr_reader :branch_id
-  # @return [String] URL of the provider's JWKS endpoint used to verify JWTs.
-  attr_reader :jwks_url
-  # @return [String] The name of the authentication provider (e.g., Clerk, Stytch, Auth0)
-  attr_reader :provider_name
-  # @return [String] The date and time when the JWKS was created
-  attr_reader :created_at
-  # @return [String] The date and time when the JWKS was last modified
-  attr_reader :updated_at
-  # @return [String] Expected JWT `aud` claim value configured for this JWKS.
-  attr_reader :jwt_audience
-  # @return [Array_of_String] Database role names that are permitted to authenticate using this JWKS configuration.
-  attr_reader :role_names
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalGrantPermissionToProjectRequestMetadata
+    FIELDS = {
+      email: 'email'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      email
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for GrantPermissionToProjectRequest.
+  # Typed representation of the `GrantPermissionToProjectRequest` API schema.
+  class GrantPermissionToProjectRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalGrantPermissionToProjectRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalGrantPermissionToProjectRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalGrantPermissionToProjectRequestMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalJWKSCreationOperationMetadata
-  FIELDS = {
-    jwks: "jwks",
-    operations: "operations",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    jwks
-    operations
-  ].freeze
-  DECODERS = {
-    jwks: lambda do |value|
-      ::OctridevNeon::JWKS.from_hash(value)
-    end,
-    operations: lambda do |value|
-      value&.map { |item| ::OctridevNeon::Operation.from_hash(item) }
-    end,
-  }.freeze
-end
+    # @return [String] Email address of the user to grant project access to.
+    attr_reader :email
 
-# API model for JWKSCreationOperation.
-# Typed representation of the `JWKSCreationOperation` API schema.
-class JWKSCreationOperation
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalJWKSCreationOperationMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalJWKSCreationOperationMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalJWKSCreationOperationMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [JWKS] JWKS configuration associated with the project.
-  attr_reader :jwks
-  # @return [Array_of_Operation] Required array value serialized in the `operations` wire field.
-  attr_reader :operations
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalJWKSMetadata
+    FIELDS = {
+      id: 'id',
+      project_id: 'project_id',
+      branch_id: 'branch_id',
+      jwks_url: 'jwks_url',
+      provider_name: 'provider_name',
+      created_at: 'created_at',
+      updated_at: 'updated_at',
+      jwt_audience: 'jwt_audience',
+      role_names: 'role_names'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      project_id
+      jwks_url
+      provider_name
+      created_at
+      updated_at
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for JWKS.
+  # Typed representation of the `JWKS` API schema.
+  class JWKS
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalJWKSMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalJWKSMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalJWKSMetadata::DECODERS
+
+    # @return [String] The JWKS configuration's ID.
+    attr_reader :id
+    # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
+    attr_reader :project_id
+    # @return [String] The Neon branch ID. Returned as `id` from `GET /projects/{project_id}/branches`.
+    attr_reader :branch_id
+    # @return [String] URL of the provider's JWKS endpoint used to verify JWTs.
+    attr_reader :jwks_url
+    # @return [String] The name of the authentication provider (e.g., Clerk, Stytch, Auth0)
+    attr_reader :provider_name
+    # @return [String] The date and time when the JWKS was created
+    attr_reader :created_at
+    # @return [String] The date and time when the JWKS was last modified
+    attr_reader :updated_at
+    # @return [String] Expected JWT `aud` claim value configured for this JWKS.
+    attr_reader :jwt_audience
+    # @return [Array_of_String] Database role names that are permitted to authenticate using this JWKS configuration.
+    attr_reader :role_names
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalJWKSCreationOperationMetadata
+    FIELDS = {
+      jwks: 'jwks',
+      operations: 'operations'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      jwks
+      operations
+    ].freeze
+    DECODERS = {
+      jwks: lambda do |value|
+        ::OctridevNeon::JWKS.from_hash(value)
+      end,
+      operations: lambda do |value|
+        value&.map { |item| ::OctridevNeon::Operation.from_hash(item) }
+      end
+    }.freeze
+  end
+
+  # API model for JWKSCreationOperation.
+  # Typed representation of the `JWKSCreationOperation` API schema.
+  class JWKSCreationOperation
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalJWKSCreationOperationMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalJWKSCreationOperationMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalJWKSCreationOperationMetadata::DECODERS
+
+    # @return [JWKS] JWKS configuration associated with the project.
+    attr_reader :jwks
+    # @return [Array_of_Operation] Required array value serialized in the `operations` wire field.
+    attr_reader :operations
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

@@ -13,13 +13,7 @@ module OctridevNeon
       #
       # @param project_id [String] The Neon project ID
       # @param operation_id [String] The operation ID
-      singleton_class.define_method(:get_operation) do |
-        config:,
-        project_id:,
-        operation_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_operation) do |config:, project_id:, operation_id:, request_options: nil|
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_uuid('operation_id', operation_id)
@@ -27,9 +21,9 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/operations/",
+            '/operations/',
             SdkClient.encode_path_segment(operation_id)
           ].join,
           config: config,
@@ -37,7 +31,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'get_operation',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -55,7 +49,6 @@ module OctridevNeon
         limit: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 1000) }
@@ -63,20 +56,20 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/operations"
+            '/operations'
           ].join,
           config: config,
           query: {
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
-            'limit' => QueryValue.new(limit, style: 'form', explode: true),
+            'limit' => QueryValue.new(limit, style: 'form', explode: true)
           },
           return_type: ::OctridevNeon::Methods::Operation::OperationsResponse,
           decoder: :json,
           operation_id: 'list_operation',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

@@ -5,43 +5,43 @@
 
 # operation domain models
 module OctridevNeon
-# Internal model hydration metadata.
-class SdkInternalOperationResponseMetadata
-  FIELDS = {
-    operation: "operation",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    operation
-  ].freeze
-  DECODERS = {
-    operation: lambda do |value|
-      ::OctridevNeon::Operation.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for OperationResponse.
-# Typed representation of the `OperationResponse` API schema.
-class OperationResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalOperationResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalOperationResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalOperationResponseMetadata::DECODERS
-
-  # @return [Operation] An asynchronous action Neon performs on your resources (for example, starting a compute or creating a branch). Fields such as `action`, `status`, and `total_duration_ms` describe the operation and its progress.
-  attr_reader :operation
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalOperationResponseMetadata
+    FIELDS = {
+      operation: 'operation'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      operation
+    ].freeze
+    DECODERS = {
+      operation: lambda do |value|
+        ::OctridevNeon::Operation.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # API model for OperationResponse.
+  # Typed representation of the `OperationResponse` API schema.
+  class OperationResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalOperationResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalOperationResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalOperationResponseMetadata::DECODERS
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+    # @return [Operation] An asynchronous action Neon performs on your resources (for example, starting a compute or creating a branch). Fields such as `action`, `status`, and `total_duration_ms` describe the operation and its progress.
+    attr_reader :operation
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end
