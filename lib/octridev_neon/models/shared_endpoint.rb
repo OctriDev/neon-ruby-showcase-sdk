@@ -5,241 +5,242 @@
 
 # shared_endpoint domain models
 module OctridevNeon
-  # Internal model hydration metadata.
-  class SdkInternalEndpointMetadata
-    FIELDS = {
-      host: 'host',
-      id: 'id',
-      name: 'name',
-      project_id: 'project_id',
-      branch_id: 'branch_id',
-      autoscaling_limit_min_cu: 'autoscaling_limit_min_cu',
-      autoscaling_limit_max_cu: 'autoscaling_limit_max_cu',
-      region_id: 'region_id',
-      type: 'type',
-      current_state: 'current_state',
-      pending_state: 'pending_state',
-      settings: 'settings',
-      pooler_enabled: 'pooler_enabled',
-      pooler_mode: 'pooler_mode',
-      disabled: 'disabled',
-      passwordless_access: 'passwordless_access',
-      last_active: 'last_active',
-      creation_source: 'creation_source',
-      created_at: 'created_at',
-      updated_at: 'updated_at',
-      started_at: 'started_at',
-      suspended_at: 'suspended_at',
-      proxy_host: 'proxy_host',
-      suspend_timeout_seconds: 'suspend_timeout_seconds',
-      provisioner: 'provisioner',
-      compute_release_version: 'compute_release_version'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      host
-      id
-      project_id
-      branch_id
-      autoscaling_limit_min_cu
-      autoscaling_limit_max_cu
-      region_id
-      type
-      current_state
-      settings
-      pooler_enabled
-      pooler_mode
-      disabled
-      passwordless_access
-      creation_source
-      created_at
-      updated_at
-      proxy_host
-      suspend_timeout_seconds
-      provisioner
-    ].freeze
-    DECODERS = {
-      autoscaling_limit_min_cu: lambda do |value|
-        ::OctridevNeon::ComputeUnit.from_value(value)
-      end,
-      autoscaling_limit_max_cu: lambda do |value|
-        ::OctridevNeon::ComputeUnit.from_value(value)
-      end,
-      type: lambda do |value|
-        ::OctridevNeon::EndpointType.from_value(value)
-      end,
-      current_state: lambda do |value|
-        ::OctridevNeon::EndpointState.from_value(value)
-      end,
-      pending_state: lambda do |value|
-        ::OctridevNeon::EndpointState.from_value(value)
-      end,
-      settings: lambda do |value|
-        ::OctridevNeon::EndpointSettingsData.from_hash(value)
-      end,
-      pooler_mode: lambda do |value|
-        ::OctridevNeon::EndpointPoolerMode.from_value(value)
-      end,
-      suspend_timeout_seconds: lambda do |value|
-        ::OctridevNeon::SuspendTimeoutSeconds.from_value(value)
-      end,
-      provisioner: lambda do |value|
-        ::OctridevNeon::Provisioner.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalEndpointMetadata
+  FIELDS = {
+    host: "host",
+    id: "id",
+    name: "name",
+    project_id: "project_id",
+    branch_id: "branch_id",
+    autoscaling_limit_min_cu: "autoscaling_limit_min_cu",
+    autoscaling_limit_max_cu: "autoscaling_limit_max_cu",
+    region_id: "region_id",
+    type: "type",
+    current_state: "current_state",
+    pending_state: "pending_state",
+    settings: "settings",
+    pooler_enabled: "pooler_enabled",
+    pooler_mode: "pooler_mode",
+    disabled: "disabled",
+    passwordless_access: "passwordless_access",
+    last_active: "last_active",
+    creation_source: "creation_source",
+    created_at: "created_at",
+    updated_at: "updated_at",
+    started_at: "started_at",
+    suspended_at: "suspended_at",
+    proxy_host: "proxy_host",
+    suspend_timeout_seconds: "suspend_timeout_seconds",
+    provisioner: "provisioner",
+    compute_release_version: "compute_release_version",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    host
+    id
+    project_id
+    branch_id
+    autoscaling_limit_min_cu
+    autoscaling_limit_max_cu
+    region_id
+    type
+    current_state
+    settings
+    pooler_enabled
+    pooler_mode
+    disabled
+    passwordless_access
+    creation_source
+    created_at
+    updated_at
+    proxy_host
+    suspend_timeout_seconds
+    provisioner
+  ].freeze
+  DECODERS = {
+    autoscaling_limit_min_cu: lambda do |value|
+      ::OctridevNeon::ComputeUnit.from_value(value)
+    end,
+    autoscaling_limit_max_cu: lambda do |value|
+      ::OctridevNeon::ComputeUnit.from_value(value)
+    end,
+    type: lambda do |value|
+      ::OctridevNeon::EndpointType.from_value(value)
+    end,
+    current_state: lambda do |value|
+      ::OctridevNeon::EndpointState.from_value(value)
+    end,
+    pending_state: lambda do |value|
+      ::OctridevNeon::EndpointState.from_value(value)
+    end,
+    settings: lambda do |value|
+      ::OctridevNeon::EndpointSettingsData.from_hash(value)
+    end,
+    pooler_mode: lambda do |value|
+      ::OctridevNeon::EndpointPoolerMode.from_value(value)
+    end,
+    suspend_timeout_seconds: lambda do |value|
+      ::OctridevNeon::SuspendTimeoutSeconds.from_value(value)
+    end,
+    provisioner: lambda do |value|
+      ::OctridevNeon::Provisioner.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for Endpoint.
+# Typed representation of the `Endpoint` API schema.
+class Endpoint
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalEndpointMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalEndpointMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalEndpointMetadata::DECODERS
+
+  # @return [String] The hostname of the compute endpoint. This is the hostname specified when connecting to a Neon database.
+  attr_reader :host
+  # @return [String] The compute endpoint ID. Compute endpoint IDs have an `ep-` prefix. For example: `ep-little-smoke-851426`
+  attr_reader :id
+  # @return [String] Optional name of the compute endpoint
+  attr_reader :name
+  # @return [String] The ID of the project this compute endpoint belongs to.
+  attr_reader :project_id
+  # @return [String] The ID of the branch this compute endpoint belongs to.
+  attr_reader :branch_id
+  # @return [ComputeUnit] The minimum number of Compute Units
+  attr_reader :autoscaling_limit_min_cu
+  # @return [ComputeUnit] The maximum number of Compute Units
+  attr_reader :autoscaling_limit_max_cu
+  # @return [String] Cloud region where the resource's Postgres compute and storage reside (for example, `aws-us-east-1`). Valid values are returned by `GET /regions`.
+  attr_reader :region_id
+  # @return [EndpointType] Compute endpoint type. `read_write`: the primary read-write endpoint (one per branch). `read_only`: a read replica endpoint (multiple allowed per branch).
+  attr_reader :type
+  # @return [EndpointState] Lifecycle state of the compute endpoint. `init`: being initialized. `active`: running and accepting connections. `idle`: suspended (scaled to zero).
+  attr_reader :current_state
+  # @return [EndpointState] Target state the compute endpoint is transitioning to. Omitted when no transition is in progress.
+  attr_reader :pending_state
+  # @return [EndpointSettingsData] A collection of settings for a compute endpoint
+  attr_reader :settings
+  # @return [Boolean] Deprecated. To use connection pooling, append `-pooler` to the endpoint ID in the connection string.
+  attr_reader :pooler_enabled
+  # @return [EndpointPoolerMode] Deprecated. The connection pooler mode. Removal scheduled for June 20, 2026.
+  attr_reader :pooler_mode
+  # @return [Boolean] Whether to restrict connections to the compute endpoint. Enabling this option schedules a suspend compute operation. A disabled compute endpoint cannot be enabled by a connection or console action.
+  attr_reader :disabled
+  # @return [Boolean] Whether to permit passwordless access to the compute endpoint
+  attr_reader :passwordless_access
+  # @return [String] A timestamp indicating when the compute endpoint was last active
+  attr_reader :last_active
+  # @return [String] The compute endpoint creation source
+  attr_reader :creation_source
+  # @return [String] A timestamp indicating when the compute endpoint was created
+  attr_reader :created_at
+  # @return [String] A timestamp indicating when the compute endpoint was last updated
+  attr_reader :updated_at
+  # @return [String] A timestamp indicating when the compute endpoint was last started
+  attr_reader :started_at
+  # @return [String] A timestamp indicating when the compute endpoint was last suspended
+  attr_reader :suspended_at
+  # @return [String] Deprecated. Use the `host` property instead.
+  attr_reader :proxy_host
+  # @return [SuspendTimeoutSeconds] Scale-to-zero idle timeout, in seconds, before the compute suspends. `0` means the plan default applies; `-1` means scale-to-zero is disabled (never suspends).
+  attr_reader :suspend_timeout_seconds
+  # @return [Provisioner] Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.
+  attr_reader :provisioner
+  # @return [String] Attached compute's release version number.
+  attr_reader :compute_release_version
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for Endpoint.
-  # Typed representation of the `Endpoint` API schema.
-  class Endpoint
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalEndpointMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalEndpointMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalEndpointMetadata::DECODERS
-
-    # @return [String] The hostname of the compute endpoint. This is the hostname specified when connecting to a Neon database.
-    attr_reader :host
-    # @return [String] The compute endpoint ID. Compute endpoint IDs have an `ep-` prefix. For example: `ep-little-smoke-851426`
-    attr_reader :id
-    # @return [String] Optional name of the compute endpoint
-    attr_reader :name
-    # @return [String] The ID of the project this compute endpoint belongs to.
-    attr_reader :project_id
-    # @return [String] The ID of the branch this compute endpoint belongs to.
-    attr_reader :branch_id
-    # @return [ComputeUnit] The minimum number of Compute Units
-    attr_reader :autoscaling_limit_min_cu
-    # @return [ComputeUnit] The maximum number of Compute Units
-    attr_reader :autoscaling_limit_max_cu
-    # @return [String] Cloud region where the resource's Postgres compute and storage reside (for example, `aws-us-east-1`). Valid values are returned by `GET /regions`.
-    attr_reader :region_id
-    # @return [EndpointType] Compute endpoint type. `read_write`: the primary read-write endpoint (one per branch). `read_only`: a read replica endpoint (multiple allowed per branch).
-    attr_reader :type
-    # @return [EndpointState] Lifecycle state of the compute endpoint. `init`: being initialized. `active`: running and accepting connections. `idle`: suspended (scaled to zero).
-    attr_reader :current_state
-    # @return [EndpointState] Target state the compute endpoint is transitioning to. Omitted when no transition is in progress.
-    attr_reader :pending_state
-    # @return [EndpointSettingsData] A collection of settings for a compute endpoint
-    attr_reader :settings
-    # @return [Boolean] Deprecated. To use connection pooling, append `-pooler` to the endpoint ID in the connection string.
-    attr_reader :pooler_enabled
-    # @return [EndpointPoolerMode] Deprecated. The connection pooler mode. Removal scheduled for June 20, 2026.
-    attr_reader :pooler_mode
-    # @return [Boolean] Whether to restrict connections to the compute endpoint. Enabling this option schedules a suspend compute operation. A disabled compute endpoint cannot be enabled by a connection or console action.
-    attr_reader :disabled
-    # @return [Boolean] Whether to permit passwordless access to the compute endpoint
-    attr_reader :passwordless_access
-    # @return [String] A timestamp indicating when the compute endpoint was last active
-    attr_reader :last_active
-    # @return [String] The compute endpoint creation source
-    attr_reader :creation_source
-    # @return [String] A timestamp indicating when the compute endpoint was created
-    attr_reader :created_at
-    # @return [String] A timestamp indicating when the compute endpoint was last updated
-    attr_reader :updated_at
-    # @return [String] A timestamp indicating when the compute endpoint was last started
-    attr_reader :started_at
-    # @return [String] A timestamp indicating when the compute endpoint was last suspended
-    attr_reader :suspended_at
-    # @return [String] Deprecated. Use the `host` property instead.
-    attr_reader :proxy_host
-    # @return [SuspendTimeoutSeconds] Scale-to-zero idle timeout, in seconds, before the compute suspends. `0` means the plan default applies; `-1` means scale-to-zero is disabled (never suspends).
-    attr_reader :suspend_timeout_seconds
-    # @return [Provisioner] Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.
-    attr_reader :provisioner
-    # @return [String] Attached compute's release version number.
-    attr_reader :compute_release_version
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the EndpointPoolerMode SDK namespace.
-  module EndpointPoolerMode
-    TRANSACTION = 'transaction'
-    VALUES = ['transaction'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the EndpointPoolerMode SDK namespace.
+module EndpointPoolerMode
+  TRANSACTION = 'transaction'
+  VALUES = ['transaction'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalEndpointSettingsDataMetadata
+  FIELDS = {
+    pg_settings: "pg_settings",
+    pgbouncer_settings: "pgbouncer_settings",
+    preload_libraries: "preload_libraries",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    pg_settings: lambda do |value|
+      ::OctridevNeon::PgSettingsData.from_hash(value)
+    end,
+    pgbouncer_settings: lambda do |value|
+      ::OctridevNeon::PgbouncerSettingsData.from_hash(value)
+    end,
+    preload_libraries: lambda do |value|
+      ::OctridevNeon::PreloadLibraries.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for EndpointSettingsData.
+# A collection of settings for a compute endpoint
+class EndpointSettingsData
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalEndpointSettingsDataMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalEndpointSettingsDataMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalEndpointSettingsDataMetadata::DECODERS
+
+  # @return [PgSettingsData] A raw representation of Postgres settings
+  attr_reader :pg_settings
+  # @return [PgbouncerSettingsData] Deprecated. PgBouncer settings for the compute endpoint. Removal scheduled for June 20, 2026.
+  attr_reader :pgbouncer_settings
+  # @return [PreloadLibraries] The shared libraries to preload into the project's compute instances.
+  attr_reader :preload_libraries
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalEndpointSettingsDataMetadata
-    FIELDS = {
-      pg_settings: 'pg_settings',
-      pgbouncer_settings: 'pgbouncer_settings',
-      preload_libraries: 'preload_libraries'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      pg_settings: lambda do |value|
-        ::OctridevNeon::PgSettingsData.from_hash(value)
-      end,
-      pgbouncer_settings: lambda do |value|
-        ::OctridevNeon::PgbouncerSettingsData.from_hash(value)
-      end,
-      preload_libraries: lambda do |value|
-        ::OctridevNeon::PreloadLibraries.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for EndpointSettingsData.
-  # A collection of settings for a compute endpoint
-  class EndpointSettingsData
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalEndpointSettingsDataMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalEndpointSettingsDataMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalEndpointSettingsDataMetadata::DECODERS
-
-    # @return [PgSettingsData] A raw representation of Postgres settings
-    attr_reader :pg_settings
-    # @return [PgbouncerSettingsData] Deprecated. PgBouncer settings for the compute endpoint. Removal scheduled for June 20, 2026.
-    attr_reader :pgbouncer_settings
-    # @return [PreloadLibraries] The shared libraries to preload into the project's compute instances.
-    attr_reader :preload_libraries
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the EndpointState SDK namespace.
-  module EndpointState
-    INIT = 'init'
-    ACTIVE = 'active'
-    IDLE = 'idle'
-    VALUES = %w[init active idle].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the EndpointState SDK namespace.
+module EndpointState
+  INIT = 'init'
+  ACTIVE = 'active'
+  IDLE = 'idle'
+  VALUES = ['init', 'active', 'idle'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the EndpointType SDK namespace.
-  module EndpointType
-    READ_ONLY = 'read_only'
-    READ_WRITE = 'read_write'
-    VALUES = %w[read_only read_write].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the EndpointType SDK namespace.
+module EndpointType
+  READ_ONLY = 'read_only'
+  READ_WRITE = 'read_write'
+  VALUES = ['read_only', 'read_write'].freeze
+  def self.from_value(value)
+    value
   end
+end
 end

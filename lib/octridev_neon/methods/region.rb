@@ -14,21 +14,26 @@ module OctridevNeon
       # @param org_id [String] Organization ID. When provided, returns only regions
       #   available to this organization. Recommended for accurate region
       #   availability.
-      singleton_class.define_method(:get_active_regions) do |config:, org_id: NOT_GIVEN, request_options: nil|
+      singleton_class.define_method(:get_active_regions) do |
+        config:,
+        org_id: NOT_GIVEN,
+        request_options: nil
+      |
+
         Validation.if_given(org_id) { Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$') }
 
         SdkClient.request(
           'GET',
-          '/regions',
+          "/regions",
           config: config,
           query: {
-            'org_id' => QueryValue.new(org_id, style: 'form', explode: true)
+            'org_id' => QueryValue.new(org_id, style: 'form', explode: true),
           },
           return_type: ::OctridevNeon::ActiveRegionsResponse,
           decoder: :json,
           operation_id: 'get_active_regions',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

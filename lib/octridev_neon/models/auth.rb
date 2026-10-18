@@ -5,652 +5,661 @@
 
 # auth domain models
 module OctridevNeon
-  # Internal model hydration metadata.
-  class SdkInternalCreateBranchNeonAuthNewUserRequestMetadata
-    FIELDS = {
-      email: 'email',
-      name: 'name'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      email
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalCreateBranchNeonAuthNewUserRequestMetadata
+  FIELDS = {
+    email: "email",
+    name: "name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    email
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for CreateBranchNeonAuthNewUserRequest.
+# Typed representation of the `CreateBranchNeonAuthNewUserRequest` API schema.
+class CreateBranchNeonAuthNewUserRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateBranchNeonAuthNewUserRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateBranchNeonAuthNewUserRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateBranchNeonAuthNewUserRequestMetadata::DECODERS
+
+  # @return [String] Email address of the new Neon Auth user to create.
+  attr_reader :email
+  # @return [String] Display name for the new user. Optional. Pair with the required email field when creating a new user.
+  attr_reader :name
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateBranchNeonAuthNewUserRequest.
-  # Typed representation of the `CreateBranchNeonAuthNewUserRequest` API schema.
-  class CreateBranchNeonAuthNewUserRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateBranchNeonAuthNewUserRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateBranchNeonAuthNewUserRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateBranchNeonAuthNewUserRequestMetadata::DECODERS
-
-    # @return [String] Email address of the new Neon Auth user to create.
-    attr_reader :email
-    # @return [String] Display name for the new user. Optional. Pair with the required email field when creating a new user.
-    attr_reader :name
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalEnableNeonAuthIntegrationRequestMetadata
-    FIELDS = {
-      auth_provider: 'auth_provider',
-      database_name: 'database_name'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      auth_provider
-    ].freeze
-    DECODERS = {
-      auth_provider: lambda do |value|
-        ::OctridevNeon::NeonAuthSupportedAuthProvider.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalEnableNeonAuthIntegrationRequestMetadata
+  FIELDS = {
+    auth_provider: "auth_provider",
+    database_name: "database_name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    auth_provider
+  ].freeze
+  DECODERS = {
+    auth_provider: lambda do |value|
+      ::OctridevNeon::NeonAuthSupportedAuthProvider.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for EnableNeonAuthIntegrationRequest.
+# Typed representation of the `EnableNeonAuthIntegrationRequest` API schema.
+class EnableNeonAuthIntegrationRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalEnableNeonAuthIntegrationRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalEnableNeonAuthIntegrationRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalEnableNeonAuthIntegrationRequestMetadata::DECODERS
+
+  # @return [NeonAuthSupportedAuthProvider] Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.
+  attr_reader :auth_provider
+  # @return [String] Name of the database to enable Neon Auth on. When omitted, the integration uses the project's default database.
+  attr_reader :database_name
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for EnableNeonAuthIntegrationRequest.
-  # Typed representation of the `EnableNeonAuthIntegrationRequest` API schema.
-  class EnableNeonAuthIntegrationRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalEnableNeonAuthIntegrationRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalEnableNeonAuthIntegrationRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalEnableNeonAuthIntegrationRequestMetadata::DECODERS
-
-    # @return [NeonAuthSupportedAuthProvider] Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.
-    attr_reader :auth_provider
-    # @return [String] Name of the database to enable Neon Auth on. When omitted, the integration uses the project's default database.
-    attr_reader :database_name
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalListNeonAuthOAuthClientsResponseMetadata
-    FIELDS = {
-      clients: 'clients'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      clients
-    ].freeze
-    DECODERS = {
-      clients: lambda do |value|
-        value&.map { |item| ::OctridevNeon::NeonAuthOAuthClient.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalListNeonAuthOAuthClientsResponseMetadata
+  FIELDS = {
+    clients: "clients",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    clients
+  ].freeze
+  DECODERS = {
+    clients: lambda do |value|
+      value&.map { |item| ::OctridevNeon::NeonAuthOAuthClient.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for ListNeonAuthOAuthClientsResponse.
+# Typed representation of the `ListNeonAuthOAuthClientsResponse` API schema.
+class ListNeonAuthOAuthClientsResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalListNeonAuthOAuthClientsResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalListNeonAuthOAuthClientsResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalListNeonAuthOAuthClientsResponseMetadata::DECODERS
+
+  # @return [Array_of_NeonAuthOAuthClient] OAuth clients registered for the branch.
+  attr_reader :clients
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ListNeonAuthOAuthClientsResponse.
-  # Typed representation of the `ListNeonAuthOAuthClientsResponse` API schema.
-  class ListNeonAuthOAuthClientsResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalListNeonAuthOAuthClientsResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalListNeonAuthOAuthClientsResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalListNeonAuthOAuthClientsResponseMetadata::DECODERS
-
-    # @return [Array_of_NeonAuthOAuthClient] OAuth clients registered for the branch.
-    attr_reader :clients
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalNeonAuthAllowLocalhostResponseMetadata
-    FIELDS = {
-      allow_localhost: 'allow_localhost'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      allow_localhost
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalNeonAuthAllowLocalhostResponseMetadata
+  FIELDS = {
+    allow_localhost: "allow_localhost",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    allow_localhost
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for NeonAuthAllowLocalhostResponse.
+# Typed representation of the `NeonAuthAllowLocalhostResponse` API schema.
+class NeonAuthAllowLocalhostResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalNeonAuthAllowLocalhostResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalNeonAuthAllowLocalhostResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalNeonAuthAllowLocalhostResponseMetadata::DECODERS
+
+  # @return [Boolean] Whether to allow localhost connections
+  attr_reader :allow_localhost
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for NeonAuthAllowLocalhostResponse.
-  # Typed representation of the `NeonAuthAllowLocalhostResponse` API schema.
-  class NeonAuthAllowLocalhostResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalNeonAuthAllowLocalhostResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalNeonAuthAllowLocalhostResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalNeonAuthAllowLocalhostResponseMetadata::DECODERS
-
-    # @return [Boolean] Whether to allow localhost connections
-    attr_reader :allow_localhost
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalNeonAuthConfigResponseMetadata
-    FIELDS = {
-      name: 'name'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalNeonAuthConfigResponseMetadata
+  FIELDS = {
+    name: "name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for NeonAuthConfigResponse.
+# Typed representation of the `NeonAuthConfigResponse` API schema.
+class NeonAuthConfigResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalNeonAuthConfigResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalNeonAuthConfigResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalNeonAuthConfigResponseMetadata::DECODERS
+
+  # @return [String] The application name used in auth emails and communications.
+  attr_reader :name
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for NeonAuthConfigResponse.
-  # Typed representation of the `NeonAuthConfigResponse` API schema.
-  class NeonAuthConfigResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalNeonAuthConfigResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalNeonAuthConfigResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalNeonAuthConfigResponseMetadata::DECODERS
-
-    # @return [String] The application name used in auth emails and communications.
-    attr_reader :name
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalNeonAuthConfigUpdateMetadata
-    FIELDS = {
-      name: 'name'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalNeonAuthConfigUpdateMetadata
+  FIELDS = {
+    name: "name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for NeonAuthConfigUpdate.
+# Typed representation of the `NeonAuthConfigUpdate` API schema.
+class NeonAuthConfigUpdate
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalNeonAuthConfigUpdateMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalNeonAuthConfigUpdateMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalNeonAuthConfigUpdateMetadata::DECODERS
+
+  # @return [String] The application name used in auth emails and communications.
+  attr_reader :name
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for NeonAuthConfigUpdate.
-  # Typed representation of the `NeonAuthConfigUpdate` API schema.
-  class NeonAuthConfigUpdate
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalNeonAuthConfigUpdateMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalNeonAuthConfigUpdateMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalNeonAuthConfigUpdateMetadata::DECODERS
-
-    # @return [String] The application name used in auth emails and communications.
-    attr_reader :name
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalNeonAuthEmailAndPasswordConfigMetadata
-    FIELDS = {
-      enabled: 'enabled',
-      email_verification_method: 'email_verification_method',
-      require_email_verification: 'require_email_verification',
-      auto_sign_in_after_verification: 'auto_sign_in_after_verification',
-      send_verification_email_on_sign_up: 'send_verification_email_on_sign_up',
-      send_verification_email_on_sign_in: 'send_verification_email_on_sign_in',
-      disable_sign_up: 'disable_sign_up'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      enabled
-      email_verification_method
-      require_email_verification
-      auto_sign_in_after_verification
-      send_verification_email_on_sign_up
-      send_verification_email_on_sign_in
-      disable_sign_up
-    ].freeze
-    DECODERS = {
-      email_verification_method: lambda do |value|
-        ::OctridevNeon::NeonAuthEmailVerificationMethod.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalNeonAuthEmailAndPasswordConfigMetadata
+  FIELDS = {
+    enabled: "enabled",
+    email_verification_method: "email_verification_method",
+    require_email_verification: "require_email_verification",
+    auto_sign_in_after_verification: "auto_sign_in_after_verification",
+    send_verification_email_on_sign_up: "send_verification_email_on_sign_up",
+    send_verification_email_on_sign_in: "send_verification_email_on_sign_in",
+    disable_sign_up: "disable_sign_up",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    enabled
+    email_verification_method
+    require_email_verification
+    auto_sign_in_after_verification
+    send_verification_email_on_sign_up
+    send_verification_email_on_sign_in
+    disable_sign_up
+  ].freeze
+  DECODERS = {
+    email_verification_method: lambda do |value|
+      ::OctridevNeon::NeonAuthEmailVerificationMethod.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for NeonAuthEmailAndPasswordConfig.
+# Typed representation of the `NeonAuthEmailAndPasswordConfig` API schema.
+class NeonAuthEmailAndPasswordConfig
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalNeonAuthEmailAndPasswordConfigMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalNeonAuthEmailAndPasswordConfigMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalNeonAuthEmailAndPasswordConfigMetadata::DECODERS
+
+  # @return [Boolean] Whether email and password authentication is enabled
+  attr_reader :enabled
+  # @return [NeonAuthEmailVerificationMethod] Controls how email addresses are verified during sign-up or sign-in. - `link`: sends a verification link to the user's email address - `otp`: sends a one-time password to the user's email address
+  attr_reader :email_verification_method
+  # @return [Boolean] Whether email verification is required before users can sign in
+  attr_reader :require_email_verification
+  # @return [Boolean] Whether users are automatically signed in after verifying their email
+  attr_reader :auto_sign_in_after_verification
+  # @return [Boolean] Whether to send a verification email when users sign up
+  attr_reader :send_verification_email_on_sign_up
+  # @return [Boolean] Whether to send a verification email when users sign in
+  attr_reader :send_verification_email_on_sign_in
+  # @return [Boolean] Whether to disable new user sign ups
+  attr_reader :disable_sign_up
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for NeonAuthEmailAndPasswordConfig.
-  # Typed representation of the `NeonAuthEmailAndPasswordConfig` API schema.
-  class NeonAuthEmailAndPasswordConfig
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalNeonAuthEmailAndPasswordConfigMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalNeonAuthEmailAndPasswordConfigMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalNeonAuthEmailAndPasswordConfigMetadata::DECODERS
-
-    # @return [Boolean] Whether email and password authentication is enabled
-    attr_reader :enabled
-    # @return [NeonAuthEmailVerificationMethod] Controls how email addresses are verified during sign-up or sign-in. - `link`: sends a verification link to the user's email address - `otp`: sends a one-time password to the user's email address
-    attr_reader :email_verification_method
-    # @return [Boolean] Whether email verification is required before users can sign in
-    attr_reader :require_email_verification
-    # @return [Boolean] Whether users are automatically signed in after verifying their email
-    attr_reader :auto_sign_in_after_verification
-    # @return [Boolean] Whether to send a verification email when users sign up
-    attr_reader :send_verification_email_on_sign_up
-    # @return [Boolean] Whether to send a verification email when users sign in
-    attr_reader :send_verification_email_on_sign_in
-    # @return [Boolean] Whether to disable new user sign ups
-    attr_reader :disable_sign_up
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalNeonAuthEmailAndPasswordConfigUpdateMetadata
-    FIELDS = {
-      enabled: 'enabled',
-      email_verification_method: 'email_verification_method',
-      require_email_verification: 'require_email_verification',
-      auto_sign_in_after_verification: 'auto_sign_in_after_verification',
-      send_verification_email_on_sign_up: 'send_verification_email_on_sign_up',
-      send_verification_email_on_sign_in: 'send_verification_email_on_sign_in',
-      disable_sign_up: 'disable_sign_up'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      email_verification_method: lambda do |value|
-        ::OctridevNeon::NeonAuthEmailVerificationMethod.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalNeonAuthEmailAndPasswordConfigUpdateMetadata
+  FIELDS = {
+    enabled: "enabled",
+    email_verification_method: "email_verification_method",
+    require_email_verification: "require_email_verification",
+    auto_sign_in_after_verification: "auto_sign_in_after_verification",
+    send_verification_email_on_sign_up: "send_verification_email_on_sign_up",
+    send_verification_email_on_sign_in: "send_verification_email_on_sign_in",
+    disable_sign_up: "disable_sign_up",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    email_verification_method: lambda do |value|
+      ::OctridevNeon::NeonAuthEmailVerificationMethod.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for NeonAuthEmailAndPasswordConfigUpdate.
+# Typed representation of the `NeonAuthEmailAndPasswordConfigUpdate` API schema.
+class NeonAuthEmailAndPasswordConfigUpdate
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalNeonAuthEmailAndPasswordConfigUpdateMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalNeonAuthEmailAndPasswordConfigUpdateMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalNeonAuthEmailAndPasswordConfigUpdateMetadata::DECODERS
+
+  # @return [Boolean] Controls whether email and password authentication is enabled for this project. When omitted from an update request, the current value is unchanged.
+  attr_reader :enabled
+  # @return [NeonAuthEmailVerificationMethod] Email verification method. `link`: sends a verification link. `otp`: sends a one-time password.
+  attr_reader :email_verification_method
+  # @return [Boolean] When true, users must verify their email address before they can sign in. Omitting this field from an update request leaves the current value unchanged.
+  attr_reader :require_email_verification
+  # @return [Boolean] Whether users are automatically signed in after verifying their email
+  attr_reader :auto_sign_in_after_verification
+  # @return [Boolean] Whether to send a verification email when users sign up.
+  attr_reader :send_verification_email_on_sign_up
+  # @return [Boolean] Whether to send a verification email when a user with an unverified email signs in.
+  attr_reader :send_verification_email_on_sign_in
+  # @return [Boolean] Whether to disable new user sign ups. When omitted, the current setting is not changed.
+  attr_reader :disable_sign_up
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for NeonAuthEmailAndPasswordConfigUpdate.
-  # Typed representation of the `NeonAuthEmailAndPasswordConfigUpdate` API schema.
-  class NeonAuthEmailAndPasswordConfigUpdate
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalNeonAuthEmailAndPasswordConfigUpdateMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalNeonAuthEmailAndPasswordConfigUpdateMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalNeonAuthEmailAndPasswordConfigUpdateMetadata::DECODERS
-
-    # @return [Boolean] Controls whether email and password authentication is enabled for this project. When omitted from an update request, the current value is unchanged.
-    attr_reader :enabled
-    # @return [NeonAuthEmailVerificationMethod] Email verification method. `link`: sends a verification link. `otp`: sends a one-time password.
-    attr_reader :email_verification_method
-    # @return [Boolean] When true, users must verify their email address before they can sign in. Omitting this field from an update request leaves the current value unchanged.
-    attr_reader :require_email_verification
-    # @return [Boolean] Whether users are automatically signed in after verifying their email
-    attr_reader :auto_sign_in_after_verification
-    # @return [Boolean] Whether to send a verification email when users sign up.
-    attr_reader :send_verification_email_on_sign_up
-    # @return [Boolean] Whether to send a verification email when a user with an unverified email signs in.
-    attr_reader :send_verification_email_on_sign_in
-    # @return [Boolean] Whether to disable new user sign ups. When omitted, the current setting is not changed.
-    attr_reader :disable_sign_up
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the NeonAuthEmailVerificationMethod SDK namespace.
-  module NeonAuthEmailVerificationMethod
-    LINK = 'link'
-    OTP = 'otp'
-    VALUES = %w[link otp].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the NeonAuthEmailVerificationMethod SDK namespace.
+module NeonAuthEmailVerificationMethod
+  LINK = 'link'
+  OTP = 'otp'
+  VALUES = ['link', 'otp'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalNeonAuthMagicLinkConfigMetadata
+  FIELDS = {
+    enabled: "enabled",
+    expires_in: "expires_in",
+    disable_sign_up: "disable_sign_up",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    enabled
+    expires_in
+    disable_sign_up
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for NeonAuthMagicLinkConfig.
+# Typed representation of the `NeonAuthMagicLinkConfig` API schema.
+class NeonAuthMagicLinkConfig
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalNeonAuthMagicLinkConfigMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalNeonAuthMagicLinkConfigMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalNeonAuthMagicLinkConfigMetadata::DECODERS
+
+  # @return [Boolean] Whether the magic link plugin is enabled.
+  attr_reader :enabled
+  # @return [Integer] Minutes until the magic link expires.
+  attr_reader :expires_in
+  # @return [Boolean] Whether to disable sign-up via magic link.
+  attr_reader :disable_sign_up
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalNeonAuthMagicLinkConfigMetadata
-    FIELDS = {
-      enabled: 'enabled',
-      expires_in: 'expires_in',
-      disable_sign_up: 'disable_sign_up'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      enabled
-      expires_in
-      disable_sign_up
-    ].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for NeonAuthMagicLinkConfig.
-  # Typed representation of the `NeonAuthMagicLinkConfig` API schema.
-  class NeonAuthMagicLinkConfig
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalNeonAuthMagicLinkConfigMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalNeonAuthMagicLinkConfigMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalNeonAuthMagicLinkConfigMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Boolean] Whether the magic link plugin is enabled.
-    attr_reader :enabled
-    # @return [Integer] Minutes until the magic link expires.
-    attr_reader :expires_in
-    # @return [Boolean] Whether to disable sign-up via magic link.
-    attr_reader :disable_sign_up
+# Internal model hydration metadata.
+class SdkInternalNeonAuthMagicLinkConfigUpdateMetadata
+  FIELDS = {
+    enabled: "enabled",
+    expires_in: "expires_in",
+    disable_sign_up: "disable_sign_up",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for NeonAuthMagicLinkConfigUpdate.
+# Typed representation of the `NeonAuthMagicLinkConfigUpdate` API schema.
+class NeonAuthMagicLinkConfigUpdate
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalNeonAuthMagicLinkConfigUpdateMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalNeonAuthMagicLinkConfigUpdateMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalNeonAuthMagicLinkConfigUpdateMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [Boolean] Whether to enable the magic link plugin.
+  attr_reader :enabled
+  # @return [Integer] Minutes until the magic link expires.
+  attr_reader :expires_in
+  # @return [Boolean] When true, sign-up via magic link is disabled.
+  attr_reader :disable_sign_up
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalNeonAuthMagicLinkConfigUpdateMetadata
-    FIELDS = {
-      enabled: 'enabled',
-      expires_in: 'expires_in',
-      disable_sign_up: 'disable_sign_up'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for NeonAuthMagicLinkConfigUpdate.
-  # Typed representation of the `NeonAuthMagicLinkConfigUpdate` API schema.
-  class NeonAuthMagicLinkConfigUpdate
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalNeonAuthMagicLinkConfigUpdateMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalNeonAuthMagicLinkConfigUpdateMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalNeonAuthMagicLinkConfigUpdateMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Boolean] Whether to enable the magic link plugin.
-    attr_reader :enabled
-    # @return [Integer] Minutes until the magic link expires.
-    attr_reader :expires_in
-    # @return [Boolean] When true, sign-up via magic link is disabled.
-    attr_reader :disable_sign_up
+# Internal model hydration metadata.
+class SdkInternalNeonAuthOAuthClientMetadata
+  FIELDS = {
+    client_id: "client_id",
+    name: "name",
+    type: "type",
+    redirect_uris: "redirect_uris",
+    resources: "resources",
+    skip_consent: "skip_consent",
+    disabled: "disabled",
+    created_at: "created_at",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    client_id
+    name
+    type
+    redirect_uris
+    resources
+    skip_consent
+    disabled
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevNeon::NeonAuthOAuthClientType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for NeonAuthOAuthClient.
+# Typed representation of the `NeonAuthOAuthClient` API schema.
+class NeonAuthOAuthClient
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalNeonAuthOAuthClientMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalNeonAuthOAuthClientMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalNeonAuthOAuthClientMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The OAuth client ID.
+  attr_reader :client_id
+  # @return [String] Display name of the client.
+  attr_reader :name
+  # @return [NeonAuthOAuthClientType] Confidential clients authenticate with a client secret. Public clients have no secret.
+  attr_reader :type
+  # @return [Array_of_String] Redirect URIs the client may use.
+  attr_reader :redirect_uris
+  # @return [Array_of_String] Identifiers of the protected resources the client is linked to.
+  attr_reader :resources
+  # @return [Boolean] Whether users are not asked for consent when authorizing this client.
+  attr_reader :skip_consent
+  # @return [Boolean] Whether the client is disabled.
+  attr_reader :disabled
+  # @return [String] When the client was created.
+  attr_reader :created_at
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalNeonAuthOAuthClientMetadata
-    FIELDS = {
-      client_id: 'client_id',
-      name: 'name',
-      type: 'type',
-      redirect_uris: 'redirect_uris',
-      resources: 'resources',
-      skip_consent: 'skip_consent',
-      disabled: 'disabled',
-      created_at: 'created_at'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      client_id
-      name
-      type
-      redirect_uris
-      resources
-      skip_consent
-      disabled
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevNeon::NeonAuthOAuthClientType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for NeonAuthOAuthClient.
-  # Typed representation of the `NeonAuthOAuthClient` API schema.
-  class NeonAuthOAuthClient
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalNeonAuthOAuthClientMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalNeonAuthOAuthClientMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalNeonAuthOAuthClientMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The OAuth client ID.
-    attr_reader :client_id
-    # @return [String] Display name of the client.
-    attr_reader :name
-    # @return [NeonAuthOAuthClientType] Confidential clients authenticate with a client secret. Public clients have no secret.
-    attr_reader :type
-    # @return [Array_of_String] Redirect URIs the client may use.
-    attr_reader :redirect_uris
-    # @return [Array_of_String] Identifiers of the protected resources the client is linked to.
-    attr_reader :resources
-    # @return [Boolean] Whether users are not asked for consent when authorizing this client.
-    attr_reader :skip_consent
-    # @return [Boolean] Whether the client is disabled.
-    attr_reader :disabled
-    # @return [String] When the client was created.
-    attr_reader :created_at
+# Internal model hydration metadata.
+class SdkInternalNeonAuthOAuthClientCreatedMetadata
+  FIELDS = {
+    client_id: "client_id",
+    name: "name",
+    type: "type",
+    redirect_uris: "redirect_uris",
+    resources: "resources",
+    skip_consent: "skip_consent",
+    disabled: "disabled",
+    created_at: "created_at",
+    client_secret: "client_secret",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    client_id
+    name
+    type
+    redirect_uris
+    resources
+    skip_consent
+    disabled
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevNeon::NeonAuthOAuthClientType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for NeonAuthOAuthClientCreated.
+# Typed representation of the `NeonAuthOAuthClientCreated` API schema.
+class NeonAuthOAuthClientCreated
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalNeonAuthOAuthClientCreatedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalNeonAuthOAuthClientCreatedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalNeonAuthOAuthClientCreatedMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The OAuth client ID.
+  attr_reader :client_id
+  # @return [String] Display name of the client.
+  attr_reader :name
+  # @return [NeonAuthOAuthClientType] Confidential clients authenticate with a client secret. Public clients have no secret.
+  attr_reader :type
+  # @return [Array_of_String] Redirect URIs the client may use.
+  attr_reader :redirect_uris
+  # @return [Array_of_String] Identifiers of the protected resources the client is linked to.
+  attr_reader :resources
+  # @return [Boolean] Whether users are not asked for consent when authorizing this client.
+  attr_reader :skip_consent
+  # @return [Boolean] Whether the client is disabled.
+  attr_reader :disabled
+  # @return [String] When the client was created.
+  attr_reader :created_at
+  # @return [String] The client secret. Returned only for confidential clients and only in this response.
+  attr_reader :client_secret
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalNeonAuthOAuthClientCreatedMetadata
-    FIELDS = {
-      client_id: 'client_id',
-      name: 'name',
-      type: 'type',
-      redirect_uris: 'redirect_uris',
-      resources: 'resources',
-      skip_consent: 'skip_consent',
-      disabled: 'disabled',
-      created_at: 'created_at',
-      client_secret: 'client_secret'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      client_id
-      name
-      type
-      redirect_uris
-      resources
-      skip_consent
-      disabled
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevNeon::NeonAuthOAuthClientType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for NeonAuthOAuthClientCreated.
-  # Typed representation of the `NeonAuthOAuthClientCreated` API schema.
-  class NeonAuthOAuthClientCreated
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalNeonAuthOAuthClientCreatedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalNeonAuthOAuthClientCreatedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalNeonAuthOAuthClientCreatedMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The OAuth client ID.
-    attr_reader :client_id
-    # @return [String] Display name of the client.
-    attr_reader :name
-    # @return [NeonAuthOAuthClientType] Confidential clients authenticate with a client secret. Public clients have no secret.
-    attr_reader :type
-    # @return [Array_of_String] Redirect URIs the client may use.
-    attr_reader :redirect_uris
-    # @return [Array_of_String] Identifiers of the protected resources the client is linked to.
-    attr_reader :resources
-    # @return [Boolean] Whether users are not asked for consent when authorizing this client.
-    attr_reader :skip_consent
-    # @return [Boolean] Whether the client is disabled.
-    attr_reader :disabled
-    # @return [String] When the client was created.
-    attr_reader :created_at
-    # @return [String] The client secret. Returned only for confidential clients and only in this response.
-    attr_reader :client_secret
+# Internal model hydration metadata.
+class SdkInternalNeonAuthOAuthClientCreateRequestMetadata
+  FIELDS = {
+    name: "name",
+    redirect_uris: "redirect_uris",
+    type: "type",
+    resources: "resources",
+    skip_consent: "skip_consent",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+    redirect_uris
+    type
+    resources
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevNeon::NeonAuthOAuthClientType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for NeonAuthOAuthClientCreateRequest.
+# Typed representation of the `NeonAuthOAuthClientCreateRequest` API schema.
+class NeonAuthOAuthClientCreateRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalNeonAuthOAuthClientCreateRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalNeonAuthOAuthClientCreateRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalNeonAuthOAuthClientCreateRequestMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] Display name of the client.
+  attr_reader :name
+  # @return [Array_of_String] Redirect URIs the client may use. Must be https, or http on loopback hosts when localhost is allowed.
+  attr_reader :redirect_uris
+  # @return [NeonAuthOAuthClientType] Confidential clients authenticate with a client secret. Public clients have no secret.
+  attr_reader :type
+  # @return [Array_of_String] Identifiers of the protected resources to link the client to. Each must be configured on the OAuth provider plugin.
+  attr_reader :resources
+  # @return [Boolean] Whether to skip the consent prompt for this client.
+  attr_reader :skip_consent
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalNeonAuthOAuthClientCreateRequestMetadata
-    FIELDS = {
-      name: 'name',
-      redirect_uris: 'redirect_uris',
-      type: 'type',
-      resources: 'resources',
-      skip_consent: 'skip_consent'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-      redirect_uris
-      type
-      resources
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevNeon::NeonAuthOAuthClientType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for NeonAuthOAuthClientCreateRequest.
-  # Typed representation of the `NeonAuthOAuthClientCreateRequest` API schema.
-  class NeonAuthOAuthClientCreateRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalNeonAuthOAuthClientCreateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalNeonAuthOAuthClientCreateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalNeonAuthOAuthClientCreateRequestMetadata::DECODERS
-
-    # @return [String] Display name of the client.
-    attr_reader :name
-    # @return [Array_of_String] Redirect URIs the client may use. Must be https, or http on loopback hosts when localhost is allowed.
-    attr_reader :redirect_uris
-    # @return [NeonAuthOAuthClientType] Confidential clients authenticate with a client secret. Public clients have no secret.
-    attr_reader :type
-    # @return [Array_of_String] Identifiers of the protected resources to link the client to. Each must be configured on the OAuth provider plugin.
-    attr_reader :resources
-    # @return [Boolean] Whether to skip the consent prompt for this client.
-    attr_reader :skip_consent
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalNeonAuthOAuthClientSecretMetadata
-    FIELDS = {
-      client_id: 'client_id',
-      client_secret: 'client_secret'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      client_id
-      client_secret
-    ].freeze
-    DECODERS = {}.freeze
-  end
+# Internal model hydration metadata.
+class SdkInternalNeonAuthOAuthClientSecretMetadata
+  FIELDS = {
+    client_id: "client_id",
+    client_secret: "client_secret",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    client_id
+    client_secret
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 end

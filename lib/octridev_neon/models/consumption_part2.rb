@@ -5,30 +5,30 @@
 
 # consumption domain models (part 2)
 module OctridevNeon
-  # API model for GetConsumptionHistoryPerProjectV2Response.
-  # Typed representation of the `GetConsumptionHistoryPerProjectV2Response` API schema.
-  class GetConsumptionHistoryPerProjectV2Response
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGetConsumptionHistoryPerProjectV2ResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGetConsumptionHistoryPerProjectV2ResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGetConsumptionHistoryPerProjectV2ResponseMetadata::DECODERS
+# API model for GetConsumptionHistoryPerProjectV2Response.
+# Typed representation of the `GetConsumptionHistoryPerProjectV2Response` API schema.
+class GetConsumptionHistoryPerProjectV2Response
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGetConsumptionHistoryPerProjectV2ResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGetConsumptionHistoryPerProjectV2ResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGetConsumptionHistoryPerProjectV2ResponseMetadata::DECODERS
 
-    # @return [Array_of_ConsumptionHistoryPerProjectV2] Per-project consumption history entries for the requested time range.
-    attr_reader :projects
-    # @return [Pagination] Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.
-    attr_reader :pagination
+  # @return [Array_of_ConsumptionHistoryPerProjectV2] Per-project consumption history entries for the requested time range.
+  attr_reader :projects
+  # @return [Pagination] Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.
+  attr_reader :pagination
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 end

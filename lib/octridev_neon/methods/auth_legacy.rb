@@ -12,10 +12,12 @@ module OctridevNeon
       # Internal model hydration metadata.
       class SdkInternalDeleteAuthLegacyIntegrationMetadata
         FIELDS = {
-          delete_data: 'delete_data'
+          delete_data: "delete_data",
         }.freeze
-        REQUIRED_FIELDS = %i[].freeze
-        DECODERS = {}.freeze
+        REQUIRED_FIELDS = %i[
+        ].freeze
+        DECODERS = {
+        }.freeze
       end
 
       # API model for DeleteAuthLegacyIntegration.
@@ -69,26 +71,27 @@ module OctridevNeon
         role_name: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
-          '/projects/auth/create',
+          "/projects/auth/create",
           config: config,
           body: {
             'auth_provider' => auth_provider,
             'project_id' => project_id,
             'branch_id' => branch_id,
             'database_name' => database_name,
-            'role_name' => role_name
+            'role_name' => role_name,
           },
           return_type: ::OctridevNeon::NeonAuthCreateIntegrationResponse,
           decoder: :json,
           operation_id: 'create_auth_legacy_integration',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -102,21 +105,22 @@ module OctridevNeon
         project_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/auth/domains'
+            "/auth/domains"
           ].join,
           config: config,
           return_type: ::OctridevNeon::NeonAuthRedirectURIWhitelistResponse,
           decoder: :json,
           operation_id: 'list_auth_legacy_redirect_uri_whitelist_domains',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -139,6 +143,7 @@ module OctridevNeon
         auth_provider:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_uri('domain', domain)
@@ -146,19 +151,19 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/auth/domains'
+            "/auth/domains"
           ].join,
           config: config,
           body: {
             'domain' => domain,
-            'auth_provider' => auth_provider
+            'auth_provider' => auth_provider,
           },
           decoder: :empty,
           operation_id: 'add_auth_legacy_domain_to_redirect_uri_whitelist',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -182,24 +187,25 @@ module OctridevNeon
         domains:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/auth/domains'
+            "/auth/domains"
           ].join,
           config: config,
           body: {
             'auth_provider' => auth_provider,
-            'domains' => domains
+            'domains' => domains,
           },
           decoder: :empty,
           operation_id: 'delete_auth_legacy_domain_from_redirect_uri_whitelist',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -218,21 +224,22 @@ module OctridevNeon
         auth_provider:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
-          '/projects/auth/keys',
+          "/projects/auth/keys",
           config: config,
           body: {
             'project_id' => project_id,
-            'auth_provider' => auth_provider
+            'auth_provider' => auth_provider,
           },
           return_type: ::OctridevNeon::NeonAuthCreateIntegrationResponse,
           decoder: :json,
           operation_id: 'create_auth_legacy_provider_sdk_keys',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -258,6 +265,7 @@ module OctridevNeon
         name: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_length('email', email, min: 1, max: 256)
@@ -267,19 +275,19 @@ module OctridevNeon
 
         SdkClient.request(
           'POST',
-          '/projects/auth/user',
+          "/projects/auth/user",
           config: config,
           body: {
             'project_id' => project_id,
             'auth_provider' => auth_provider,
             'email' => email,
-            'name' => name
+            'name' => name,
           },
           return_type: ::OctridevNeon::NeonAuthCreateNewUserResponse,
           decoder: :json,
           operation_id: 'create_auth_legacy_user',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -295,21 +303,22 @@ module OctridevNeon
         auth_user_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/auth/users/',
+            "/auth/users/",
             SdkClient.encode_path_segment(auth_user_id)
           ].join,
           config: config,
           decoder: :empty,
           operation_id: 'delete_auth_legacy_user',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -328,21 +337,22 @@ module OctridevNeon
         auth_provider:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
-          '/projects/auth/transfer_ownership',
+          "/projects/auth/transfer_ownership",
           config: config,
           body: {
             'project_id' => project_id,
-            'auth_provider' => auth_provider
+            'auth_provider' => auth_provider,
           },
           return_type: ::OctridevNeon::NeonAuthTransferAuthProviderProjectResponse,
           decoder: :json,
           operation_id: 'transfer_auth_legacy_provider',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -356,21 +366,22 @@ module OctridevNeon
         project_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/auth/integrations'
+            "/auth/integrations"
           ].join,
           config: config,
           return_type: ::OctridevNeon::ListNeonAuthIntegrationsResponse,
           decoder: :json,
           operation_id: 'list_auth_legacy_integrations',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -384,21 +395,22 @@ module OctridevNeon
         project_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/auth/oauth_providers'
+            "/auth/oauth_providers"
           ].join,
           config: config,
           return_type: ::OctridevNeon::ListNeonAuthOauthProvidersResponse,
           decoder: :json,
           operation_id: 'list_auth_legacy_oauth_providers',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -424,27 +436,28 @@ module OctridevNeon
         microsoft_tenant_id: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/auth/oauth_providers'
+            "/auth/oauth_providers"
           ].join,
           config: config,
           body: {
             'id' => id,
             'client_id' => client_id,
             'client_secret' => client_secret,
-            'microsoft_tenant_id' => microsoft_tenant_id
+            'microsoft_tenant_id' => microsoft_tenant_id,
           },
           return_type: ::OctridevNeon::NeonAuthOauthProvider,
           decoder: :json,
           operation_id: 'add_auth_legacy_oauth_provider',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -470,27 +483,28 @@ module OctridevNeon
         microsoft_tenant_id: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'PATCH',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/auth/oauth_providers/',
+            "/auth/oauth_providers/",
             SdkClient.encode_path_segment(oauth_provider_id)
           ].join,
           config: config,
           body: {
             'client_id' => client_id,
             'client_secret' => client_secret,
-            'microsoft_tenant_id' => microsoft_tenant_id
+            'microsoft_tenant_id' => microsoft_tenant_id,
           },
           return_type: ::OctridevNeon::NeonAuthOauthProvider,
           decoder: :json,
           operation_id: 'update_auth_legacy_oauth_provider',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -506,21 +520,22 @@ module OctridevNeon
         oauth_provider_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/auth/oauth_providers/',
+            "/auth/oauth_providers/",
             SdkClient.encode_path_segment(oauth_provider_id)
           ].join,
           config: config,
           decoder: :empty,
           operation_id: 'delete_auth_legacy_oauth_provider',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -529,22 +544,27 @@ module OctridevNeon
       # @param project_id [String] The Neon project ID
       #
       # @deprecated This operation is deprecated and may be removed in a future release.
-      singleton_class.define_method(:get_auth_legacy_email_server) do |config:, project_id:, request_options: nil|
+      singleton_class.define_method(:get_auth_legacy_email_server) do |
+        config:,
+        project_id:,
+        request_options: nil
+      |
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/auth/email_server'
+            "/auth/email_server"
           ].join,
           config: config,
           return_type: ::OctridevNeon::NeonAuthEmailServerConfigResponse,
           decoder: :json,
           operation_id: 'get_auth_legacy_email_server',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

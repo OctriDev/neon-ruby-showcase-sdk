@@ -5,650 +5,652 @@
 
 # consumption domain models
 module OctridevNeon
-  # Defines the ConsumptionHistoryGranularity SDK namespace.
-  module ConsumptionHistoryGranularity
-    HOURLY = 'hourly'
-    DAILY = 'daily'
-    MONTHLY = 'monthly'
-    VALUES = %w[hourly daily monthly].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the ConsumptionHistoryGranularity SDK namespace.
+module ConsumptionHistoryGranularity
+  HOURLY = 'hourly'
+  DAILY = 'daily'
+  MONTHLY = 'monthly'
+  VALUES = ['hourly', 'daily', 'monthly'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalConsumptionHistoryPerBranchV2Metadata
+  FIELDS = {
+    project_id: "project_id",
+    branch_id: "branch_id",
+    periods: "periods",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    project_id
+    branch_id
+    periods
+  ].freeze
+  DECODERS = {
+    periods: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerPeriodV2.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for ConsumptionHistoryPerBranchV2.
+# Typed representation of the `ConsumptionHistoryPerBranchV2` API schema.
+class ConsumptionHistoryPerBranchV2
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConsumptionHistoryPerBranchV2Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerBranchV2Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConsumptionHistoryPerBranchV2Metadata::DECODERS
+
+  # @return [String] The ID of the project that owns this branch.
+  attr_reader :project_id
+  # @return [String] The Neon branch ID. Returned as `id` from `GET /projects/{project_id}/branches`.
+  attr_reader :branch_id
+  # @return [Array_of_ConsumptionHistoryPerPeriodV2] Consumption history records for the branch, grouped by billing period.
+  attr_reader :periods
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConsumptionHistoryPerBranchV2Metadata
-    FIELDS = {
-      project_id: 'project_id',
-      branch_id: 'branch_id',
-      periods: 'periods'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      project_id
-      branch_id
-      periods
-    ].freeze
-    DECODERS = {
-      periods: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerPeriodV2.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ConsumptionHistoryPerBranchV2.
-  # Typed representation of the `ConsumptionHistoryPerBranchV2` API schema.
-  class ConsumptionHistoryPerBranchV2
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConsumptionHistoryPerBranchV2Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerBranchV2Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConsumptionHistoryPerBranchV2Metadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The ID of the project that owns this branch.
-    attr_reader :project_id
-    # @return [String] The Neon branch ID. Returned as `id` from `GET /projects/{project_id}/branches`.
-    attr_reader :branch_id
-    # @return [Array_of_ConsumptionHistoryPerPeriodV2] Consumption history records for the branch, grouped by billing period.
-    attr_reader :periods
+# Internal model hydration metadata.
+class SdkInternalConsumptionHistoryPerBranchV2ResponseMetadata
+  FIELDS = {
+    branches: "branches",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    branches
+  ].freeze
+  DECODERS = {
+    branches: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerBranchV2.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for ConsumptionHistoryPerBranchV2Response.
+# Typed representation of the `ConsumptionHistoryPerBranchV2Response` API schema.
+class ConsumptionHistoryPerBranchV2Response
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConsumptionHistoryPerBranchV2ResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerBranchV2ResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConsumptionHistoryPerBranchV2ResponseMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [Array_of_ConsumptionHistoryPerBranchV2] Per-branch consumption history records returned for the requested time range.
+  attr_reader :branches
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConsumptionHistoryPerBranchV2ResponseMetadata
-    FIELDS = {
-      branches: 'branches'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      branches
-    ].freeze
-    DECODERS = {
-      branches: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerBranchV2.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ConsumptionHistoryPerBranchV2Response.
-  # Typed representation of the `ConsumptionHistoryPerBranchV2Response` API schema.
-  class ConsumptionHistoryPerBranchV2Response
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConsumptionHistoryPerBranchV2ResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerBranchV2ResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConsumptionHistoryPerBranchV2ResponseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Array_of_ConsumptionHistoryPerBranchV2] Per-branch consumption history records returned for the requested time range.
-    attr_reader :branches
+# Internal model hydration metadata.
+class SdkInternalConsumptionHistoryPerPeriodMetadata
+  FIELDS = {
+    period_id: "period_id",
+    period_plan: "period_plan",
+    period_start: "period_start",
+    period_end: "period_end",
+    consumption: "consumption",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    period_id
+    period_plan
+    period_start
+    consumption
+  ].freeze
+  DECODERS = {
+    consumption: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerTimeframe.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for ConsumptionHistoryPerPeriod.
+# Typed representation of the `ConsumptionHistoryPerPeriod` API schema.
+class ConsumptionHistoryPerPeriod
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConsumptionHistoryPerPeriodMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerPeriodMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConsumptionHistoryPerPeriodMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The ID assigned to the specified billing period.
+  attr_reader :period_id
+  # @return [String] The billing plan applicable during the billing period.
+  attr_reader :period_plan
+  # @return [String] The start date-time of the billing period.
+  attr_reader :period_start
+  # @return [String] The end date-time of the billing period, available for the past periods only.
+  attr_reader :period_end
+  # @return [Array_of_ConsumptionHistoryPerTimeframe] Consumption metric records for the billing period.
+  attr_reader :consumption
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConsumptionHistoryPerPeriodMetadata
-    FIELDS = {
-      period_id: 'period_id',
-      period_plan: 'period_plan',
-      period_start: 'period_start',
-      period_end: 'period_end',
-      consumption: 'consumption'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      period_id
-      period_plan
-      period_start
-      consumption
-    ].freeze
-    DECODERS = {
-      consumption: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerTimeframe.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ConsumptionHistoryPerPeriod.
-  # Typed representation of the `ConsumptionHistoryPerPeriod` API schema.
-  class ConsumptionHistoryPerPeriod
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConsumptionHistoryPerPeriodMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerPeriodMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConsumptionHistoryPerPeriodMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The ID assigned to the specified billing period.
-    attr_reader :period_id
-    # @return [String] The billing plan applicable during the billing period.
-    attr_reader :period_plan
-    # @return [String] The start date-time of the billing period.
-    attr_reader :period_start
-    # @return [String] The end date-time of the billing period, available for the past periods only.
-    attr_reader :period_end
-    # @return [Array_of_ConsumptionHistoryPerTimeframe] Consumption metric records for the billing period.
-    attr_reader :consumption
+# Internal model hydration metadata.
+class SdkInternalConsumptionHistoryPerPeriodV2Metadata
+  FIELDS = {
+    period_id: "period_id",
+    period_plan: "period_plan",
+    period_start: "period_start",
+    period_end: "period_end",
+    consumption: "consumption",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    period_id
+    period_plan
+    period_start
+    consumption
+  ].freeze
+  DECODERS = {
+    consumption: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerTimeframeV2.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for ConsumptionHistoryPerPeriodV2.
+# Typed representation of the `ConsumptionHistoryPerPeriodV2` API schema.
+class ConsumptionHistoryPerPeriodV2
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConsumptionHistoryPerPeriodV2Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerPeriodV2Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConsumptionHistoryPerPeriodV2Metadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The ID assigned to the specified billing period.
+  attr_reader :period_id
+  # @return [String] The billing plan applicable during the billing period.
+  attr_reader :period_plan
+  # @return [String] The start date-time of the billing period.
+  attr_reader :period_start
+  # @return [String] The end date-time of the billing period, available for the past periods only.
+  attr_reader :period_end
+  # @return [Array_of_ConsumptionHistoryPerTimeframeV2] Consumption metric records for the billing period.
+  attr_reader :consumption
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConsumptionHistoryPerPeriodV2Metadata
-    FIELDS = {
-      period_id: 'period_id',
-      period_plan: 'period_plan',
-      period_start: 'period_start',
-      period_end: 'period_end',
-      consumption: 'consumption'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      period_id
-      period_plan
-      period_start
-      consumption
-    ].freeze
-    DECODERS = {
-      consumption: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerTimeframeV2.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ConsumptionHistoryPerPeriodV2.
-  # Typed representation of the `ConsumptionHistoryPerPeriodV2` API schema.
-  class ConsumptionHistoryPerPeriodV2
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConsumptionHistoryPerPeriodV2Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerPeriodV2Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConsumptionHistoryPerPeriodV2Metadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The ID assigned to the specified billing period.
-    attr_reader :period_id
-    # @return [String] The billing plan applicable during the billing period.
-    attr_reader :period_plan
-    # @return [String] The start date-time of the billing period.
-    attr_reader :period_start
-    # @return [String] The end date-time of the billing period, available for the past periods only.
-    attr_reader :period_end
-    # @return [Array_of_ConsumptionHistoryPerTimeframeV2] Consumption metric records for the billing period.
-    attr_reader :consumption
+# Internal model hydration metadata.
+class SdkInternalConsumptionHistoryPerProjectMetadata
+  FIELDS = {
+    project_id: "project_id",
+    periods: "periods",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    project_id
+    periods
+  ].freeze
+  DECODERS = {
+    periods: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerPeriod.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for ConsumptionHistoryPerProject.
+# Typed representation of the `ConsumptionHistoryPerProject` API schema.
+class ConsumptionHistoryPerProject
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConsumptionHistoryPerProjectMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerProjectMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConsumptionHistoryPerProjectMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
+  attr_reader :project_id
+  # @return [Array_of_ConsumptionHistoryPerPeriod] Consumption periods for the project, each covering a discrete billing interval.
+  attr_reader :periods
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConsumptionHistoryPerProjectMetadata
-    FIELDS = {
-      project_id: 'project_id',
-      periods: 'periods'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      project_id
-      periods
-    ].freeze
-    DECODERS = {
-      periods: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerPeriod.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ConsumptionHistoryPerProject.
-  # Typed representation of the `ConsumptionHistoryPerProject` API schema.
-  class ConsumptionHistoryPerProject
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConsumptionHistoryPerProjectMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerProjectMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConsumptionHistoryPerProjectMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
-    attr_reader :project_id
-    # @return [Array_of_ConsumptionHistoryPerPeriod] Consumption periods for the project, each covering a discrete billing interval.
-    attr_reader :periods
+# Internal model hydration metadata.
+class SdkInternalConsumptionHistoryPerProjectResponseMetadata
+  FIELDS = {
+    projects: "projects",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    projects
+  ].freeze
+  DECODERS = {
+    projects: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerProject.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for ConsumptionHistoryPerProjectResponse.
+# Typed representation of the `ConsumptionHistoryPerProjectResponse` API schema.
+class ConsumptionHistoryPerProjectResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConsumptionHistoryPerProjectResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerProjectResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConsumptionHistoryPerProjectResponseMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [Array_of_ConsumptionHistoryPerProject] Per-project consumption history records included in the response.
+  attr_reader :projects
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConsumptionHistoryPerProjectResponseMetadata
-    FIELDS = {
-      projects: 'projects'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      projects
-    ].freeze
-    DECODERS = {
-      projects: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerProject.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ConsumptionHistoryPerProjectResponse.
-  # Typed representation of the `ConsumptionHistoryPerProjectResponse` API schema.
-  class ConsumptionHistoryPerProjectResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConsumptionHistoryPerProjectResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerProjectResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConsumptionHistoryPerProjectResponseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Array_of_ConsumptionHistoryPerProject] Per-project consumption history records included in the response.
-    attr_reader :projects
+# Internal model hydration metadata.
+class SdkInternalConsumptionHistoryPerProjectV2Metadata
+  FIELDS = {
+    project_id: "project_id",
+    periods: "periods",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    project_id
+    periods
+  ].freeze
+  DECODERS = {
+    periods: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerPeriodV2.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for ConsumptionHistoryPerProjectV2.
+# Typed representation of the `ConsumptionHistoryPerProjectV2` API schema.
+class ConsumptionHistoryPerProjectV2
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConsumptionHistoryPerProjectV2Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerProjectV2Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConsumptionHistoryPerProjectV2Metadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
+  attr_reader :project_id
+  # @return [Array_of_ConsumptionHistoryPerPeriodV2] Consumption periods recorded for this project.
+  attr_reader :periods
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConsumptionHistoryPerProjectV2Metadata
-    FIELDS = {
-      project_id: 'project_id',
-      periods: 'periods'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      project_id
-      periods
-    ].freeze
-    DECODERS = {
-      periods: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerPeriodV2.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ConsumptionHistoryPerProjectV2.
-  # Typed representation of the `ConsumptionHistoryPerProjectV2` API schema.
-  class ConsumptionHistoryPerProjectV2
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConsumptionHistoryPerProjectV2Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerProjectV2Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConsumptionHistoryPerProjectV2Metadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
-    attr_reader :project_id
-    # @return [Array_of_ConsumptionHistoryPerPeriodV2] Consumption periods recorded for this project.
-    attr_reader :periods
+# Internal model hydration metadata.
+class SdkInternalConsumptionHistoryPerProjectV2ResponseMetadata
+  FIELDS = {
+    projects: "projects",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    projects
+  ].freeze
+  DECODERS = {
+    projects: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerProjectV2.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for ConsumptionHistoryPerProjectV2Response.
+# Typed representation of the `ConsumptionHistoryPerProjectV2Response` API schema.
+class ConsumptionHistoryPerProjectV2Response
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConsumptionHistoryPerProjectV2ResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerProjectV2ResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConsumptionHistoryPerProjectV2ResponseMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [Array_of_ConsumptionHistoryPerProjectV2] Per-project consumption history entries for the requested time range.
+  attr_reader :projects
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConsumptionHistoryPerProjectV2ResponseMetadata
-    FIELDS = {
-      projects: 'projects'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      projects
-    ].freeze
-    DECODERS = {
-      projects: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerProjectV2.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ConsumptionHistoryPerProjectV2Response.
-  # Typed representation of the `ConsumptionHistoryPerProjectV2Response` API schema.
-  class ConsumptionHistoryPerProjectV2Response
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConsumptionHistoryPerProjectV2ResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerProjectV2ResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConsumptionHistoryPerProjectV2ResponseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Array_of_ConsumptionHistoryPerProjectV2] Per-project consumption history entries for the requested time range.
-    attr_reader :projects
+# Internal model hydration metadata.
+class SdkInternalConsumptionHistoryPerTimeframeMetadata
+  FIELDS = {
+    timeframe_start: "timeframe_start",
+    timeframe_end: "timeframe_end",
+    active_time_seconds: "active_time_seconds",
+    compute_time_seconds: "compute_time_seconds",
+    written_data_bytes: "written_data_bytes",
+    synthetic_storage_size_bytes: "synthetic_storage_size_bytes",
+    data_storage_bytes_hour: "data_storage_bytes_hour",
+    logical_size_bytes: "logical_size_bytes",
+    logical_size_bytes_hour: "logical_size_bytes_hour",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    timeframe_start
+    timeframe_end
+    active_time_seconds
+    compute_time_seconds
+    written_data_bytes
+    synthetic_storage_size_bytes
+    data_storage_bytes_hour
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for ConsumptionHistoryPerTimeframe.
+# Typed representation of the `ConsumptionHistoryPerTimeframe` API schema.
+class ConsumptionHistoryPerTimeframe
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConsumptionHistoryPerTimeframeMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerTimeframeMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConsumptionHistoryPerTimeframeMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The specified start date-time for the reported consumption.
+  attr_reader :timeframe_start
+  # @return [String] The specified end date-time for the reported consumption.
+  attr_reader :timeframe_end
+  # @return [Integer] Seconds. The amount of time the compute endpoints have been active.
+  attr_reader :active_time_seconds
+  # @return [Integer] Seconds. The number of CPU seconds used by compute endpoints, including compute endpoints that have been deleted.
+  attr_reader :compute_time_seconds
+  # @return [Integer] Bytes. The amount of written data for all branches.
+  attr_reader :written_data_bytes
+  # @return [Integer] Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead. Bytes. The space occupied in Postgres storage. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches.
+  attr_reader :synthetic_storage_size_bytes
+  # @return [Integer] Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead. Bytes-Hour. The amount of Postgres storage consumed hourly.
+  attr_reader :data_storage_bytes_hour
+  # @return [Integer] Bytes. The amount of logical size consumed.
+  attr_reader :logical_size_bytes
+  # @return [Integer] Bytes-Hour. The amount of logical size consumed hourly.
+  attr_reader :logical_size_bytes_hour
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConsumptionHistoryPerTimeframeMetadata
-    FIELDS = {
-      timeframe_start: 'timeframe_start',
-      timeframe_end: 'timeframe_end',
-      active_time_seconds: 'active_time_seconds',
-      compute_time_seconds: 'compute_time_seconds',
-      written_data_bytes: 'written_data_bytes',
-      synthetic_storage_size_bytes: 'synthetic_storage_size_bytes',
-      data_storage_bytes_hour: 'data_storage_bytes_hour',
-      logical_size_bytes: 'logical_size_bytes',
-      logical_size_bytes_hour: 'logical_size_bytes_hour'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      timeframe_start
-      timeframe_end
-      active_time_seconds
-      compute_time_seconds
-      written_data_bytes
-      synthetic_storage_size_bytes
-      data_storage_bytes_hour
-    ].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ConsumptionHistoryPerTimeframe.
-  # Typed representation of the `ConsumptionHistoryPerTimeframe` API schema.
-  class ConsumptionHistoryPerTimeframe
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConsumptionHistoryPerTimeframeMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerTimeframeMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConsumptionHistoryPerTimeframeMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The specified start date-time for the reported consumption.
-    attr_reader :timeframe_start
-    # @return [String] The specified end date-time for the reported consumption.
-    attr_reader :timeframe_end
-    # @return [Integer] Seconds. The amount of time the compute endpoints have been active.
-    attr_reader :active_time_seconds
-    # @return [Integer] Seconds. The number of CPU seconds used by compute endpoints, including compute endpoints that have been deleted.
-    attr_reader :compute_time_seconds
-    # @return [Integer] Bytes. The amount of written data for all branches.
-    attr_reader :written_data_bytes
-    # @return [Integer] Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead. Bytes. The space occupied in Postgres storage. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches.
-    attr_reader :synthetic_storage_size_bytes
-    # @return [Integer] Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead. Bytes-Hour. The amount of Postgres storage consumed hourly.
-    attr_reader :data_storage_bytes_hour
-    # @return [Integer] Bytes. The amount of logical size consumed.
-    attr_reader :logical_size_bytes
-    # @return [Integer] Bytes-Hour. The amount of logical size consumed hourly.
-    attr_reader :logical_size_bytes_hour
+# Internal model hydration metadata.
+class SdkInternalConsumptionHistoryPerTimeframeV2Metadata
+  FIELDS = {
+    timeframe_start: "timeframe_start",
+    timeframe_end: "timeframe_end",
+    metrics: "metrics",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    metrics: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionMetricValue.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for ConsumptionHistoryPerTimeframeV2.
+# Typed representation of the `ConsumptionHistoryPerTimeframeV2` API schema.
+class ConsumptionHistoryPerTimeframeV2
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConsumptionHistoryPerTimeframeV2Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerTimeframeV2Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConsumptionHistoryPerTimeframeV2Metadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The specified start date-time for the reported consumption.
+  attr_reader :timeframe_start
+  # @return [String] The specified end date-time for the reported consumption.
+  attr_reader :timeframe_end
+  # @return [Array_of_ConsumptionMetricValue] Consumption metric values recorded for the timeframe.
+  attr_reader :metrics
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConsumptionHistoryPerTimeframeV2Metadata
-    FIELDS = {
-      timeframe_start: 'timeframe_start',
-      timeframe_end: 'timeframe_end',
-      metrics: 'metrics'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      metrics: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConsumptionMetricValue.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ConsumptionHistoryPerTimeframeV2.
-  # Typed representation of the `ConsumptionHistoryPerTimeframeV2` API schema.
-  class ConsumptionHistoryPerTimeframeV2
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConsumptionHistoryPerTimeframeV2Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConsumptionHistoryPerTimeframeV2Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConsumptionHistoryPerTimeframeV2Metadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The specified start date-time for the reported consumption.
-    attr_reader :timeframe_start
-    # @return [String] The specified end date-time for the reported consumption.
-    attr_reader :timeframe_end
-    # @return [Array_of_ConsumptionMetricValue] Consumption metric values recorded for the timeframe.
-    attr_reader :metrics
+# Defines the ConsumptionHistoryQueryMetrics SDK value decoder.
+module ConsumptionHistoryQueryMetrics
+  def self.from_hash(value)
+    return nil if value.nil?
+    value&.map { |item| item }
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalConsumptionMetricValueMetadata
+  FIELDS = {
+    metric_name: "metric_name",
+    value: "value",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    metric_name
+    value
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for ConsumptionMetricValue.
+# Typed representation of the `ConsumptionMetricValue` API schema.
+class ConsumptionMetricValue
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConsumptionMetricValueMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConsumptionMetricValueMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConsumptionMetricValueMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] Name of the consumption metric, such as compute_time or data_storage_bytes_hour.
+  attr_reader :metric_name
+  # @return [Integer] Measured quantity for the metric named by `metric_name`.
+  attr_reader :value
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ConsumptionHistoryQueryMetrics SDK value decoder.
-  module ConsumptionHistoryQueryMetrics
-    def self.from_hash(value)
-      return nil if value.nil?
-
-      value&.map { |item| item }
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConsumptionMetricValueMetadata
-    FIELDS = {
-      metric_name: 'metric_name',
-      value: 'value'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      metric_name
-      value
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGetConsumptionHistoryPerBranchV2ResponseMetadata
+  FIELDS = {
+    branches: "branches",
+    pagination: "pagination",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    branches
+  ].freeze
+  DECODERS = {
+    branches: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerBranchV2.from_hash(item) }
+    end,
+    pagination: lambda do |value|
+      ::OctridevNeon::Pagination.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for GetConsumptionHistoryPerBranchV2Response.
+# Typed representation of the `GetConsumptionHistoryPerBranchV2Response` API schema.
+class GetConsumptionHistoryPerBranchV2Response
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGetConsumptionHistoryPerBranchV2ResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGetConsumptionHistoryPerBranchV2ResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGetConsumptionHistoryPerBranchV2ResponseMetadata::DECODERS
+
+  # @return [Array_of_ConsumptionHistoryPerBranchV2] Per-branch consumption history records returned for the requested time range.
+  attr_reader :branches
+  # @return [Pagination] Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.
+  attr_reader :pagination
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ConsumptionMetricValue.
-  # Typed representation of the `ConsumptionMetricValue` API schema.
-  class ConsumptionMetricValue
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConsumptionMetricValueMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConsumptionMetricValueMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConsumptionMetricValueMetadata::DECODERS
-
-    # @return [String] Name of the consumption metric, such as compute_time or data_storage_bytes_hour.
-    attr_reader :metric_name
-    # @return [Integer] Measured quantity for the metric named by `metric_name`.
-    attr_reader :value
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGetConsumptionHistoryPerBranchV2ResponseMetadata
-    FIELDS = {
-      branches: 'branches',
-      pagination: 'pagination'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      branches
-    ].freeze
-    DECODERS = {
-      branches: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerBranchV2.from_hash(item) }
-      end,
-      pagination: lambda do |value|
-        ::OctridevNeon::Pagination.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGetConsumptionHistoryPerProjectResponseMetadata
+  FIELDS = {
+    projects: "projects",
+    pagination: "pagination",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    projects
+  ].freeze
+  DECODERS = {
+    projects: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerProject.from_hash(item) }
+    end,
+    pagination: lambda do |value|
+      ::OctridevNeon::Pagination.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for GetConsumptionHistoryPerProjectResponse.
+# Typed representation of the `GetConsumptionHistoryPerProjectResponse` API schema.
+class GetConsumptionHistoryPerProjectResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGetConsumptionHistoryPerProjectResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGetConsumptionHistoryPerProjectResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGetConsumptionHistoryPerProjectResponseMetadata::DECODERS
+
+  # @return [Array_of_ConsumptionHistoryPerProject] Per-project consumption history records included in the response.
+  attr_reader :projects
+  # @return [Pagination] Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.
+  attr_reader :pagination
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for GetConsumptionHistoryPerBranchV2Response.
-  # Typed representation of the `GetConsumptionHistoryPerBranchV2Response` API schema.
-  class GetConsumptionHistoryPerBranchV2Response
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGetConsumptionHistoryPerBranchV2ResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGetConsumptionHistoryPerBranchV2ResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGetConsumptionHistoryPerBranchV2ResponseMetadata::DECODERS
-
-    # @return [Array_of_ConsumptionHistoryPerBranchV2] Per-branch consumption history records returned for the requested time range.
-    attr_reader :branches
-    # @return [Pagination] Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.
-    attr_reader :pagination
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGetConsumptionHistoryPerProjectResponseMetadata
-    FIELDS = {
-      projects: 'projects',
-      pagination: 'pagination'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      projects
-    ].freeze
-    DECODERS = {
-      projects: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerProject.from_hash(item) }
-      end,
-      pagination: lambda do |value|
-        ::OctridevNeon::Pagination.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for GetConsumptionHistoryPerProjectResponse.
-  # Typed representation of the `GetConsumptionHistoryPerProjectResponse` API schema.
-  class GetConsumptionHistoryPerProjectResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGetConsumptionHistoryPerProjectResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGetConsumptionHistoryPerProjectResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGetConsumptionHistoryPerProjectResponseMetadata::DECODERS
-
-    # @return [Array_of_ConsumptionHistoryPerProject] Per-project consumption history records included in the response.
-    attr_reader :projects
-    # @return [Pagination] Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.
-    attr_reader :pagination
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalGetConsumptionHistoryPerProjectV2ResponseMetadata
-    FIELDS = {
-      projects: 'projects',
-      pagination: 'pagination'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      projects
-    ].freeze
-    DECODERS = {
-      projects: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerProjectV2.from_hash(item) }
-      end,
-      pagination: lambda do |value|
-        ::OctridevNeon::Pagination.from_hash(value)
-      end
-    }.freeze
-  end
+# Internal model hydration metadata.
+class SdkInternalGetConsumptionHistoryPerProjectV2ResponseMetadata
+  FIELDS = {
+    projects: "projects",
+    pagination: "pagination",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    projects
+  ].freeze
+  DECODERS = {
+    projects: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerProjectV2.from_hash(item) }
+    end,
+    pagination: lambda do |value|
+      ::OctridevNeon::Pagination.from_hash(value)
+    end,
+  }.freeze
+end
 end

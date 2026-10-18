@@ -8,19 +8,15 @@ module OctridevNeon
   # Defines the NeonAuthEmailServerConfig SDK namespace.
   module NeonAuthEmailServerConfig
   end
-
   # Defines the NeonAuthEmailServerConfigResponse SDK namespace.
   module NeonAuthEmailServerConfigResponse
   end
-
   # Defines the Trigger SDK namespace.
   module Trigger
   end
-
   # Defines the TriggerCreateRequest SDK namespace.
   module TriggerCreateRequest
   end
-
   # Defines the TriggerUpdateRequest SDK namespace.
   module TriggerUpdateRequest
   end

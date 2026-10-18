@@ -12,7 +12,7 @@ module OctridevNeon
       # Internal model hydration metadata.
       class SdkInternalGetProjectAdvisorSecurityIssuesResponseMetadata
         FIELDS = {
-          issues: 'issues'
+          issues: "issues",
         }.freeze
         REQUIRED_FIELDS = %i[
           issues
@@ -20,7 +20,7 @@ module OctridevNeon
         DECODERS = {
           issues: lambda do |value|
             value&.map { |item| ::OctridevNeon::AdvisorIssue.from_hash(item) }
-          end
+          end,
         }.freeze
       end
 
@@ -50,10 +50,12 @@ module OctridevNeon
       # Internal model hydration metadata.
       class SdkInternalCreateProjectTransferRequestMetadata
         FIELDS = {
-          ttl_seconds: 'ttl_seconds'
+          ttl_seconds: "ttl_seconds",
         }.freeze
-        REQUIRED_FIELDS = %i[].freeze
-        DECODERS = {}.freeze
+        REQUIRED_FIELDS = %i[
+        ].freeze
+        DECODERS = {
+        }.freeze
       end
 
       # API model for CreateProjectTransferRequest.
@@ -83,10 +85,12 @@ module OctridevNeon
       # Internal model hydration metadata.
       class SdkInternalAcceptProjectTransferRequestMetadata
         FIELDS = {
-          org_id: 'org_id'
+          org_id: "org_id",
         }.freeze
-        REQUIRED_FIELDS = %i[].freeze
-        DECODERS = {}.freeze
+        REQUIRED_FIELDS = %i[
+        ].freeze
+        DECODERS = {
+        }.freeze
       end
 
       # API model for AcceptProjectTransferRequest.
@@ -118,7 +122,7 @@ module OctridevNeon
         INFO = 'INFO'
         WARN = 'WARN'
         ERROR = 'ERROR'
-        VALUES = %w[INFO WARN ERROR].freeze
+        VALUES = ['INFO', 'WARN', 'ERROR'].freeze
         def self.from_value(value)
           value
         end
@@ -135,7 +139,16 @@ module OctridevNeon
       # @param min_severity [GetProjectAdvisorSecurityIssuesParameter] Minimum
       #   severity level to include. For example, WARN returns WARN and ERROR issues,
       #   excluding INFO.
-      singleton_class.define_method(:get_project_advisor_security_issues) do |config:, project_id:, branch_id: NOT_GIVEN, database_name: NOT_GIVEN, category: NOT_GIVEN, min_severity: NOT_GIVEN, request_options: nil|
+      singleton_class.define_method(:get_project_advisor_security_issues) do |
+        config:,
+        project_id:,
+        branch_id: NOT_GIVEN,
+        database_name: NOT_GIVEN,
+        category: NOT_GIVEN,
+        min_severity: NOT_GIVEN,
+        request_options: nil
+      |
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.if_given(branch_id) do
@@ -145,22 +158,22 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/advisors'
+            "/advisors"
           ].join,
           config: config,
           query: {
             'branch_id' => QueryValue.new(branch_id, style: 'form', explode: true),
             'database_name' => QueryValue.new(database_name, style: 'form', explode: true),
             'category' => QueryValue.new(category, style: 'form', explode: true),
-            'min_severity' => QueryValue.new(min_severity, style: 'form', explode: true)
+            'min_severity' => QueryValue.new(min_severity, style: 'form', explode: true),
           },
           return_type: ::OctridevNeon::Methods::Project::GetProjectAdvisorSecurityIssuesResponse,
           decoder: :json,
           operation_id: 'get_project_advisor_security_issues',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -191,15 +204,16 @@ module OctridevNeon
         recoverable: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 400) }
 
         Validation.if_given(org_id) { Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$') }
 
-        Validation.if_given(timeout) { Validation.validate_range('timeout', timeout, min: 100, max: 30_000) }
+        Validation.if_given(timeout) { Validation.validate_range('timeout', timeout, min: 100, max: 30000) }
 
         SdkClient.request(
           'GET',
-          '/projects',
+          "/projects",
           config: config,
           query: {
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
@@ -207,13 +221,13 @@ module OctridevNeon
             'search' => QueryValue.new(search, style: 'form', explode: true),
             'org_id' => QueryValue.new(org_id, style: 'form', explode: true),
             'timeout' => QueryValue.new(timeout, style: 'form', explode: true),
-            'recoverable' => QueryValue.new(recoverable, style: 'form', explode: true)
+            'recoverable' => QueryValue.new(recoverable, style: 'form', explode: true),
           },
           return_type: ::OctridevNeon::ListProjectsResponse,
           decoder: :json,
           operation_id: 'list_projects',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -226,18 +240,19 @@ module OctridevNeon
         project:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/projects',
+          "/projects",
           config: config,
           body: {
-            'project' => project
+            'project' => project,
           },
           return_type: ::OctridevNeon::CreateProjectResponse,
           decoder: :json,
           operation_id: 'create_project',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -262,38 +277,44 @@ module OctridevNeon
         timeout: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 400) }
 
-        Validation.if_given(timeout) { Validation.validate_range('timeout', timeout, min: 100, max: 30_000) }
+        Validation.if_given(timeout) { Validation.validate_range('timeout', timeout, min: 100, max: 30000) }
 
         SdkClient.request(
           'GET',
-          '/projects/shared',
+          "/projects/shared",
           config: config,
           query: {
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'search' => QueryValue.new(search, style: 'form', explode: true),
-            'timeout' => QueryValue.new(timeout, style: 'form', explode: true)
+            'timeout' => QueryValue.new(timeout, style: 'form', explode: true),
           },
           return_type: ::OctridevNeon::ListSharedProjectsResponse,
           decoder: :json,
           operation_id: 'list_shared_projects',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
       # Retrieves information about the specified project. Returned details include the project settings, compute configuration, history retention, owner information, and current usage metrics.
       #
       # @param project_id [String] The Neon project ID
-      singleton_class.define_method(:get_project) do |config:, project_id:, request_options: nil|
+      singleton_class.define_method(:get_project) do |
+        config:,
+        project_id:,
+        request_options: nil
+      |
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id)
           ].join,
           config: config,
@@ -301,7 +322,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'get_project',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -318,23 +339,24 @@ module OctridevNeon
         project:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'PATCH',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id)
           ].join,
           config: config,
           body: {
-            'project' => project
+            'project' => project,
           },
           return_type: ::OctridevNeon::UpdateProjectResponse,
           decoder: :json,
           operation_id: 'update_project',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -346,12 +368,13 @@ module OctridevNeon
         project_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id)
           ].join,
           config: config,
@@ -359,7 +382,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'delete_project',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -371,21 +394,22 @@ module OctridevNeon
         project_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/recover'
+            "/recover"
           ].join,
           config: config,
           return_type: ::OctridevNeon::ProjectRecoverResponse,
           decoder: :json,
           operation_id: 'recover_project',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -397,21 +421,22 @@ module OctridevNeon
         project_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/permissions'
+            "/permissions"
           ].join,
           config: config,
           return_type: ::OctridevNeon::ProjectPermissions,
           decoder: :json,
           operation_id: 'list_project_permissions',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -426,6 +451,7 @@ module OctridevNeon
         email:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_length('email', email, min: 1, max: 256)
@@ -434,19 +460,19 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/permissions'
+            "/permissions"
           ].join,
           config: config,
           body: {
-            'email' => email
+            'email' => email,
           },
           return_type: ::OctridevNeon::ProjectPermission,
           decoder: :json,
           operation_id: 'grant_project_permission',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -466,6 +492,7 @@ module OctridevNeon
         limit: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 500) }
@@ -473,20 +500,20 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/members'
+            "/members"
           ].join,
           config: config,
           query: {
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
-            'limit' => QueryValue.new(limit, style: 'form', explode: true)
+            'limit' => QueryValue.new(limit, style: 'form', explode: true),
           },
           return_type: ::OctridevNeon::ProjectMembers,
           decoder: :json,
           operation_id: 'list_project_members',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -504,6 +531,7 @@ module OctridevNeon
         confirm_self_demotion: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_uuid('member_id', member_id)
@@ -511,24 +539,24 @@ module OctridevNeon
         SdkClient.request(
           'PUT',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/members/',
+            "/members/",
             SdkClient.encode_path_segment(member_id),
-            '/role'
+            "/role"
           ].join,
           config: config,
           query: {
-            'confirm_self_demotion' => QueryValue.new(confirm_self_demotion, style: 'form', explode: true)
+            'confirm_self_demotion' => QueryValue.new(confirm_self_demotion, style: 'form', explode: true),
           },
           body: {
-            'role' => role
+            'role' => role,
           },
           return_type: ::OctridevNeon::ProjectMemberRoleResponse,
           decoder: :json,
           operation_id: 'set_project_member_role',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

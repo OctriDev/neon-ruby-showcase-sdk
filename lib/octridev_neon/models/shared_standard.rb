@@ -5,148 +5,147 @@
 
 # shared_standard domain models
 module OctridevNeon
-  # Internal model hydration metadata.
-  class SdkInternalStandardEmailServerMetadata
-    FIELDS = {
-      host: 'host',
-      port: 'port',
-      username: 'username',
-      password: 'password',
-      sender_email: 'sender_email',
-      sender_name: 'sender_name',
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevNeon::StandardEmailServerType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalStandardEmailServerMetadata
+  FIELDS = {
+    host: "host",
+    port: "port",
+    username: "username",
+    password: "password",
+    sender_email: "sender_email",
+    sender_name: "sender_name",
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevNeon::StandardEmailServerType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for StandardEmailServer.
+# Typed representation of the `StandardEmailServer` API schema.
+class StandardEmailServer
+  include NeonAuthEmailServerConfig
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalStandardEmailServerMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalStandardEmailServerMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalStandardEmailServerMetadata::DECODERS
+
+  # @return [String] Hostname of the email server.
+  attr_reader :host
+  # @return [Integer] TCP port of the SMTP server. Common values: 25 (SMTP), 465 (SMTPS), 587 (submission).
+  attr_reader :port
+  # @return [String] Username for authenticating with the SMTP server.
+  attr_reader :username
+  # @return [String] Password for authenticating with the SMTP server.
+  attr_reader :password
+  # @return [String] Email address used as the From address on outgoing auth emails.
+  attr_reader :sender_email
+  # @return [String] Display name shown as the sender in outgoing emails.
+  attr_reader :sender_name
+  # @return [StandardEmailServerType] Optional enumerated value serialized in the `type` wire field.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for StandardEmailServer.
-  # Typed representation of the `StandardEmailServer` API schema.
-  class StandardEmailServer
-    include NeonAuthEmailServerConfig
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalStandardEmailServerMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalStandardEmailServerMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalStandardEmailServerMetadata::DECODERS
-
-    # @return [String] Hostname of the email server.
-    attr_reader :host
-    # @return [Integer] TCP port of the SMTP server. Common values: 25 (SMTP), 465 (SMTPS), 587 (submission).
-    attr_reader :port
-    # @return [String] Username for authenticating with the SMTP server.
-    attr_reader :username
-    # @return [String] Password for authenticating with the SMTP server.
-    attr_reader :password
-    # @return [String] Email address used as the From address on outgoing auth emails.
-    attr_reader :sender_email
-    # @return [String] Display name shown as the sender in outgoing emails.
-    attr_reader :sender_name
-    # @return [StandardEmailServerType] Optional enumerated value serialized in the `type` wire field.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the StandardEmailServerType SDK namespace.
-  module StandardEmailServerType
-    STANDARD = 'standard'
-    VALUES = ['standard'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('StandardEmailServerType', 'enum', "Unknown StandardEmailServerType: #{value}")
-    end
+# Defines the StandardEmailServerType SDK namespace.
+module StandardEmailServerType
+  STANDARD = 'standard'
+  VALUES = ['standard'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('StandardEmailServerType', 'enum', "Unknown StandardEmailServerType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalStandardEmailServerResponseMetadata
+  FIELDS = {
+    host: "host",
+    port: "port",
+    username: "username",
+    password: "password",
+    sender_email: "sender_email",
+    sender_name: "sender_name",
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    host
+    port
+    username
+    password
+    sender_email
+    sender_name
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevNeon::StandardEmailServerResponseType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for StandardEmailServerResponse.
+# Typed representation of the `StandardEmailServerResponse` API schema.
+class StandardEmailServerResponse
+  include NeonAuthEmailServerConfigResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalStandardEmailServerResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalStandardEmailServerResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalStandardEmailServerResponseMetadata::DECODERS
+
+  # @return [String] Hostname of the email server.
+  attr_reader :host
+  # @return [Integer] TCP port of the SMTP server. Common values: 25 (SMTP), 465 (SMTPS), 587 (submission).
+  attr_reader :port
+  # @return [String] Username for authenticating with the SMTP server.
+  attr_reader :username
+  # @return [String] On GET, returned redacted (empty) for ordinary callers, while callers with project-credential read permission receive the stored password — do not assume this field is empty. Update (PATCH) responses always return it redacted (empty) regardless of permission. Provide a value on update to set or rotate the password.
+  attr_reader :password
+  # @return [String] Email address used as the From address on outgoing auth emails.
+  attr_reader :sender_email
+  # @return [String] Display name shown as the sender in outgoing emails.
+  attr_reader :sender_name
+  # @return [StandardEmailServerResponseType] Optional enumerated value serialized in the `type` wire field.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalStandardEmailServerResponseMetadata
-    FIELDS = {
-      host: 'host',
-      port: 'port',
-      username: 'username',
-      password: 'password',
-      sender_email: 'sender_email',
-      sender_name: 'sender_name',
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      host
-      port
-      username
-      password
-      sender_email
-      sender_name
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevNeon::StandardEmailServerResponseType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for StandardEmailServerResponse.
-  # Typed representation of the `StandardEmailServerResponse` API schema.
-  class StandardEmailServerResponse
-    include NeonAuthEmailServerConfigResponse
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalStandardEmailServerResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalStandardEmailServerResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalStandardEmailServerResponseMetadata::DECODERS
-
-    # @return [String] Hostname of the email server.
-    attr_reader :host
-    # @return [Integer] TCP port of the SMTP server. Common values: 25 (SMTP), 465 (SMTPS), 587 (submission).
-    attr_reader :port
-    # @return [String] Username for authenticating with the SMTP server.
-    attr_reader :username
-    # @return [String] On GET, returned redacted (empty) for ordinary callers, while callers with project-credential read permission receive the stored password — do not assume this field is empty. Update (PATCH) responses always return it redacted (empty) regardless of permission. Provide a value on update to set or rotate the password.
-    attr_reader :password
-    # @return [String] Email address used as the From address on outgoing auth emails.
-    attr_reader :sender_email
-    # @return [String] Display name shown as the sender in outgoing emails.
-    attr_reader :sender_name
-    # @return [StandardEmailServerResponseType] Optional enumerated value serialized in the `type` wire field.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the StandardEmailServerResponseType SDK namespace.
-  module StandardEmailServerResponseType
-    STANDARD = 'standard'
-    VALUES = ['standard'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the StandardEmailServerResponseType SDK namespace.
+module StandardEmailServerResponseType
+  STANDARD = 'standard'
+  VALUES = ['standard'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('StandardEmailServerResponseType', 'enum', "Unknown StandardEmailServerResponseType: #{value}")
-    end
+    raise SdkValidationError.new('StandardEmailServerResponseType', 'enum', "Unknown StandardEmailServerResponseType: #{value}")
   end
+end
 end

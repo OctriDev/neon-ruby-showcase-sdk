@@ -5,101 +5,102 @@
 
 # ai_gateway domain models
 module OctridevNeon
-  # Internal model hydration metadata.
-  class SdkInternalBranchAiGatewayMetadata
-    FIELDS = {
-      enabled: 'enabled',
-      base_url: 'base_url'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      enabled
-      base_url
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalBranchAiGatewayMetadata
+  FIELDS = {
+    enabled: "enabled",
+    base_url: "base_url",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    enabled
+    base_url
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for BranchAiGateway.
+# Typed representation of the `BranchAiGateway` API schema.
+class BranchAiGateway
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBranchAiGatewayMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBranchAiGatewayMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBranchAiGatewayMetadata::DECODERS
+
+  # @return [Boolean] Always `true` in 200 responses. Present for forward compatibility, mirroring BranchStorage.enabled.
+  attr_reader :enabled
+  # @return [String] The AI-gateway endpoint root for this branch — an OpenAI-compatible base URL. No dialect path is included; clients append the route (e.g. `/ai-gateway/openai/v1/responses`) themselves.
+  attr_reader :base_url
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BranchAiGateway.
-  # Typed representation of the `BranchAiGateway` API schema.
-  class BranchAiGateway
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBranchAiGatewayMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBranchAiGatewayMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBranchAiGatewayMetadata::DECODERS
-
-    # @return [Boolean] Always `true` in 200 responses. Present for forward compatibility, mirroring BranchStorage.enabled.
-    attr_reader :enabled
-    # @return [String] The AI-gateway endpoint root for this branch — an OpenAI-compatible base URL. No dialect path is included; clients append the route (e.g. `/ai-gateway/openai/v1/responses`) themselves.
-    attr_reader :base_url
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBranchAiGatewayNotEnabledMetadata
-    FIELDS = {
-      code: 'code',
-      message: 'message',
-      reason: 'reason'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      code
-      message
-      reason
-    ].freeze
-    DECODERS = {
-      reason: lambda do |value|
-        ::OctridevNeon::BranchAiGatewayNotEnabledReason.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBranchAiGatewayNotEnabledMetadata
+  FIELDS = {
+    code: "code",
+    message: "message",
+    reason: "reason",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    code
+    message
+    reason
+  ].freeze
+  DECODERS = {
+    reason: lambda do |value|
+      ::OctridevNeon::BranchAiGatewayNotEnabledReason.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BranchAiGatewayNotEnabled.
+# Typed representation of the `BranchAiGatewayNotEnabled` API schema.
+class BranchAiGatewayNotEnabled
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBranchAiGatewayNotEnabledMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBranchAiGatewayNotEnabledMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBranchAiGatewayNotEnabledMetadata::DECODERS
+
+  # @return [String] Required `string` value serialized in the `code` wire field.
+  attr_reader :code
+  # @return [String] Required `string` value serialized in the `message` wire field.
+  attr_reader :message
+  # @return [BranchAiGatewayNotEnabledReason] Machine-readable reason why the AI gateway is unavailable: - `ai_gateway_unavailable`: the project's region/cell has no AI gateway configured. - `branch_not_found`: the project or branch does not exist, or the caller does not have access to it.
+  attr_reader :reason
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BranchAiGatewayNotEnabled.
-  # Typed representation of the `BranchAiGatewayNotEnabled` API schema.
-  class BranchAiGatewayNotEnabled
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBranchAiGatewayNotEnabledMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBranchAiGatewayNotEnabledMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBranchAiGatewayNotEnabledMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `code` wire field.
-    attr_reader :code
-    # @return [String] Required `string` value serialized in the `message` wire field.
-    attr_reader :message
-    # @return [BranchAiGatewayNotEnabledReason] Machine-readable reason why the AI gateway is unavailable: - `ai_gateway_unavailable`: the project's region/cell has no AI gateway configured. - `branch_not_found`: the project or branch does not exist, or the caller does not have access to it.
-    attr_reader :reason
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BranchAiGatewayNotEnabledReason SDK namespace.
-  module BranchAiGatewayNotEnabledReason
-    AI_GATEWAY_UNAVAILABLE = 'ai_gateway_unavailable'
-    BRANCH_NOT_FOUND = 'branch_not_found'
-    VALUES = %w[ai_gateway_unavailable branch_not_found].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
+
+# Defines the BranchAiGatewayNotEnabledReason SDK namespace.
+module BranchAiGatewayNotEnabledReason
+  AI_GATEWAY_UNAVAILABLE = 'ai_gateway_unavailable'
+  BRANCH_NOT_FOUND = 'branch_not_found'
+  VALUES = ['ai_gateway_unavailable', 'branch_not_found'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 end
