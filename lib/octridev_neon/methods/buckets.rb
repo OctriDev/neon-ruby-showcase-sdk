@@ -223,6 +223,7 @@ module OctridevNeon
             items = page.objects || []
             break if items.empty?
             items.each { |item| y << item }
+            break unless page.is_truncated
             next_cursor = page.next_cursor
             break if next_cursor.nil?
             cursor = next_cursor
@@ -257,7 +258,7 @@ module OctridevNeon
             items = page.objects || []
             break if items.empty?
             next_cursor = page.next_cursor
-            has_more = !next_cursor.nil?
+            has_more = page.is_truncated && !next_cursor.nil?
             y << ListBucketsObjectsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
             cursor = next_cursor

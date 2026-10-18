@@ -151,10 +151,14 @@ class SdkInternalSharedEmailServerMetadata
   FIELDS = {
     sender_email: "sender_email",
     sender_name: "sender_name",
+    type: "type",
   }.freeze
   REQUIRED_FIELDS = %i[
   ].freeze
   DECODERS = {
+    type: lambda do |value|
+      ::OctridevNeon::SharedEmailServerType.from_value(value)
+    end,
   }.freeze
 end
 
@@ -172,6 +176,8 @@ class SharedEmailServer
   attr_reader :sender_email
   # @return [String] Display name shown as the sender in outgoing emails.
   attr_reader :sender_name
+  # @return [SharedEmailServerType] Optional enumerated value serialized in the `type` wire field.
+  attr_reader :type
 
   def initialize(**attributes)
     SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
@@ -184,6 +190,17 @@ class SharedEmailServer
 
   def to_h
     SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the SharedEmailServerType SDK namespace.
+module SharedEmailServerType
+  SHARED = 'shared'
+  VALUES = ['shared'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('SharedEmailServerType', 'enum', "Unknown SharedEmailServerType: #{value}")
   end
 end
 

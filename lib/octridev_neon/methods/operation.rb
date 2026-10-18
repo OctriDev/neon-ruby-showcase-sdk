@@ -72,7 +72,7 @@ module OctridevNeon
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
           },
-          return_type: ::OctridevNeon::Methods::Operation::OperationsResponse,
+          return_type: ::OctridevNeon::ListOperationResponse,
           decoder: :json,
           operation_id: 'list_operation',
           request_options: request_options,

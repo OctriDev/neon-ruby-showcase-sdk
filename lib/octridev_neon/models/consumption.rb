@@ -542,4 +542,115 @@ class ConsumptionMetricValue
     SdkModel.to_h(self, FIELDS)
   end
 end
+
+# Internal model hydration metadata.
+class SdkInternalGetConsumptionHistoryPerBranchV2ResponseMetadata
+  FIELDS = {
+    branches: "branches",
+    pagination: "pagination",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    branches
+  ].freeze
+  DECODERS = {
+    branches: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerBranchV2.from_hash(item) }
+    end,
+    pagination: lambda do |value|
+      ::OctridevNeon::Pagination.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for GetConsumptionHistoryPerBranchV2Response.
+# Typed representation of the `GetConsumptionHistoryPerBranchV2Response` API schema.
+class GetConsumptionHistoryPerBranchV2Response
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGetConsumptionHistoryPerBranchV2ResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGetConsumptionHistoryPerBranchV2ResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGetConsumptionHistoryPerBranchV2ResponseMetadata::DECODERS
+
+  # @return [Array_of_ConsumptionHistoryPerBranchV2] Per-branch consumption history records returned for the requested time range.
+  attr_reader :branches
+  # @return [Pagination] Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.
+  attr_reader :pagination
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGetConsumptionHistoryPerProjectResponseMetadata
+  FIELDS = {
+    projects: "projects",
+    pagination: "pagination",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    projects
+  ].freeze
+  DECODERS = {
+    projects: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerProject.from_hash(item) }
+    end,
+    pagination: lambda do |value|
+      ::OctridevNeon::Pagination.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for GetConsumptionHistoryPerProjectResponse.
+# Typed representation of the `GetConsumptionHistoryPerProjectResponse` API schema.
+class GetConsumptionHistoryPerProjectResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGetConsumptionHistoryPerProjectResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGetConsumptionHistoryPerProjectResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGetConsumptionHistoryPerProjectResponseMetadata::DECODERS
+
+  # @return [Array_of_ConsumptionHistoryPerProject] Per-project consumption history records included in the response.
+  attr_reader :projects
+  # @return [Pagination] Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.
+  attr_reader :pagination
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGetConsumptionHistoryPerProjectV2ResponseMetadata
+  FIELDS = {
+    projects: "projects",
+    pagination: "pagination",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    projects
+  ].freeze
+  DECODERS = {
+    projects: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConsumptionHistoryPerProjectV2.from_hash(item) }
+    end,
+    pagination: lambda do |value|
+      ::OctridevNeon::Pagination.from_hash(value)
+    end,
+  }.freeze
+end
 end

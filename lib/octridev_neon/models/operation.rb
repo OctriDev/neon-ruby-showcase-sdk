@@ -6,6 +6,52 @@
 # operation domain models
 module OctridevNeon
 # Internal model hydration metadata.
+class SdkInternalListOperationResponseMetadata
+  FIELDS = {
+    operations: "operations",
+    pagination: "pagination",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    operations
+  ].freeze
+  DECODERS = {
+    operations: lambda do |value|
+      value&.map { |item| ::OctridevNeon::Operation.from_hash(item) }
+    end,
+    pagination: lambda do |value|
+      ::OctridevNeon::Pagination.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for ListOperationResponse.
+# Typed representation of the `ListOperationResponse` API schema.
+class ListOperationResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalListOperationResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalListOperationResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalListOperationResponseMetadata::DECODERS
+
+  # @return [Array_of_Operation] Required array value serialized in the `operations` wire field.
+  attr_reader :operations
+  # @return [Pagination] Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.
+  attr_reader :pagination
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
 class SdkInternalOperationResponseMetadata
   FIELDS = {
     operation: "operation",

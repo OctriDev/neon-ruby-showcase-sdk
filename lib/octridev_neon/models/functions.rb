@@ -283,6 +283,98 @@ class FunctionTriggerStorageObjectCreated
 end
 
 # Internal model hydration metadata.
+class SdkInternalListFunctionsCustomDomainsResponseMetadata
+  FIELDS = {
+    custom_domains: "custom_domains",
+    pagination: "pagination",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    custom_domains
+  ].freeze
+  DECODERS = {
+    custom_domains: lambda do |value|
+      value&.map { |item| ::OctridevNeon::CustomDomain.from_hash(item) }
+    end,
+    pagination: lambda do |value|
+      ::OctridevNeon::CursorPagination.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for ListFunctionsCustomDomainsResponse.
+# Typed representation of the `ListFunctionsCustomDomainsResponse` API schema.
+class ListFunctionsCustomDomainsResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalListFunctionsCustomDomainsResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalListFunctionsCustomDomainsResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalListFunctionsCustomDomainsResponseMetadata::DECODERS
+
+  # @return [Array_of_CustomDomain] Required array value serialized in the `custom_domains` wire field.
+  attr_reader :custom_domains
+  # @return [CursorPagination] To paginate the response, issue an initial request with `limit` value. Then, add the value returned in the response `.pagination.next` attribute into the request under the `cursor` query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor `next` are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.
+  attr_reader :pagination
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalListFunctionsResponseMetadata
+  FIELDS = {
+    functions: "functions",
+    pagination: "pagination",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    functions
+  ].freeze
+  DECODERS = {
+    functions: lambda do |value|
+      value&.map { |item| ::OctridevNeon::NeonFunction.from_hash(item) }
+    end,
+    pagination: lambda do |value|
+      ::OctridevNeon::CursorPagination.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for ListFunctionsResponse.
+# Typed representation of the `ListFunctionsResponse` API schema.
+class ListFunctionsResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalListFunctionsResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalListFunctionsResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalListFunctionsResponseMetadata::DECODERS
+
+  # @return [Array_of_NeonFunction] Required array value serialized in the `functions` wire field.
+  attr_reader :functions
+  # @return [CursorPagination] To paginate the response, issue an initial request with `limit` value. Then, add the value returned in the response `.pagination.next` attribute into the request under the `cursor` query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor `next` are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.
+  attr_reader :pagination
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
 class SdkInternalNeonFunctionMetadata
   FIELDS = {
     id: "id",
@@ -578,103 +670,6 @@ class NeonFunctionUpdateRequest
 
   def to_h
     SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalScheduleTriggerMetadata
-  FIELDS = {
-    type: "type",
-    trigger_id: "trigger_id",
-    function_slug: "function_slug",
-    name: "name",
-    function_path: "function_path",
-    schedule: "schedule",
-    enabled: "enabled",
-    version: "version",
-    next_run_at: "next_run_at",
-    inherited: "inherited",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    trigger_id
-    function_slug
-    name
-    function_path
-    schedule
-    enabled
-    version
-    next_run_at
-    inherited
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevNeon::ScheduleTriggerType.from_value(value)
-    end,
-    trigger_id: lambda do |value|
-      ::OctridevNeon::TriggerID.from_value(value)
-    end,
-    schedule: lambda do |value|
-      ::OctridevNeon::FunctionTriggerSchedule.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    next_run_at
-  ].freeze
-end
-
-# API model for ScheduleTrigger.
-# A branch-effective schedule trigger for a Function.
-class ScheduleTrigger
-  include Trigger
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalScheduleTriggerMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalScheduleTriggerMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalScheduleTriggerMetadata::DECODERS
-
-  # @return [ScheduleTriggerType] Trigger type discriminator.
-  attr_reader :type
-  # @return [TriggerID] Opaque, server-minted project-wide trigger identifier.
-  attr_reader :trigger_id
-  # @return [String] The branch-local Function slug resolved when an occurrence is consumed.
-  attr_reader :function_slug
-  # @return [String] Human-readable trigger name.
-  attr_reader :name
-  # @return [String] Path passed to the target Function.
-  attr_reader :function_path
-  # @return [FunctionTriggerSchedule] A numeric five-field cron schedule interpreted in UTC.
-  attr_reader :schedule
-  # @return [Boolean] Required `boolean` value serialized in the `enabled` wire field.
-  attr_reader :enabled
-  # @return [Integer] Monotonic configuration version.
-  attr_reader :version
-  # @return [String] Next scheduled occurrence as an RFC 3339 UTC timestamp, or null while disabled or inherited and not explicitly enabled on this branch.
-  attr_reader :next_run_at
-  # @return [Boolean] True when the effective configuration was authored on an ancestor branch.
-  attr_reader :inherited
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalScheduleTriggerMetadata::NULLABLE_FIELDS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ScheduleTriggerType SDK namespace.
-module ScheduleTriggerType
-  SCHEDULE = 'schedule'
-  VALUES = ['schedule'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ScheduleTriggerType', 'enum', "Unknown ScheduleTriggerType: #{value}")
   end
 end
 end

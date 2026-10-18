@@ -5,6 +5,58 @@
 
 # organizations domain models (part 2)
 module OctridevNeon
+# API model for OrgApiKeysListResponseItem.
+# Typed representation of the `OrgApiKeysListResponseItem` API schema.
+class OrgApiKeysListResponseItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalOrgApiKeysListResponseItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalOrgApiKeysListResponseItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalOrgApiKeysListResponseItemMetadata::DECODERS
+
+  # @return [Integer] The API key's unique numeric ID. Distinct from the API key token (`key`).
+  attr_reader :id
+  # @return [String] The user-specified API key name
+  attr_reader :name
+  # @return [String] A timestamp indicating when the API key was created
+  attr_reader :created_at
+  # @return [ApiKeyCreatorData] The user data of the user that created this API key.
+  attr_reader :created_by
+  # @return [String] A timestamp indicating when the API was last used
+  attr_reader :last_used_at
+  # @return [String] The IP address from which the API key was last used
+  attr_reader :last_used_from_addr
+  # @return [String] If set, the API key can access only this project
+  attr_reader :project_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalSpendingLimitResponseMetadata
+  FIELDS = {
+    spending_limit_cents: "spending_limit_cents",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    spending_limit_cents
+  ].freeze
+  DECODERS = {
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    spending_limit_cents
+  ].freeze
+end
+
 # API model for SpendingLimitResponse.
 # Typed representation of the `SpendingLimitResponse` API schema.
 class SpendingLimitResponse
