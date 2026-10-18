@@ -5,100 +5,99 @@
 
 # shared_connection domain models
 module OctridevNeon
-# Internal model hydration metadata.
-class SdkInternalConnectionDetailsMetadata
-  FIELDS = {
-    connection_uri: "connection_uri",
-    connection_parameters: "connection_parameters",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    connection_uri
-    connection_parameters
-  ].freeze
-  DECODERS = {
-    connection_parameters: lambda do |value|
-      ::OctridevNeon::ConnectionParameters.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ConnectionDetails.
-# Typed representation of the `ConnectionDetails` API schema.
-class ConnectionDetails
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalConnectionDetailsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalConnectionDetailsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalConnectionDetailsMetadata::DECODERS
-
-  # @return [String] The connection URI is defined as specified here: Connection URIs The connection URI can be used to connect to a Postgres database with psql or defined in a DATABASE_URL environment variable. When creating a branch from a parent with more than one role or database, the response body does not include a connection URI.
-  attr_reader :connection_uri
-  # @return [ConnectionParameters] Individual components of the connection URI (host, port, database, role, and password) as discrete fields, for programmatic use rather than parsing the sibling `connection_uri` string.
-  attr_reader :connection_parameters
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalConnectionDetailsMetadata
+    FIELDS = {
+      connection_uri: 'connection_uri',
+      connection_parameters: 'connection_parameters'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      connection_uri
+      connection_parameters
+    ].freeze
+    DECODERS = {
+      connection_parameters: lambda do |value|
+        ::OctridevNeon::ConnectionParameters.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ConnectionDetails.
+  # Typed representation of the `ConnectionDetails` API schema.
+  class ConnectionDetails
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalConnectionDetailsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalConnectionDetailsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalConnectionDetailsMetadata::DECODERS
+
+    # @return [String] The connection URI is defined as specified here: Connection URIs The connection URI can be used to connect to a Postgres database with psql or defined in a DATABASE_URL environment variable. When creating a branch from a parent with more than one role or database, the response body does not include a connection URI.
+    attr_reader :connection_uri
+    # @return [ConnectionParameters] Individual components of the connection URI (host, port, database, role, and password) as discrete fields, for programmatic use rather than parsing the sibling `connection_uri` string.
+    attr_reader :connection_parameters
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalConnectionParametersMetadata
-  FIELDS = {
-    database: "database",
-    password: "password",
-    role: "role",
-    host: "host",
-    pooler_host: "pooler_host",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    database
-    password
-    role
-    host
-    pooler_host
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ConnectionParameters.
-# Typed representation of the `ConnectionParameters` API schema.
-class ConnectionParameters
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalConnectionParametersMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalConnectionParametersMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalConnectionParametersMetadata::DECODERS
-
-  # @return [String] Name of the Postgres database used in the connection URI.
-  attr_reader :database
-  # @return [String] Authentication password for the role, used in the connection URI.
-  attr_reader :password
-  # @return [String] Postgres role used to authenticate the database connection.
-  attr_reader :role
-  # @return [String] Hostname of the compute endpoint. Use `pooler_host` for the pooled connection hostname.
-  attr_reader :host
-  # @return [String] PgBouncer (transaction mode) pooled host, the `-pooler` variant of `host`. Connect through it to work around the Postgres `max_connections` limit for serverless or connection-per-request workloads.
-  attr_reader :pooler_host
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalConnectionParametersMetadata
+    FIELDS = {
+      database: 'database',
+      password: 'password',
+      role: 'role',
+      host: 'host',
+      pooler_host: 'pooler_host'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      database
+      password
+      role
+      host
+      pooler_host
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # API model for ConnectionParameters.
+  # Typed representation of the `ConnectionParameters` API schema.
+  class ConnectionParameters
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalConnectionParametersMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalConnectionParametersMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalConnectionParametersMetadata::DECODERS
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+    # @return [String] Name of the Postgres database used in the connection URI.
+    attr_reader :database
+    # @return [String] Authentication password for the role, used in the connection URI.
+    attr_reader :password
+    # @return [String] Postgres role used to authenticate the database connection.
+    attr_reader :role
+    # @return [String] Hostname of the compute endpoint. Use `pooler_host` for the pooled connection hostname.
+    attr_reader :host
+    # @return [String] PgBouncer (transaction mode) pooled host, the `-pooler` variant of `host`. Connect through it to work around the Postgres `max_connections` limit for serverless or connection-per-request workloads.
+    attr_reader :pooler_host
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

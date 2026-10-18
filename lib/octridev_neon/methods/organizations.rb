@@ -14,7 +14,7 @@ module OctridevNeon
         EMAIL = 'email'
         ROLE = 'role'
         JOINED_AT = 'joined_at'
-        VALUES = ['email', 'role', 'joined_at'].freeze
+        VALUES = %w[email role joined_at].freeze
         def self.from_value(value)
           value
         end
@@ -23,18 +23,13 @@ module OctridevNeon
       # Retrieves details for the specified organization, including its name, plan, and configuration.
       #
       # @param org_id [String] The Neon organization ID
-      singleton_class.define_method(:get_organization) do |
-        config:,
-        org_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_organization) do |config:, org_id:, request_options: nil|
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id)
           ].join,
           config: config,
@@ -42,7 +37,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'get_organization',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -54,22 +49,21 @@ module OctridevNeon
         org_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/api_keys"
+            '/api_keys'
           ].join,
           config: config,
           return_type: [::OctridevNeon::OrgApiKeysListResponseItem],
           decoder: :json,
           operation_id: 'list_organizations_api_keys',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -82,15 +76,14 @@ module OctridevNeon
         body:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/api_keys"
+            '/api_keys'
           ].join,
           config: config,
           body: body,
@@ -98,7 +91,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'create_organizations_api_key',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -112,15 +105,14 @@ module OctridevNeon
         key_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/api_keys/",
+            '/api_keys/',
             SdkClient.encode_path_segment(key_id)
           ].join,
           config: config,
@@ -128,34 +120,29 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'revoke_organizations_api_key',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
       # Returns the configured monthly spending limit for the specified organization. `spending_limit_cents: null` indicates that no limit is currently set. Available to organization members with read access on Launch and Scale plans only.
       #
       # @param org_id [String] The Neon organization ID
-      singleton_class.define_method(:get_organization_spending_limit) do |
-        config:,
-        org_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_organization_spending_limit) do |config:, org_id:, request_options: nil|
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/billing/spending_limit"
+            '/billing/spending_limit'
           ].join,
           config: config,
           return_type: ::OctridevNeon::SpendingLimitResponse,
           decoder: :json,
           operation_id: 'get_organization_spending_limit',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -175,7 +162,6 @@ module OctridevNeon
         spending_limit_cents:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_range('spending_limit_cents', spending_limit_cents, min: 1)
@@ -183,19 +169,19 @@ module OctridevNeon
         SdkClient.request(
           'PUT',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/billing/spending_limit"
+            '/billing/spending_limit'
           ].join,
           config: config,
           body: {
-            'spending_limit_cents' => spending_limit_cents,
+            'spending_limit_cents' => spending_limit_cents
           },
           return_type: ::OctridevNeon::SpendingLimitResponse,
           decoder: :json,
           operation_id: 'set_organization_spending_limit',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -207,22 +193,21 @@ module OctridevNeon
         org_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/billing/spending_limit"
+            '/billing/spending_limit'
           ].join,
           config: config,
           return_type: ::OctridevNeon::EmptyResponse,
           decoder: :json,
           operation_id: 'delete_organization_spending_limit',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -246,7 +231,6 @@ module OctridevNeon
         limit: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 500) }
@@ -254,22 +238,22 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/members"
+            '/members'
           ].join,
           config: config,
           query: {
             'sort_by' => QueryValue.new(sort_by, style: 'form', explode: true),
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
             'sort_order' => QueryValue.new(sort_order, style: 'form', explode: true),
-            'limit' => QueryValue.new(limit, style: 'form', explode: true),
+            'limit' => QueryValue.new(limit, style: 'form', explode: true)
           },
           return_type: ::OctridevNeon::ListOrganizationsMembersResponse,
           decoder: :json,
           operation_id: 'list_organizations_members',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -277,13 +261,7 @@ module OctridevNeon
       #
       # @param org_id [String] The Neon organization ID
       # @param member_id [String] The Neon organization member ID
-      singleton_class.define_method(:get_organization_member) do |
-        config:,
-        org_id:,
-        member_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_organization_member) do |config:, org_id:, member_id:, request_options: nil|
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_uuid('member_id', member_id)
@@ -291,9 +269,9 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/members/",
+            '/members/',
             SdkClient.encode_path_segment(member_id)
           ].join,
           config: config,
@@ -301,7 +279,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'get_organization_member',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -321,7 +299,6 @@ module OctridevNeon
         role:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_uuid('member_id', member_id)
@@ -329,20 +306,20 @@ module OctridevNeon
         SdkClient.request(
           'PATCH',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/members/",
+            '/members/',
             SdkClient.encode_path_segment(member_id)
           ].join,
           config: config,
           body: {
-            'role' => role,
+            'role' => role
           },
           return_type: ::OctridevNeon::Member,
           decoder: :json,
           operation_id: 'update_organization_member',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -356,7 +333,6 @@ module OctridevNeon
         member_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_uuid('member_id', member_id)
@@ -364,9 +340,9 @@ module OctridevNeon
         SdkClient.request(
           'DELETE',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/members/",
+            '/members/',
             SdkClient.encode_path_segment(member_id)
           ].join,
           config: config,
@@ -374,7 +350,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'remove_organization_member',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -386,22 +362,21 @@ module OctridevNeon
         org_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/invitations"
+            '/invitations'
           ].join,
           config: config,
           return_type: ::OctridevNeon::OrganizationInvitationsResponse,
           decoder: :json,
           operation_id: 'list_organizations_invitations',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -416,25 +391,24 @@ module OctridevNeon
         invitations:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/invitations"
+            '/invitations'
           ].join,
           config: config,
           body: {
-            'invitations' => invitations,
+            'invitations' => invitations
           },
           return_type: ::OctridevNeon::OrganizationInvitationsResponse,
           decoder: :json,
           operation_id: 'create_organization_invitations',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -452,7 +426,6 @@ module OctridevNeon
         project_ids:,
         request_options: nil
       )
-
         Validation.validate_pattern('source_org_id', source_org_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('destination_org_id', destination_org_id, '^[a-z0-9-]{1,60}$')
@@ -462,20 +435,20 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(source_org_id),
-            "/projects/transfer"
+            '/projects/transfer'
           ].join,
           config: config,
           body: {
             'destination_org_id' => destination_org_id,
-            'project_ids' => project_ids,
+            'project_ids' => project_ids
           },
           return_type: ::OctridevNeon::EmptyResponse,
           decoder: :json,
           operation_id: 'transfer_organizations_projects',
           request_options: request_options,
-          errors: { '406' => ::OctridevNeon::LimitsUnsatisfiedResponse, '422' => ::OctridevNeon::ProjectsWithIntegrationResponse, 'default' => ::OctridevNeon::GeneralError },
+          errors: { '406' => ::OctridevNeon::LimitsUnsatisfiedResponse, '422' => ::OctridevNeon::ProjectsWithIntegrationResponse, 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -487,22 +460,21 @@ module OctridevNeon
         org_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/vpc/vpc_endpoints"
+            '/vpc/vpc_endpoints'
           ].join,
           config: config,
           return_type: ::OctridevNeon::VPCEndpointsWithRegionResponse,
           decoder: :json,
           operation_id: 'list_organization_vpc_endpoints_all_regions',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -516,24 +488,23 @@ module OctridevNeon
         region_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/vpc/region/",
+            '/vpc/region/',
             SdkClient.encode_path_segment(region_id),
-            "/vpc_endpoints"
+            '/vpc_endpoints'
           ].join,
           config: config,
           return_type: ::OctridevNeon::VPCEndpointsResponse,
           decoder: :json,
           operation_id: 'list_organization_vpc_endpoints',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end
