@@ -5,273 +5,272 @@
 
 # auth_legacy domain models
 module OctridevNeon
-# Internal model hydration metadata.
-class SdkInternalListNeonAuthIntegrationsResponseMetadata
-  FIELDS = {
-    data: "data",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    data
-  ].freeze
-  DECODERS = {
-    data: lambda do |value|
-      value&.map { |item| ::OctridevNeon::NeonAuthIntegration.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for ListNeonAuthIntegrationsResponse.
-# Typed representation of the `ListNeonAuthIntegrationsResponse` API schema.
-class ListNeonAuthIntegrationsResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalListNeonAuthIntegrationsResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalListNeonAuthIntegrationsResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalListNeonAuthIntegrationsResponseMetadata::DECODERS
-
-  # @return [Array_of_NeonAuthIntegration] Neon Auth integrations configured for the project.
-  attr_reader :data
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalListNeonAuthIntegrationsResponseMetadata
+    FIELDS = {
+      data: 'data'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      data
+    ].freeze
+    DECODERS = {
+      data: lambda do |value|
+        value&.map { |item| ::OctridevNeon::NeonAuthIntegration.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ListNeonAuthIntegrationsResponse.
+  # Typed representation of the `ListNeonAuthIntegrationsResponse` API schema.
+  class ListNeonAuthIntegrationsResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalListNeonAuthIntegrationsResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalListNeonAuthIntegrationsResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalListNeonAuthIntegrationsResponseMetadata::DECODERS
+
+    # @return [Array_of_NeonAuthIntegration] Neon Auth integrations configured for the project.
+    attr_reader :data
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalNeonAuthCreateAuthProviderSDKKeysRequestMetadata
-  FIELDS = {
-    project_id: "project_id",
-    auth_provider: "auth_provider",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    project_id
-    auth_provider
-  ].freeze
-  DECODERS = {
-    auth_provider: lambda do |value|
-      ::OctridevNeon::NeonAuthSupportedAuthProvider.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for NeonAuthCreateAuthProviderSDKKeysRequest.
-# Typed representation of the `NeonAuthCreateAuthProviderSDKKeysRequest` API schema.
-class NeonAuthCreateAuthProviderSDKKeysRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalNeonAuthCreateAuthProviderSDKKeysRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalNeonAuthCreateAuthProviderSDKKeysRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalNeonAuthCreateAuthProviderSDKKeysRequestMetadata::DECODERS
-
-  # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
-  attr_reader :project_id
-  # @return [NeonAuthSupportedAuthProvider] Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.
-  attr_reader :auth_provider
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalNeonAuthCreateAuthProviderSDKKeysRequestMetadata
+    FIELDS = {
+      project_id: 'project_id',
+      auth_provider: 'auth_provider'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      project_id
+      auth_provider
+    ].freeze
+    DECODERS = {
+      auth_provider: lambda do |value|
+        ::OctridevNeon::NeonAuthSupportedAuthProvider.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for NeonAuthCreateAuthProviderSDKKeysRequest.
+  # Typed representation of the `NeonAuthCreateAuthProviderSDKKeysRequest` API schema.
+  class NeonAuthCreateAuthProviderSDKKeysRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalNeonAuthCreateAuthProviderSDKKeysRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalNeonAuthCreateAuthProviderSDKKeysRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalNeonAuthCreateAuthProviderSDKKeysRequestMetadata::DECODERS
+
+    # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
+    attr_reader :project_id
+    # @return [NeonAuthSupportedAuthProvider] Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.
+    attr_reader :auth_provider
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalNeonAuthCreateIntegrationRequestMetadata
-  FIELDS = {
-    auth_provider: "auth_provider",
-    project_id: "project_id",
-    branch_id: "branch_id",
-    database_name: "database_name",
-    role_name: "role_name",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    auth_provider
-    project_id
-    branch_id
-  ].freeze
-  DECODERS = {
-    auth_provider: lambda do |value|
-      ::OctridevNeon::NeonAuthSupportedAuthProvider.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for NeonAuthCreateIntegrationRequest.
-# Typed representation of the `NeonAuthCreateIntegrationRequest` API schema.
-class NeonAuthCreateIntegrationRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalNeonAuthCreateIntegrationRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalNeonAuthCreateIntegrationRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalNeonAuthCreateIntegrationRequestMetadata::DECODERS
-
-  # @return [NeonAuthSupportedAuthProvider] Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.
-  attr_reader :auth_provider
-  # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
-  attr_reader :project_id
-  # @return [String] The Neon branch ID. Returned as `id` from `GET /projects/{project_id}/branches`.
-  attr_reader :branch_id
-  # @return [String] Name of the database to associate with the Neon Auth integration. When omitted, the integration uses the project's default database.
-  attr_reader :database_name
-  # @return [String] Deprecated. The database role for the auth integration. Omit this field; it is ignored.
-  attr_reader :role_name
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalNeonAuthCreateIntegrationRequestMetadata
+    FIELDS = {
+      auth_provider: 'auth_provider',
+      project_id: 'project_id',
+      branch_id: 'branch_id',
+      database_name: 'database_name',
+      role_name: 'role_name'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      auth_provider
+      project_id
+      branch_id
+    ].freeze
+    DECODERS = {
+      auth_provider: lambda do |value|
+        ::OctridevNeon::NeonAuthSupportedAuthProvider.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for NeonAuthCreateIntegrationRequest.
+  # Typed representation of the `NeonAuthCreateIntegrationRequest` API schema.
+  class NeonAuthCreateIntegrationRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalNeonAuthCreateIntegrationRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalNeonAuthCreateIntegrationRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalNeonAuthCreateIntegrationRequestMetadata::DECODERS
+
+    # @return [NeonAuthSupportedAuthProvider] Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.
+    attr_reader :auth_provider
+    # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
+    attr_reader :project_id
+    # @return [String] The Neon branch ID. Returned as `id` from `GET /projects/{project_id}/branches`.
+    attr_reader :branch_id
+    # @return [String] Name of the database to associate with the Neon Auth integration. When omitted, the integration uses the project's default database.
+    attr_reader :database_name
+    # @return [String] Deprecated. The database role for the auth integration. Omit this field; it is ignored.
+    attr_reader :role_name
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalNeonAuthCreateNewUserRequestMetadata
-  FIELDS = {
-    project_id: "project_id",
-    auth_provider: "auth_provider",
-    email: "email",
-    name: "name",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    project_id
-    auth_provider
-    email
-  ].freeze
-  DECODERS = {
-    auth_provider: lambda do |value|
-      ::OctridevNeon::NeonAuthSupportedAuthProvider.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for NeonAuthCreateNewUserRequest.
-# Typed representation of the `NeonAuthCreateNewUserRequest` API schema.
-class NeonAuthCreateNewUserRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalNeonAuthCreateNewUserRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalNeonAuthCreateNewUserRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalNeonAuthCreateNewUserRequestMetadata::DECODERS
-
-  # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
-  attr_reader :project_id
-  # @return [NeonAuthSupportedAuthProvider] Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.
-  attr_reader :auth_provider
-  # @return [String] Email address of the new user.
-  attr_reader :email
-  # @return [String] Display name for the new user. When omitted, the created user has no display name.
-  attr_reader :name
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalNeonAuthCreateNewUserRequestMetadata
+    FIELDS = {
+      project_id: 'project_id',
+      auth_provider: 'auth_provider',
+      email: 'email',
+      name: 'name'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      project_id
+      auth_provider
+      email
+    ].freeze
+    DECODERS = {
+      auth_provider: lambda do |value|
+        ::OctridevNeon::NeonAuthSupportedAuthProvider.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for NeonAuthCreateNewUserRequest.
+  # Typed representation of the `NeonAuthCreateNewUserRequest` API schema.
+  class NeonAuthCreateNewUserRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalNeonAuthCreateNewUserRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalNeonAuthCreateNewUserRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalNeonAuthCreateNewUserRequestMetadata::DECODERS
+
+    # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
+    attr_reader :project_id
+    # @return [NeonAuthSupportedAuthProvider] Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.
+    attr_reader :auth_provider
+    # @return [String] Email address of the new user.
+    attr_reader :email
+    # @return [String] Display name for the new user. When omitted, the created user has no display name.
+    attr_reader :name
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalNeonAuthTransferAuthProviderProjectRequestMetadata
-  FIELDS = {
-    project_id: "project_id",
-    auth_provider: "auth_provider",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    project_id
-    auth_provider
-  ].freeze
-  DECODERS = {
-    auth_provider: lambda do |value|
-      ::OctridevNeon::NeonAuthSupportedAuthProvider.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for NeonAuthTransferAuthProviderProjectRequest.
-# Typed representation of the `NeonAuthTransferAuthProviderProjectRequest` API schema.
-class NeonAuthTransferAuthProviderProjectRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalNeonAuthTransferAuthProviderProjectRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalNeonAuthTransferAuthProviderProjectRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalNeonAuthTransferAuthProviderProjectRequestMetadata::DECODERS
-
-  # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
-  attr_reader :project_id
-  # @return [NeonAuthSupportedAuthProvider] Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.
-  attr_reader :auth_provider
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalNeonAuthTransferAuthProviderProjectRequestMetadata
+    FIELDS = {
+      project_id: 'project_id',
+      auth_provider: 'auth_provider'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      project_id
+      auth_provider
+    ].freeze
+    DECODERS = {
+      auth_provider: lambda do |value|
+        ::OctridevNeon::NeonAuthSupportedAuthProvider.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for NeonAuthTransferAuthProviderProjectRequest.
+  # Typed representation of the `NeonAuthTransferAuthProviderProjectRequest` API schema.
+  class NeonAuthTransferAuthProviderProjectRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalNeonAuthTransferAuthProviderProjectRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalNeonAuthTransferAuthProviderProjectRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalNeonAuthTransferAuthProviderProjectRequestMetadata::DECODERS
+
+    # @return [String] The Neon project ID. Returned as `id` from `GET /projects`.
+    attr_reader :project_id
+    # @return [NeonAuthSupportedAuthProvider] Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.
+    attr_reader :auth_provider
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalNeonAuthTransferAuthProviderProjectResponseMetadata
-  FIELDS = {
-    url: "url",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    url
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for NeonAuthTransferAuthProviderProjectResponse.
-# Typed representation of the `NeonAuthTransferAuthProviderProjectResponse` API schema.
-class NeonAuthTransferAuthProviderProjectResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalNeonAuthTransferAuthProviderProjectResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalNeonAuthTransferAuthProviderProjectResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalNeonAuthTransferAuthProviderProjectResponseMetadata::DECODERS
-
-  # @return [String] URL for completing the process of ownership transfer
-  attr_reader :url
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalNeonAuthTransferAuthProviderProjectResponseMetadata
+    FIELDS = {
+      url: 'url'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      url
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # API model for NeonAuthTransferAuthProviderProjectResponse.
+  # Typed representation of the `NeonAuthTransferAuthProviderProjectResponse` API schema.
+  class NeonAuthTransferAuthProviderProjectResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalNeonAuthTransferAuthProviderProjectResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalNeonAuthTransferAuthProviderProjectResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalNeonAuthTransferAuthProviderProjectResponseMetadata::DECODERS
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+    # @return [String] URL for completing the process of ownership transfer
+    attr_reader :url
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

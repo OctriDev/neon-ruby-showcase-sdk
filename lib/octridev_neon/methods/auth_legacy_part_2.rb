@@ -22,15 +22,14 @@ module OctridevNeon
         body:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'PATCH',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/auth/email_server"
+            '/auth/email_server'
           ].join,
           config: config,
           body: body,
@@ -38,7 +37,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'update_auth_legacy_email_server',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -58,25 +57,24 @@ module OctridevNeon
         delete_data: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/auth/integration/",
+            '/auth/integration/',
             SdkClient.encode_path_segment(auth_provider)
           ].join,
           config: config,
           body: {
-            'delete_data' => delete_data,
+            'delete_data' => delete_data
           },
           decoder: :empty,
           operation_id: 'delete_auth_legacy_integration',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end
