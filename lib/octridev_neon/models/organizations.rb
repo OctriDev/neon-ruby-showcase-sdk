@@ -66,6 +66,52 @@ module OctridevNeon
   end
 
   # Internal model hydration metadata.
+  class SdkInternalListOrganizationsMembersResponseMetadata
+    FIELDS = {
+      members: 'members',
+      pagination: 'pagination'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      members
+    ].freeze
+    DECODERS = {
+      members: lambda do |value|
+        value&.map { |item| ::OctridevNeon::MemberWithUser.from_hash(item) }
+      end,
+      pagination: lambda do |value|
+        ::OctridevNeon::CursorPagination.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for ListOrganizationsMembersResponse.
+  # Typed representation of the `ListOrganizationsMembersResponse` API schema.
+  class ListOrganizationsMembersResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalListOrganizationsMembersResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalListOrganizationsMembersResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalListOrganizationsMembersResponseMetadata::DECODERS
+
+    # @return [Array_of_MemberWithUser] Members of the organization, each combining membership details (role, status) with the associated user's identity.
+    attr_reader :members
+    # @return [CursorPagination] To paginate the response, issue an initial request with `limit` value. Then, add the value returned in the response `.pagination.next` attribute into the request under the `cursor` query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor `next` are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.
+    attr_reader :pagination
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
   class SdkInternalMemberMetadata
     FIELDS = {
       id: 'id',
@@ -605,56 +651,5 @@ module OctridevNeon
         ::OctridevNeon::ApiKeyCreatorData.from_hash(value)
       end
     }.freeze
-  end
-
-  # API model for OrgApiKeysListResponseItem.
-  # Typed representation of the `OrgApiKeysListResponseItem` API schema.
-  class OrgApiKeysListResponseItem
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalOrgApiKeysListResponseItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalOrgApiKeysListResponseItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalOrgApiKeysListResponseItemMetadata::DECODERS
-
-    # @return [Integer] The API key's unique numeric ID. Distinct from the API key token (`key`).
-    attr_reader :id
-    # @return [String] The user-specified API key name
-    attr_reader :name
-    # @return [String] A timestamp indicating when the API key was created
-    attr_reader :created_at
-    # @return [ApiKeyCreatorData] The user data of the user that created this API key.
-    attr_reader :created_by
-    # @return [String] A timestamp indicating when the API was last used
-    attr_reader :last_used_at
-    # @return [String] The IP address from which the API key was last used
-    attr_reader :last_used_from_addr
-    # @return [String] If set, the API key can access only this project
-    attr_reader :project_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalSpendingLimitResponseMetadata
-    FIELDS = {
-      spending_limit_cents: 'spending_limit_cents'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      spending_limit_cents
-    ].freeze
-    DECODERS = {}.freeze
-    NULLABLE_FIELDS = %i[
-      spending_limit_cents
-    ].freeze
   end
 end

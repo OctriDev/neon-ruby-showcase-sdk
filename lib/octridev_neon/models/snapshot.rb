@@ -132,6 +132,59 @@ module OctridevNeon
   end
 
   # Internal model hydration metadata.
+  class SdkInternalRestoreSnapshotResponseMetadata
+    FIELDS = {
+      branch: 'branch',
+      endpoints: 'endpoints',
+      operations: 'operations'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      branch
+      operations
+    ].freeze
+    DECODERS = {
+      branch: lambda do |value|
+        ::OctridevNeon::Branch.from_hash(value)
+      end,
+      endpoints: lambda do |value|
+        value&.map { |item| ::OctridevNeon::Endpoint.from_hash(item) }
+      end,
+      operations: lambda do |value|
+        value&.map { |item| ::OctridevNeon::Operation.from_hash(item) }
+      end
+    }.freeze
+  end
+
+  # API model for RestoreSnapshotResponse.
+  # Typed representation of the `RestoreSnapshotResponse` API schema.
+  class RestoreSnapshotResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRestoreSnapshotResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRestoreSnapshotResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRestoreSnapshotResponseMetadata::DECODERS
+
+    # @return [Branch] Branch returned by the request.
+    attr_reader :branch
+    # @return [Array_of_Endpoint] Compute endpoints associated with the project.
+    attr_reader :endpoints
+    # @return [Array_of_Operation] Required array value serialized in the `operations` wire field.
+    attr_reader :operations
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
   class SdkInternalSnapshotMetadata
     FIELDS = {
       id: 'id',

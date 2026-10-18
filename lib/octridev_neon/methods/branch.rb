@@ -73,7 +73,7 @@ module OctridevNeon
           ].join,
           config: config,
           body: body,
-          return_type: ::OctridevNeon::Methods::Branch::BranchResponse,
+          return_type: ::OctridevNeon::CreateBranchResponse,
           decoder: :json,
           operation_id: 'create_branch',
           request_options: request_options,
@@ -130,7 +130,7 @@ module OctridevNeon
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'include_deleted' => QueryValue.new(include_deleted, style: 'form', explode: true)
           },
-          return_type: ::OctridevNeon::Methods::Branch::BranchesResponse,
+          return_type: ::OctridevNeon::ListBranchResponse,
           decoder: :json,
           operation_id: 'list_branch',
           request_options: request_options,
@@ -160,7 +160,7 @@ module OctridevNeon
           ].join,
           config: config,
           body: body,
-          return_type: ::OctridevNeon::Methods::Branch::BranchResponse,
+          return_type: ::OctridevNeon::CreateBranchResponse,
           decoder: :json,
           operation_id: 'create_branch_anonymized',
           request_options: request_options,
@@ -191,7 +191,7 @@ module OctridevNeon
           query: {
             'search' => QueryValue.new(search, style: 'form', explode: true)
           },
-          return_type: ::OctridevNeon::Methods::Branch::BranchesCountResponse,
+          return_type: ::OctridevNeon::BranchesCountResponse,
           decoder: :json,
           operation_id: 'count_branch',
           request_options: request_options,
@@ -217,7 +217,7 @@ module OctridevNeon
             SdkClient.encode_path_segment(branch_id)
           ].join,
           config: config,
-          return_type: ::OctridevNeon::Methods::Branch::BranchResponse,
+          return_type: ::OctridevNeon::GetBranchResponse,
           decoder: :json,
           operation_id: 'get_branch',
           request_options: request_options,

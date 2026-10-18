@@ -83,7 +83,7 @@ module OctridevNeon
             'include_v1_metrics' => QueryValue.new(include_v1_metrics, style: 'form', explode: true),
             'metrics' => QueryValue.new(metrics, style: 'form', explode: true)
           },
-          return_type: ::OctridevNeon::Methods::Consumption::ConsumptionHistoryPerProjectResponse,
+          return_type: ::OctridevNeon::GetConsumptionHistoryPerProjectResponse,
           decoder: :json,
           operation_id: 'get_consumption_history_per_project',
           request_options: request_options,
@@ -158,7 +158,7 @@ module OctridevNeon
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'project_ids' => QueryValue.new(project_ids, style: 'form', explode: true)
           },
-          return_type: ::OctridevNeon::Methods::Consumption::ConsumptionHistoryPerProjectV2Response,
+          return_type: ::OctridevNeon::GetConsumptionHistoryPerProjectV2Response,
           decoder: :json,
           operation_id: 'get_consumption_history_per_project_v2',
           request_options: request_options,
@@ -239,7 +239,7 @@ module OctridevNeon
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'branch_ids' => QueryValue.new(branch_ids, style: 'form', explode: true)
           },
-          return_type: ::OctridevNeon::Methods::Consumption::ConsumptionHistoryPerBranchV2Response,
+          return_type: ::OctridevNeon::GetConsumptionHistoryPerBranchV2Response,
           decoder: :json,
           operation_id: 'get_consumption_history_per_branch_v2',
           request_options: request_options,

@@ -46,7 +46,7 @@ module OctridevNeon
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true)
           },
-          return_type: ::OctridevNeon::Methods::Functions::NeonFunctionsListResponse,
+          return_type: ::OctridevNeon::ListFunctionsResponse,
           decoder: :json,
           operation_id: 'list_functions',
           request_options: request_options,
@@ -310,7 +310,7 @@ module OctridevNeon
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_length('trigger_id', trigger_id, min: 1, max: 128)
-        Validation.validate_pattern('trigger_id', trigger_id, '^[A-Za-z0-9][A-Za-z0-9_.\-]{0,127}$')
+        Validation.validate_pattern('trigger_id', trigger_id, '^[A-Za-z0-9][A-Za-z0-9_.\\-]{0,127}$')
 
         SdkClient.request(
           'GET',
@@ -351,7 +351,7 @@ module OctridevNeon
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_length('trigger_id', trigger_id, min: 1, max: 128)
-        Validation.validate_pattern('trigger_id', trigger_id, '^[A-Za-z0-9][A-Za-z0-9_.\-]{0,127}$')
+        Validation.validate_pattern('trigger_id', trigger_id, '^[A-Za-z0-9][A-Za-z0-9_.\\-]{0,127}$')
 
         SdkClient.request(
           'PATCH',
@@ -390,7 +390,7 @@ module OctridevNeon
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_length('trigger_id', trigger_id, min: 1, max: 128)
-        Validation.validate_pattern('trigger_id', trigger_id, '^[A-Za-z0-9][A-Za-z0-9_.\-]{0,127}$')
+        Validation.validate_pattern('trigger_id', trigger_id, '^[A-Za-z0-9][A-Za-z0-9_.\\-]{0,127}$')
 
         SdkClient.request(
           'DELETE',
@@ -504,7 +504,7 @@ module OctridevNeon
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true)
           },
-          return_type: ::OctridevNeon::Methods::Functions::CustomDomainsListResponse,
+          return_type: ::OctridevNeon::ListFunctionsCustomDomainsResponse,
           decoder: :json,
           operation_id: 'list_functions_custom_domains',
           request_options: request_options,

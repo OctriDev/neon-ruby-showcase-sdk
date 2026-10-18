@@ -290,6 +290,80 @@ module OctridevNeon
   end
 
   # Internal model hydration metadata.
+  class SdkInternalCreateBranchResponseMetadata
+    FIELDS = {
+      branch: 'branch',
+      endpoints: 'endpoints',
+      operations: 'operations',
+      roles: 'roles',
+      databases: 'databases',
+      connection_uris: 'connection_uris'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      branch
+      endpoints
+      operations
+      roles
+      databases
+    ].freeze
+    DECODERS = {
+      branch: lambda do |value|
+        ::OctridevNeon::Branch.from_hash(value)
+      end,
+      endpoints: lambda do |value|
+        value&.map { |item| ::OctridevNeon::Endpoint.from_hash(item) }
+      end,
+      operations: lambda do |value|
+        value&.map { |item| ::OctridevNeon::Operation.from_hash(item) }
+      end,
+      roles: lambda do |value|
+        value&.map { |item| ::OctridevNeon::Role.from_hash(item) }
+      end,
+      databases: lambda do |value|
+        value&.map { |item| ::OctridevNeon::Database.from_hash(item) }
+      end,
+      connection_uris: lambda do |value|
+        value&.map { |item| ::OctridevNeon::ConnectionDetails.from_hash(item) }
+      end
+    }.freeze
+  end
+
+  # API model for CreateBranchResponse.
+  # Typed representation of the `CreateBranchResponse` API schema.
+  class CreateBranchResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateBranchResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateBranchResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateBranchResponseMetadata::DECODERS
+
+    # @return [Branch] Branch returned by the request.
+    attr_reader :branch
+    # @return [Array_of_Endpoint] Compute endpoints in the project. Each includes `id`, `branch_id`, `host`, and `type`.
+    attr_reader :endpoints
+    # @return [Array_of_Operation] Required array value serialized in the `operations` wire field.
+    attr_reader :operations
+    # @return [Array_of_Role] Roles belonging to the branch. Each role includes fields such as `branch_id`, `name`, `protected`, `created_at`, and `updated_at`.
+    attr_reader :roles
+    # @return [Array_of_Database] Databases on the branch. Each includes `id`, `name`, `owner_name`, and `created_at`.
+    attr_reader :databases
+    # @return [Array_of_ConnectionDetails] Connection URIs for the compute endpoint, including credentials.
+    attr_reader :connection_uris
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
   class SdkInternalDatabaseCreateRequestDatabaseMetadata
     FIELDS = {
       name: 'name',
@@ -534,124 +608,37 @@ module OctridevNeon
   end
 
   # Internal model hydration metadata.
-  class SdkInternalMaskingRuleMetadata
+  class SdkInternalGetBranchResponseMetadata
     FIELDS = {
-      database_name: 'database_name',
-      schema_name: 'schema_name',
-      table_name: 'table_name',
-      column_name: 'column_name',
-      masking_function: 'masking_function',
-      masking_value: 'masking_value'
+      branch: 'branch',
+      annotation: 'annotation'
     }.freeze
     REQUIRED_FIELDS = %i[
-      database_name
-      schema_name
-      table_name
-      column_name
-    ].freeze
-    DECODERS = {}.freeze
-  end
-
-  # API model for MaskingRule.
-  # Typed representation of the `MaskingRule` API schema.
-  class MaskingRule
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalMaskingRuleMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalMaskingRuleMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalMaskingRuleMetadata::DECODERS
-
-    # @return [String] The name of the database containing the table to be masked
-    attr_reader :database_name
-    # @return [String] The name of the schema containing the table to be masked
-    attr_reader :schema_name
-    # @return [String] The name of the table containing the column to be masked
-    attr_reader :table_name
-    # @return [String] The name of the column to be masked
-    attr_reader :column_name
-    # @return [String] The PostgreSQL Anonymizer masking function to apply. Can be a predefined function (e.g., 'anon.random_string(10)', 'anon.fake_email()') or a custom function definition (e.g., 'anon.hash(column_name)')
-    attr_reader :masking_function
-    # @return [String] A literal value to set on the column when masking.
-    attr_reader :masking_value
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalMaskingRulesResponseMetadata
-    FIELDS = {
-      masking_rules: 'masking_rules'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      masking_rules
+      branch
+      annotation
     ].freeze
     DECODERS = {
-      masking_rules: lambda do |value|
-        value&.map { |item| ::OctridevNeon::MaskingRule.from_hash(item) }
+      branch: lambda do |value|
+        ::OctridevNeon::Branch.from_hash(value)
+      end,
+      annotation: lambda do |value|
+        ::OctridevNeon::AnnotationData.from_hash(value)
       end
     }.freeze
   end
 
-  # API model for MaskingRulesResponse.
-  # Typed representation of the `MaskingRulesResponse` API schema.
-  class MaskingRulesResponse
+  # API model for GetBranchResponse.
+  # Typed representation of the `GetBranchResponse` API schema.
+  class GetBranchResponse
     CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalMaskingRulesResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalMaskingRulesResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalMaskingRulesResponseMetadata::DECODERS
+    FIELDS = SdkInternalGetBranchResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalGetBranchResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalGetBranchResponseMetadata::DECODERS
 
-    # @return [Array_of_MaskingRule] List of masking rules for the branch
-    attr_reader :masking_rules
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalMaskingRulesUpdateRequestMetadata
-    FIELDS = {
-      masking_rules: 'masking_rules'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      masking_rules
-    ].freeze
-    DECODERS = {
-      masking_rules: lambda do |value|
-        value&.map { |item| ::OctridevNeon::MaskingRule.from_hash(item) }
-      end
-    }.freeze
-  end
-
-  # API model for MaskingRulesUpdateRequest.
-  # Typed representation of the `MaskingRulesUpdateRequest` API schema.
-  class MaskingRulesUpdateRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalMaskingRulesUpdateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalMaskingRulesUpdateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalMaskingRulesUpdateRequestMetadata::DECODERS
-
-    # @return [Array_of_MaskingRule] List of masking rules to apply to the branch. This will replace all existing masking rules for the branch.
-    attr_reader :masking_rules
+    # @return [Branch] Branch returned by the request.
+    attr_reader :branch
+    # @return [AnnotationData] Annotation data associated with the annotated object.
+    attr_reader :annotation
 
     def initialize(**attributes)
       SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)

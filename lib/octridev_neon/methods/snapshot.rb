@@ -364,7 +364,7 @@ module OctridevNeon
             'target_branch_id' => target_branch_id,
             'finalize_restore' => finalize_restore
           },
-          return_type: ::OctridevNeon::Methods::Snapshot::BranchResponse,
+          return_type: ::OctridevNeon::RestoreSnapshotResponse,
           decoder: :json,
           operation_id: 'restore_snapshot',
           request_options: request_options,

@@ -209,7 +209,7 @@ module OctridevNeon
             'timeout' => QueryValue.new(timeout, style: 'form', explode: true),
             'recoverable' => QueryValue.new(recoverable, style: 'form', explode: true)
           },
-          return_type: ::OctridevNeon::Methods::Project::ProjectsResponse,
+          return_type: ::OctridevNeon::ListProjectsResponse,
           decoder: :json,
           operation_id: 'list_projects',
           request_options: request_options,
@@ -233,7 +233,7 @@ module OctridevNeon
           body: {
             'project' => project
           },
-          return_type: ::OctridevNeon::Methods::Project::ProjectResponse,
+          return_type: ::OctridevNeon::CreateProjectResponse,
           decoder: :json,
           operation_id: 'create_project',
           request_options: request_options,
@@ -276,7 +276,7 @@ module OctridevNeon
             'search' => QueryValue.new(search, style: 'form', explode: true),
             'timeout' => QueryValue.new(timeout, style: 'form', explode: true)
           },
-          return_type: ::OctridevNeon::Methods::Project::ProjectsResponse,
+          return_type: ::OctridevNeon::ListSharedProjectsResponse,
           decoder: :json,
           operation_id: 'list_shared_projects',
           request_options: request_options,
@@ -330,7 +330,7 @@ module OctridevNeon
           body: {
             'project' => project
           },
-          return_type: ::OctridevNeon::Methods::Project::ProjectResponse,
+          return_type: ::OctridevNeon::UpdateProjectResponse,
           decoder: :json,
           operation_id: 'update_project',
           request_options: request_options,

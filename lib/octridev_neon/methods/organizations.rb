@@ -249,7 +249,7 @@ module OctridevNeon
             'sort_order' => QueryValue.new(sort_order, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true)
           },
-          return_type: ::OctridevNeon::Methods::Organizations::OrganizationMembersResponse,
+          return_type: ::OctridevNeon::ListOrganizationsMembersResponse,
           decoder: :json,
           operation_id: 'list_organizations_members',
           request_options: request_options,

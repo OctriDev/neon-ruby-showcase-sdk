@@ -6,6 +6,104 @@
 # functions domain models (part 2)
 module OctridevNeon
   # Internal model hydration metadata.
+  class SdkInternalScheduleTriggerMetadata
+    FIELDS = {
+      type: 'type',
+      trigger_id: 'trigger_id',
+      function_slug: 'function_slug',
+      name: 'name',
+      function_path: 'function_path',
+      schedule: 'schedule',
+      enabled: 'enabled',
+      version: 'version',
+      next_run_at: 'next_run_at',
+      inherited: 'inherited'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      trigger_id
+      function_slug
+      name
+      function_path
+      schedule
+      enabled
+      version
+      next_run_at
+      inherited
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevNeon::ScheduleTriggerType.from_value(value)
+      end,
+      trigger_id: lambda do |value|
+        ::OctridevNeon::TriggerID.from_value(value)
+      end,
+      schedule: lambda do |value|
+        ::OctridevNeon::FunctionTriggerSchedule.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      next_run_at
+    ].freeze
+  end
+
+  # API model for ScheduleTrigger.
+  # A branch-effective schedule trigger for a Function.
+  class ScheduleTrigger
+    include Trigger
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalScheduleTriggerMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalScheduleTriggerMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalScheduleTriggerMetadata::DECODERS
+
+    # @return [ScheduleTriggerType] Trigger type discriminator.
+    attr_reader :type
+    # @return [TriggerID] Opaque, server-minted project-wide trigger identifier.
+    attr_reader :trigger_id
+    # @return [String] The branch-local Function slug resolved when an occurrence is consumed.
+    attr_reader :function_slug
+    # @return [String] Human-readable trigger name.
+    attr_reader :name
+    # @return [String] Path passed to the target Function.
+    attr_reader :function_path
+    # @return [FunctionTriggerSchedule] A numeric five-field cron schedule interpreted in UTC.
+    attr_reader :schedule
+    # @return [Boolean] Required `boolean` value serialized in the `enabled` wire field.
+    attr_reader :enabled
+    # @return [Integer] Monotonic configuration version.
+    attr_reader :version
+    # @return [String] Next scheduled occurrence as an RFC 3339 UTC timestamp, or null while disabled or inherited and not explicitly enabled on this branch.
+    attr_reader :next_run_at
+    # @return [Boolean] True when the effective configuration was authored on an ancestor branch.
+    attr_reader :inherited
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalScheduleTriggerMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the ScheduleTriggerType SDK namespace.
+  module ScheduleTriggerType
+    SCHEDULE = 'schedule'
+    VALUES = ['schedule'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ScheduleTriggerType', 'enum', "Unknown ScheduleTriggerType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
   class SdkInternalScheduleTriggerCreateRequestMetadata
     FIELDS = {
       type: 'type',

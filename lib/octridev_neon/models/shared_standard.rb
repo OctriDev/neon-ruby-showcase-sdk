@@ -13,10 +13,15 @@ module OctridevNeon
       username: 'username',
       password: 'password',
       sender_email: 'sender_email',
-      sender_name: 'sender_name'
+      sender_name: 'sender_name',
+      type: 'type'
     }.freeze
     REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevNeon::StandardEmailServerType.from_value(value)
+      end
+    }.freeze
   end
 
   # API model for StandardEmailServer.
@@ -41,6 +46,8 @@ module OctridevNeon
     attr_reader :sender_email
     # @return [String] Display name shown as the sender in outgoing emails.
     attr_reader :sender_name
+    # @return [StandardEmailServerType] Optional enumerated value serialized in the `type` wire field.
+    attr_reader :type
 
     def initialize(**attributes)
       SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
@@ -56,6 +63,17 @@ module OctridevNeon
     end
   end
 
+  # Defines the StandardEmailServerType SDK namespace.
+  module StandardEmailServerType
+    STANDARD = 'standard'
+    VALUES = ['standard'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('StandardEmailServerType', 'enum', "Unknown StandardEmailServerType: #{value}")
+    end
+  end
+
   # Internal model hydration metadata.
   class SdkInternalStandardEmailServerResponseMetadata
     FIELDS = {
@@ -64,7 +82,8 @@ module OctridevNeon
       username: 'username',
       password: 'password',
       sender_email: 'sender_email',
-      sender_name: 'sender_name'
+      sender_name: 'sender_name',
+      type: 'type'
     }.freeze
     REQUIRED_FIELDS = %i[
       host
@@ -74,7 +93,11 @@ module OctridevNeon
       sender_email
       sender_name
     ].freeze
-    DECODERS = {}.freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevNeon::StandardEmailServerResponseType.from_value(value)
+      end
+    }.freeze
   end
 
   # API model for StandardEmailServerResponse.
@@ -99,6 +122,8 @@ module OctridevNeon
     attr_reader :sender_email
     # @return [String] Display name shown as the sender in outgoing emails.
     attr_reader :sender_name
+    # @return [StandardEmailServerResponseType] Optional enumerated value serialized in the `type` wire field.
+    attr_reader :type
 
     def initialize(**attributes)
       SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
@@ -111,6 +136,17 @@ module OctridevNeon
 
     def to_h
       SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the StandardEmailServerResponseType SDK namespace.
+  module StandardEmailServerResponseType
+    STANDARD = 'standard'
+    VALUES = ['standard'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('StandardEmailServerResponseType', 'enum', "Unknown StandardEmailServerResponseType: #{value}")
     end
   end
 end
