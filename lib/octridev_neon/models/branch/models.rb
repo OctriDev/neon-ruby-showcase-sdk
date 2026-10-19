@@ -5,224 +5,223 @@
 
 # tagged_models_branch domain models
 module OctridevNeon
-# Internal model hydration metadata.
-class SdkInternalAnnotationCreateValueRequestMetadata
-  FIELDS = {
-    annotation_value: "annotation_value",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    annotation_value: lambda do |value|
-      ::OctridevNeon::AnnotationValueData.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for AnnotationCreateValueRequest.
-# Typed representation of the `AnnotationCreateValueRequest` API schema.
-class AnnotationCreateValueRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAnnotationCreateValueRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAnnotationCreateValueRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAnnotationCreateValueRequestMetadata::DECODERS
-
-  # @return [AnnotationValueData] A free-form map of string key-value pairs for attaching metadata to a resource (for example, a git commit reference). Maximum 50 entries.
-  attr_reader :annotation_value
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAnnotationCreateValueRequestMetadata
+    FIELDS = {
+      annotation_value: 'annotation_value'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      annotation_value: lambda do |value|
+        ::OctridevNeon::AnnotationValueData.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AnnotationCreateValueRequest.
+  # Typed representation of the `AnnotationCreateValueRequest` API schema.
+  class AnnotationCreateValueRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAnnotationCreateValueRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAnnotationCreateValueRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAnnotationCreateValueRequestMetadata::DECODERS
+
+    # @return [AnnotationValueData] A free-form map of string key-value pairs for attaching metadata to a resource (for example, a git commit reference). Maximum 50 entries.
+    attr_reader :annotation_value
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAnnotationDataMetadata
-  FIELDS = {
-    object: "object",
-    value: "value",
-    created_at: "created_at",
-    updated_at: "updated_at",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    value
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevNeon::AnnotationObjectData.from_hash(value)
-    end,
-    value: lambda do |value|
-      ::OctridevNeon::AnnotationValueData.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for AnnotationData.
-# Typed representation of the `AnnotationData` API schema.
-class AnnotationData
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAnnotationDataMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAnnotationDataMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAnnotationDataMetadata::DECODERS
-
-  # @return [AnnotationObjectData] Resource that this annotation is attached to.
-  attr_reader :object
-  # @return [AnnotationValueData] A free-form map of string key-value pairs for attaching metadata to a resource (for example, a git commit reference). Maximum 50 entries.
-  attr_reader :value
-  # @return [String] Timestamp when the annotation was created, in RFC 3339 format (UTC).
-  attr_reader :created_at
-  # @return [String] Timestamp of the most recent update to the annotation, in RFC 3339 format (UTC).
-  attr_reader :updated_at
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAnnotationDataMetadata
+    FIELDS = {
+      object: 'object',
+      value: 'value',
+      created_at: 'created_at',
+      updated_at: 'updated_at'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      value
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevNeon::AnnotationObjectData.from_hash(value)
+      end,
+      value: lambda do |value|
+        ::OctridevNeon::AnnotationValueData.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AnnotationData.
+  # Typed representation of the `AnnotationData` API schema.
+  class AnnotationData
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAnnotationDataMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAnnotationDataMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAnnotationDataMetadata::DECODERS
+
+    # @return [AnnotationObjectData] Resource that this annotation is attached to.
+    attr_reader :object
+    # @return [AnnotationValueData] A free-form map of string key-value pairs for attaching metadata to a resource (for example, a git commit reference). Maximum 50 entries.
+    attr_reader :value
+    # @return [String] Timestamp when the annotation was created, in RFC 3339 format (UTC).
+    attr_reader :created_at
+    # @return [String] Timestamp of the most recent update to the annotation, in RFC 3339 format (UTC).
+    attr_reader :updated_at
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAnnotationObjectDataMetadata
-  FIELDS = {
-    type: "type",
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AnnotationObjectData.
-# Typed representation of the `AnnotationObjectData` API schema.
-class AnnotationObjectData
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAnnotationObjectDataMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAnnotationObjectDataMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAnnotationObjectDataMetadata::DECODERS
-
-  # @return [String] Kind of resource the annotation is attached to, for example "branch" or "endpoint".
-  attr_reader :type
-  # @return [String] The annotated object's ID.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAnnotationObjectDataMetadata
+    FIELDS = {
+      type: 'type',
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AnnotationObjectData.
+  # Typed representation of the `AnnotationObjectData` API schema.
+  class AnnotationObjectData
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAnnotationObjectDataMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAnnotationObjectDataMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAnnotationObjectDataMetadata::DECODERS
+
+    # @return [String] Kind of resource the annotation is attached to, for example "branch" or "endpoint".
+    attr_reader :type
+    # @return [String] The annotated object's ID.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAnnotationResponseMetadata
-  FIELDS = {
-    annotation: "annotation",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    annotation
-  ].freeze
-  DECODERS = {
-    annotation: lambda do |value|
-      ::OctridevNeon::AnnotationData.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for AnnotationResponse.
-# Typed representation of the `AnnotationResponse` API schema.
-class AnnotationResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAnnotationResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAnnotationResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAnnotationResponseMetadata::DECODERS
-
-  # @return [AnnotationData] Annotation data associated with the annotated object.
-  attr_reader :annotation
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAnnotationResponseMetadata
+    FIELDS = {
+      annotation: 'annotation'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      annotation
+    ].freeze
+    DECODERS = {
+      annotation: lambda do |value|
+        ::OctridevNeon::AnnotationData.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AnnotationResponse.
+  # Typed representation of the `AnnotationResponse` API schema.
+  class AnnotationResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAnnotationResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAnnotationResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAnnotationResponseMetadata::DECODERS
+
+    # @return [AnnotationData] Annotation data associated with the annotated object.
+    attr_reader :annotation
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAnnotationsMapResponseMetadata
-  FIELDS = {
-    annotations: "annotations",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    annotations
-  ].freeze
-  DECODERS = {
-    annotations: lambda do |value|
-      value&.transform_values { |item| ::OctridevNeon::AnnotationData.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for AnnotationsMapResponse.
-# Typed representation of the `AnnotationsMapResponse` API schema.
-class AnnotationsMapResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAnnotationsMapResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAnnotationsMapResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAnnotationsMapResponseMetadata::DECODERS
-
-  # @return [Hash] Map of annotations keyed by resource identifier, where each value contains the annotation data for that resource.
-  attr_reader :annotations
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAnnotationsMapResponseMetadata
+    FIELDS = {
+      annotations: 'annotations'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      annotations
+    ].freeze
+    DECODERS = {
+      annotations: lambda do |value|
+        value&.transform_values { |item| ::OctridevNeon::AnnotationData.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AnnotationsMapResponse.
+  # Typed representation of the `AnnotationsMapResponse` API schema.
+  class AnnotationsMapResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAnnotationsMapResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAnnotationsMapResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAnnotationsMapResponseMetadata::DECODERS
+
+    # @return [Hash] Map of annotations keyed by resource identifier, where each value contains the annotation data for that resource.
+    attr_reader :annotations
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the AnnotationValueData SDK value decoder.
+  module AnnotationValueData
+    def self.from_hash(value)
+      return nil if value.nil?
 
-# Defines the AnnotationValueData SDK value decoder.
-module AnnotationValueData
-  def self.from_hash(value)
-    return nil if value.nil?
-    value&.transform_values { |item| item }
+      value&.transform_values { |item| item }
+    end
   end
-end
 end

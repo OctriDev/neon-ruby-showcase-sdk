@@ -5,265 +5,260 @@
 
 # tagged_models_data_api domain models
 module OctridevNeon
-# Internal model hydration metadata.
-class SdkInternalDataAPICreateRequestMetadata
-  FIELDS = {
-    auth_provider: "auth_provider",
-    jwks_url: "jwks_url",
-    provider_name: "provider_name",
-    jwt_audience: "jwt_audience",
-    add_default_grants: "add_default_grants",
-    skip_auth_schema: "skip_auth_schema",
-    settings: "settings",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    auth_provider: lambda do |value|
-      ::OctridevNeon::DataAPICreateRequestAuthProvider.from_value(value)
-    end,
-    settings: lambda do |value|
-      ::OctridevNeon::DataAPISettings.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for DataAPICreateRequest.
-# Create Neon Data API
-class DataAPICreateRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDataAPICreateRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDataAPICreateRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDataAPICreateRequestMetadata::DECODERS
-
-  # @return [DataAPICreateRequestAuthProvider] Authentication provider for the Neon Data API. `neon_auth`: use Neon's built-in managed authentication (no JWKS configuration required). `external`: use an external JWT provider, which requires `jwks_url`. When omitted, no auth provider is configured (existing setup is kept).
-  attr_reader :auth_provider
-  # @return [String] URL of the JWKS endpoint used to verify JWTs for this Data API. Required when configuring JWT-based authentication; omit when using a non-JWT auth provider.
-  attr_reader :jwks_url
-  # @return [String] Display name for the authentication provider. Accepted values include "Clerk", "Stytch", and "Auth0", but any non-empty string is valid. Optional field.
-  attr_reader :provider_name
-  # @return [String] Expected `aud` claim in incoming JWTs. When set, tokens with a different audience are rejected; tokens with no audience are still accepted. Omit to skip audience validation.
-  attr_reader :jwt_audience
-  # @return [Boolean] Grant all permissions to the tables in the public schema to authenticated users
-  attr_reader :add_default_grants
-  # @return [Boolean] Skip creating the auth schema and RLS functions
-  attr_reader :skip_auth_schema
-  # @return [DataAPISettings] Auth and schema configuration for the Data API.
-  attr_reader :settings
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalDataAPICreateRequestMetadata
+    FIELDS = {
+      auth_provider: 'auth_provider',
+      jwks_url: 'jwks_url',
+      provider_name: 'provider_name',
+      jwt_audience: 'jwt_audience',
+      add_default_grants: 'add_default_grants',
+      skip_auth_schema: 'skip_auth_schema',
+      settings: 'settings'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      auth_provider: lambda do |value|
+        ::OctridevNeon::DataAPICreateRequestAuthProvider.from_value(value)
+      end,
+      settings: lambda do |value|
+        ::OctridevNeon::DataAPISettings.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for DataAPICreateRequest.
+  # Create Neon Data API
+  class DataAPICreateRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDataAPICreateRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDataAPICreateRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDataAPICreateRequestMetadata::DECODERS
+
+    # @return [DataAPICreateRequestAuthProvider] Authentication provider for the Neon Data API. `neon_auth`: use Neon's built-in managed authentication (no JWKS configuration required). `external`: use an external JWT provider, which requires `jwks_url`. When omitted, no auth provider is configured (existing setup is kept).
+    attr_reader :auth_provider
+    # @return [String] URL of the JWKS endpoint used to verify JWTs for this Data API. Required when configuring JWT-based authentication; omit when using a non-JWT auth provider.
+    attr_reader :jwks_url
+    # @return [String] Display name for the authentication provider. Accepted values include "Clerk", "Stytch", and "Auth0", but any non-empty string is valid. Optional field.
+    attr_reader :provider_name
+    # @return [String] Expected `aud` claim in incoming JWTs. When set, tokens with a different audience are rejected; tokens with no audience are still accepted. Omit to skip audience validation.
+    attr_reader :jwt_audience
+    # @return [Boolean] Grant all permissions to the tables in the public schema to authenticated users
+    attr_reader :add_default_grants
+    # @return [Boolean] Skip creating the auth schema and RLS functions
+    attr_reader :skip_auth_schema
+    # @return [DataAPISettings] Auth and schema configuration for the Data API.
+    attr_reader :settings
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the DataAPICreateRequestAuthProvider SDK namespace.
-module DataAPICreateRequestAuthProvider
-  NEON_AUTH = 'neon_auth'
-  EXTERNAL = 'external'
-  VALUES = ['neon_auth', 'external'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalDataAPICreateResponseMetadata
-  FIELDS = {
-    url: "url",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    url
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for DataAPICreateResponse.
-# Neon Data API created successfully
-class DataAPICreateResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDataAPICreateResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDataAPICreateResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDataAPICreateResponseMetadata::DECODERS
-
-  # @return [String] URL of the created Data API endpoint.
-  attr_reader :url
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the DataAPICreateRequestAuthProvider SDK namespace.
+  module DataAPICreateRequestAuthProvider
+    NEON_AUTH = 'neon_auth'
+    EXTERNAL = 'external'
+    VALUES = %w[neon_auth external].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalDataAPICreateResponseMetadata
+    FIELDS = {
+      url: 'url'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      url
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for DataAPICreateResponse.
+  # Neon Data API created successfully
+  class DataAPICreateResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDataAPICreateResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDataAPICreateResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDataAPICreateResponseMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalDataAPIReponseMetadata
-  FIELDS = {
-    url: "url",
-    status: "status",
-    settings: "settings",
-    available_schemas: "available_schemas",
-    observed_at: "observed_at",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    url
-    status
-  ].freeze
-  DECODERS = {
-    settings: lambda do |value|
-      ::OctridevNeon::DataAPISettings.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [String] URL of the created Data API endpoint.
+    attr_reader :url
 
-# API model for DataAPIReponse.
-# Neon Data API response
-class DataAPIReponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDataAPIReponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDataAPIReponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDataAPIReponseMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The URL of the Neon Data API
-  attr_reader :url
-  # @return [String] The status of the Neon Data API deployment
-  attr_reader :status
-  # @return [DataAPISettings] Configuration settings for the Data API (SubZero only)
-  attr_reader :settings
-  # @return [Array_of_String] List of available database schemas (SubZero only)
-  attr_reader :available_schemas
-  # @return [String] When `settings` and `available_schemas` were read from the database. While the compute is suspended they are served from that read, so a change made directly in the database since then shows up in the first response served while the compute is active.
-  attr_reader :observed_at
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalDataAPIReponseMetadata
+    FIELDS = {
+      url: 'url',
+      status: 'status',
+      settings: 'settings',
+      available_schemas: 'available_schemas',
+      observed_at: 'observed_at'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      url
+      status
+    ].freeze
+    DECODERS = {
+      settings: lambda do |value|
+        ::OctridevNeon::DataAPISettings.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for DataAPIReponse.
+  # Neon Data API response
+  class DataAPIReponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDataAPIReponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDataAPIReponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDataAPIReponseMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalDataAPISettingsMetadata
-  FIELDS = {
-    db_aggregates_enabled: "db_aggregates_enabled",
-    db_anon_role: "db_anon_role",
-    db_extra_search_path: "db_extra_search_path",
-    db_max_rows: "db_max_rows",
-    db_schemas: "db_schemas",
-    jwt_role_claim_key: "jwt_role_claim_key",
-    jwt_cache_max_lifetime: "jwt_cache_max_lifetime",
-    openapi_mode: "openapi_mode",
-    server_cors_allowed_origins: "server_cors_allowed_origins",
-    server_timing_enabled: "server_timing_enabled",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [String] The URL of the Neon Data API
+    attr_reader :url
+    # @return [String] The status of the Neon Data API deployment
+    attr_reader :status
+    # @return [DataAPISettings] Configuration settings for the Data API (SubZero only)
+    attr_reader :settings
+    # @return [Array_of_String] List of available database schemas (SubZero only)
+    attr_reader :available_schemas
+    # @return [String] When `settings` and `available_schemas` were read from the database. While the compute is suspended they are served from that read, so a change made directly in the database since then shows up in the first response served while the compute is active.
+    attr_reader :observed_at
 
-# API model for DataAPISettings.
-# Configuration settings for the Neon Data API
-class DataAPISettings
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDataAPISettingsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDataAPISettingsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDataAPISettingsMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Boolean] Enable aggregates feature
-  attr_reader :db_aggregates_enabled
-  # @return [String] Database role to use for anonymous requests
-  attr_reader :db_anon_role
-  # @return [String] Extra schemas to add to the search path
-  attr_reader :db_extra_search_path
-  # @return [Integer] Hard limit on the number of rows returned in a single Data API response. No limit when unset.
-  attr_reader :db_max_rows
-  # @return [Array_of_String] List of schemas to expose via the API. Default: ["public"]
-  attr_reader :db_schemas
-  # @return [String] JWT claim key to use for role extraction
-  attr_reader :jwt_role_claim_key
-  # @return [Integer] Maximum lifetime of the Data API's JWT cache, in seconds.
-  attr_reader :jwt_cache_max_lifetime
-  # @return [String] OpenAPI specification mode (ignore-privileges, disabled)
-  attr_reader :openapi_mode
-  # @return [String] CORS allowed origins
-  attr_reader :server_cors_allowed_origins
-  # @return [Boolean] When enabled, the Data API adds `Server-Timing` headers to each response showing database execution and internal processing time. Default: disabled.
-  attr_reader :server_timing_enabled
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalDataAPISettingsMetadata
+    FIELDS = {
+      db_aggregates_enabled: 'db_aggregates_enabled',
+      db_anon_role: 'db_anon_role',
+      db_extra_search_path: 'db_extra_search_path',
+      db_max_rows: 'db_max_rows',
+      db_schemas: 'db_schemas',
+      jwt_role_claim_key: 'jwt_role_claim_key',
+      jwt_cache_max_lifetime: 'jwt_cache_max_lifetime',
+      openapi_mode: 'openapi_mode',
+      server_cors_allowed_origins: 'server_cors_allowed_origins',
+      server_timing_enabled: 'server_timing_enabled'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for DataAPISettings.
+  # Configuration settings for the Neon Data API
+  class DataAPISettings
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDataAPISettingsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDataAPISettingsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDataAPISettingsMetadata::DECODERS
+
+    # @return [Boolean] Enable aggregates feature
+    attr_reader :db_aggregates_enabled
+    # @return [String] Database role to use for anonymous requests
+    attr_reader :db_anon_role
+    # @return [String] Extra schemas to add to the search path
+    attr_reader :db_extra_search_path
+    # @return [Integer] Hard limit on the number of rows returned in a single Data API response. No limit when unset.
+    attr_reader :db_max_rows
+    # @return [Array_of_String] List of schemas to expose via the API. Default: ["public"]
+    attr_reader :db_schemas
+    # @return [String] JWT claim key to use for role extraction
+    attr_reader :jwt_role_claim_key
+    # @return [Integer] Maximum lifetime of the Data API's JWT cache, in seconds.
+    attr_reader :jwt_cache_max_lifetime
+    # @return [String] OpenAPI specification mode (ignore-privileges, disabled)
+    attr_reader :openapi_mode
+    # @return [String] CORS allowed origins
+    attr_reader :server_cors_allowed_origins
+    # @return [Boolean] When enabled, the Data API adds `Server-Timing` headers to each response showing database execution and internal processing time. Default: disabled.
+    attr_reader :server_timing_enabled
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 
-# Internal model hydration metadata.
-class SdkInternalDataAPIUpdateRequestMetadata
-  FIELDS = {
-    settings: "settings",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    settings: lambda do |value|
-      ::OctridevNeon::DataAPISettings.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for DataAPIUpdateRequest.
-# Update Neon Data API
-class DataAPIUpdateRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDataAPIUpdateRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDataAPIUpdateRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDataAPIUpdateRequestMetadata::DECODERS
-
-  # @return [DataAPISettings] Configuration settings for the Neon Data API.
-  attr_reader :settings
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalDataAPIUpdateRequestMetadata
+    FIELDS = {
+      settings: 'settings'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      settings: lambda do |value|
+        ::OctridevNeon::DataAPISettings.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # API model for DataAPIUpdateRequest.
+  # Update Neon Data API
+  class DataAPIUpdateRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDataAPIUpdateRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDataAPIUpdateRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDataAPIUpdateRequestMetadata::DECODERS
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+    # @return [DataAPISettings] Configuration settings for the Neon Data API.
+    attr_reader :settings
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

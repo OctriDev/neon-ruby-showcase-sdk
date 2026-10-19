@@ -5,649 +5,643 @@
 
 # project_project domain models (part 2)
 module OctridevNeon
-# Internal model hydration metadata.
-class SdkInternalProjectMemberRoleResponseMetadata
-  FIELDS = {
-    project_id: "project_id",
-    member_id: "member_id",
-    user_id: "user_id",
-    email: "email",
-    name: "name",
-    org_role: "org_role",
-    project_role: "project_role",
-    org_default_project_permission: "org_default_project_permission",
-    explicit_project_permission: "explicit_project_permission",
-    effective_project_permission: "effective_project_permission",
-    credential_rotation_recommended: "credential_rotation_recommended",
-    org_api_key_rotation_recommended: "org_api_key_rotation_recommended",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    project_id
-    member_id
-    user_id
-    org_role
-  ].freeze
-  DECODERS = {
-    org_role: lambda do |value|
-      ::OctridevNeon::ProjectMemberOrgRole.from_value(value)
-    end,
-    project_role: lambda do |value|
-      ::OctridevNeon::ProjectRole.from_value(value)
-    end,
-    org_default_project_permission: lambda do |value|
-      ::OctridevNeon::ProjectPermissionLevel.from_value(value)
-    end,
-    explicit_project_permission: lambda do |value|
-      ::OctridevNeon::ProjectPermissionLevel.from_value(value)
-    end,
-    effective_project_permission: lambda do |value|
-      ::OctridevNeon::ProjectPermissionLevel.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ProjectMemberRoleResponse.
-# Typed representation of the `ProjectMemberRoleResponse` API schema.
-class ProjectMemberRoleResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectMemberRoleResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectMemberRoleResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectMemberRoleResponseMetadata::DECODERS
-
-  # @return [String] Required `string` value serialized in the `project_id` wire field.
-  attr_reader :project_id
-  # @return [String] Required `uuid`-formatted value serialized in the `member_id` wire field.
-  attr_reader :member_id
-  # @return [String] Required `uuid`-formatted value serialized in the `user_id` wire field.
-  attr_reader :user_id
-  # @return [String] Email address of the user who has been granted access to the project.
-  attr_reader :email
-  # @return [String] The user's display name.
-  attr_reader :name
-  # @return [ProjectMemberOrgRole] Organization-level role used by project member role management.
-  attr_reader :org_role
-  # @return [ProjectRole] The resulting effective project role after applying org-admin default access, explicit grants, and creator fallback. Null only when the member has no remaining effective project access.
-  attr_reader :project_role
-  # @return [ProjectPermissionLevel] The caller's effective permission for a project when per-project permissions are enabled. `VIEWER` grants read access, `EDITOR` adds update access, and `ADMIN` grants full management. Omitted for personal projects, flag-off organizations, and non-user subjects.
-  attr_reader :org_default_project_permission
-  # @return [ProjectPermissionLevel] The caller's effective permission for a project when per-project permissions are enabled. `VIEWER` grants read access, `EDITOR` adds update access, and `ADMIN` grants full management. Omitted for personal projects, flag-off organizations, and non-user subjects.
-  attr_reader :explicit_project_permission
-  # @return [ProjectPermissionLevel] The caller's effective permission for a project when per-project permissions are enabled. `VIEWER` grants read access, `EDITOR` adds update access, and `ADMIN` grants full management. Omitted for personal projects, flag-off organizations, and non-user subjects.
-  attr_reader :effective_project_permission
-  # @return [Boolean] Hint that database credentials may need rotation after the role change.
-  attr_reader :credential_rotation_recommended
-  # @return [Boolean] Hint that project-scoped org API keys created by the target user may need rotation.
-  attr_reader :org_api_key_rotation_recommended
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalProjectMemberRoleResponseMetadata
+    FIELDS = {
+      project_id: 'project_id',
+      member_id: 'member_id',
+      user_id: 'user_id',
+      email: 'email',
+      name: 'name',
+      org_role: 'org_role',
+      project_role: 'project_role',
+      org_default_project_permission: 'org_default_project_permission',
+      explicit_project_permission: 'explicit_project_permission',
+      effective_project_permission: 'effective_project_permission',
+      credential_rotation_recommended: 'credential_rotation_recommended',
+      org_api_key_rotation_recommended: 'org_api_key_rotation_recommended'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      project_id
+      member_id
+      user_id
+      org_role
+    ].freeze
+    DECODERS = {
+      org_role: lambda do |value|
+        ::OctridevNeon::ProjectMemberOrgRole.from_value(value)
+      end,
+      project_role: lambda do |value|
+        ::OctridevNeon::ProjectRole.from_value(value)
+      end,
+      org_default_project_permission: lambda do |value|
+        ::OctridevNeon::ProjectPermissionLevel.from_value(value)
+      end,
+      explicit_project_permission: lambda do |value|
+        ::OctridevNeon::ProjectPermissionLevel.from_value(value)
+      end,
+      effective_project_permission: lambda do |value|
+        ::OctridevNeon::ProjectPermissionLevel.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ProjectMemberRoleResponse.
+  # Typed representation of the `ProjectMemberRoleResponse` API schema.
+  class ProjectMemberRoleResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectMemberRoleResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectMemberRoleResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectMemberRoleResponseMetadata::DECODERS
+
+    # @return [String] Required `string` value serialized in the `project_id` wire field.
+    attr_reader :project_id
+    # @return [String] Required `uuid`-formatted value serialized in the `member_id` wire field.
+    attr_reader :member_id
+    # @return [String] Required `uuid`-formatted value serialized in the `user_id` wire field.
+    attr_reader :user_id
+    # @return [String] Email address of the user who has been granted access to the project.
+    attr_reader :email
+    # @return [String] The user's display name.
+    attr_reader :name
+    # @return [ProjectMemberOrgRole] Organization-level role used by project member role management.
+    attr_reader :org_role
+    # @return [ProjectRole] The resulting effective project role after applying org-admin default access, explicit grants, and creator fallback. Null only when the member has no remaining effective project access.
+    attr_reader :project_role
+    # @return [ProjectPermissionLevel] The caller's effective permission for a project when per-project permissions are enabled. `VIEWER` grants read access, `EDITOR` adds update access, and `ADMIN` grants full management. Omitted for personal projects, flag-off organizations, and non-user subjects.
+    attr_reader :org_default_project_permission
+    # @return [ProjectPermissionLevel] The caller's effective permission for a project when per-project permissions are enabled. `VIEWER` grants read access, `EDITOR` adds update access, and `ADMIN` grants full management. Omitted for personal projects, flag-off organizations, and non-user subjects.
+    attr_reader :explicit_project_permission
+    # @return [ProjectPermissionLevel] The caller's effective permission for a project when per-project permissions are enabled. `VIEWER` grants read access, `EDITOR` adds update access, and `ADMIN` grants full management. Omitted for personal projects, flag-off organizations, and non-user subjects.
+    attr_reader :effective_project_permission
+    # @return [Boolean] Hint that database credentials may need rotation after the role change.
+    attr_reader :credential_rotation_recommended
+    # @return [Boolean] Hint that project-scoped org API keys created by the target user may need rotation.
+    attr_reader :org_api_key_rotation_recommended
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalProjectMembersMetadata
-  FIELDS = {
-    project_members: "project_members",
-    pagination: "pagination",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    project_members
-  ].freeze
-  DECODERS = {
-    project_members: lambda do |value|
-      value&.map { |item| ::OctridevNeon::ProjectMember.from_hash(item) }
-    end,
-    pagination: lambda do |value|
-      ::OctridevNeon::CursorPagination.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ProjectMembers.
-# Typed representation of the `ProjectMembers` API schema.
-class ProjectMembers
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectMembersMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectMembersMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectMembersMetadata::DECODERS
-
-  # @return [Array_of_ProjectMember] Required array value serialized in the `project_members` wire field.
-  attr_reader :project_members
-  # @return [CursorPagination] To paginate the response, issue an initial request with `limit` value. Then, add the value returned in the response `.pagination.next` attribute into the request under the `cursor` query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor `next` are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.
-  attr_reader :pagination
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalProjectMembersMetadata
+    FIELDS = {
+      project_members: 'project_members',
+      pagination: 'pagination'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      project_members
+    ].freeze
+    DECODERS = {
+      project_members: lambda do |value|
+        value&.map { |item| ::OctridevNeon::ProjectMember.from_hash(item) }
+      end,
+      pagination: lambda do |value|
+        ::OctridevNeon::CursorPagination.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ProjectMembers.
+  # Typed representation of the `ProjectMembers` API schema.
+  class ProjectMembers
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectMembersMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectMembersMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectMembersMetadata::DECODERS
+
+    # @return [Array_of_ProjectMember] Required array value serialized in the `project_members` wire field.
+    attr_reader :project_members
+    # @return [CursorPagination] To paginate the response, issue an initial request with `limit` value. Then, add the value returned in the response `.pagination.next` attribute into the request under the `cursor` query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor `next` are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.
+    attr_reader :pagination
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalProjectOwnerDataMetadata
-  FIELDS = {
-    email: "email",
-    name: "name",
-    branches_limit: "branches_limit",
-    subscription_type: "subscription_type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    email
-    name
-    branches_limit
-    subscription_type
-  ].freeze
-  DECODERS = {
-    subscription_type: lambda do |value|
-      ::OctridevNeon::BillingSubscriptionType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ProjectOwnerData.
-# Typed representation of the `ProjectOwnerData` API schema.
-class ProjectOwnerData
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectOwnerDataMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectOwnerDataMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectOwnerDataMetadata::DECODERS
-
-  # @return [String] Email address of the project owner.
-  attr_reader :email
-  # @return [String] Display name of the project owner.
-  attr_reader :name
-  # @return [Integer] Maximum number of branches the owner is allowed to create across their projects.
-  attr_reader :branches_limit
-  # @return [BillingSubscriptionType] Type of subscription to Neon Cloud. Notice that for users without billing account this will be "UNKNOWN"
-  attr_reader :subscription_type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalProjectOwnerDataMetadata
+    FIELDS = {
+      email: 'email',
+      name: 'name',
+      branches_limit: 'branches_limit',
+      subscription_type: 'subscription_type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      email
+      name
+      branches_limit
+      subscription_type
+    ].freeze
+    DECODERS = {
+      subscription_type: lambda do |value|
+        ::OctridevNeon::BillingSubscriptionType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ProjectOwnerData.
+  # Typed representation of the `ProjectOwnerData` API schema.
+  class ProjectOwnerData
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectOwnerDataMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectOwnerDataMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectOwnerDataMetadata::DECODERS
+
+    # @return [String] Email address of the project owner.
+    attr_reader :email
+    # @return [String] Display name of the project owner.
+    attr_reader :name
+    # @return [Integer] Maximum number of branches the owner is allowed to create across their projects.
+    attr_reader :branches_limit
+    # @return [BillingSubscriptionType] Type of subscription to Neon Cloud. Notice that for users without billing account this will be "UNKNOWN"
+    attr_reader :subscription_type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalProjectPermissionMetadata
-  FIELDS = {
-    id: "id",
-    granted_to_email: "granted_to_email",
-    granted_at: "granted_at",
-    revoked_at: "revoked_at",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    granted_to_email
-    granted_at
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ProjectPermission.
-# Typed representation of the `ProjectPermission` API schema.
-class ProjectPermission
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectPermissionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectPermissionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectPermissionMetadata::DECODERS
-
-  # @return [String] The project permission's ID.
-  attr_reader :id
-  # @return [String] Email address of the user who has been granted access to the project.
-  attr_reader :granted_to_email
-  # @return [String] Timestamp when the permission was granted.
-  attr_reader :granted_at
-  # @return [String] Timestamp when the permission was revoked. Null if the permission is still active.
-  attr_reader :revoked_at
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalProjectPermissionMetadata
+    FIELDS = {
+      id: 'id',
+      granted_to_email: 'granted_to_email',
+      granted_at: 'granted_at',
+      revoked_at: 'revoked_at'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      granted_to_email
+      granted_at
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ProjectPermission.
+  # Typed representation of the `ProjectPermission` API schema.
+  class ProjectPermission
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectPermissionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectPermissionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectPermissionMetadata::DECODERS
+
+    # @return [String] The project permission's ID.
+    attr_reader :id
+    # @return [String] Email address of the user who has been granted access to the project.
+    attr_reader :granted_to_email
+    # @return [String] Timestamp when the permission was granted.
+    attr_reader :granted_at
+    # @return [String] Timestamp when the permission was revoked. Null if the permission is still active.
+    attr_reader :revoked_at
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ProjectPermissionLevel SDK namespace.
-module ProjectPermissionLevel
-  VIEWER = 'VIEWER'
-  EDITOR = 'EDITOR'
-  ADMIN = 'ADMIN'
-  VALUES = ['VIEWER', 'EDITOR', 'ADMIN'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalProjectPermissionsMetadata
-  FIELDS = {
-    project_permissions: "project_permissions",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    project_permissions
-  ].freeze
-  DECODERS = {
-    project_permissions: lambda do |value|
-      value&.map { |item| ::OctridevNeon::ProjectPermission.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for ProjectPermissions.
-# Typed representation of the `ProjectPermissions` API schema.
-class ProjectPermissions
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectPermissionsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectPermissionsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectPermissionsMetadata::DECODERS
-
-  # @return [Array_of_ProjectPermission] Required array value serialized in the `project_permissions` wire field.
-  attr_reader :project_permissions
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ProjectPermissionLevel SDK namespace.
+  module ProjectPermissionLevel
+    VIEWER = 'VIEWER'
+    EDITOR = 'EDITOR'
+    ADMIN = 'ADMIN'
+    VALUES = %w[VIEWER EDITOR ADMIN].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalProjectPermissionsMetadata
+    FIELDS = {
+      project_permissions: 'project_permissions'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      project_permissions
+    ].freeze
+    DECODERS = {
+      project_permissions: lambda do |value|
+        value&.map { |item| ::OctridevNeon::ProjectPermission.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ProjectPermissions.
+  # Typed representation of the `ProjectPermissions` API schema.
+  class ProjectPermissions
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectPermissionsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectPermissionsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectPermissionsMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalProjectQuotaMetadata
-  FIELDS = {
-    active_time_seconds: "active_time_seconds",
-    compute_time_seconds: "compute_time_seconds",
-    written_data_bytes: "written_data_bytes",
-    data_transfer_bytes: "data_transfer_bytes",
-    logical_size_bytes: "logical_size_bytes",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [Array_of_ProjectPermission] Required array value serialized in the `project_permissions` wire field.
+    attr_reader :project_permissions
 
-# API model for ProjectQuota.
-# Per-project consumption quotas. If a quota is exceeded, all active computes are automatically suspended and cannot be started via API calls or incoming connections. The exception is `logical_size_bytes`, which is enforced per branch. If a branch exceeds its `logical_size_bytes` quota, computes can still be started, but write operations will fail—allowing data to be deleted to free up space. Computes on other branches are not affected. Setting `logical_size_bytes` overrides…
-class ProjectQuota
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectQuotaMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectQuotaMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectQuotaMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Integer] The total amount of wall-clock time allowed to be spent by the project's compute endpoints.
-  attr_reader :active_time_seconds
-  # @return [Integer] The total amount of CPU seconds allowed to be spent by the project's compute endpoints.
-  attr_reader :compute_time_seconds
-  # @return [Integer] Total amount of data written to all of a project's branches.
-  attr_reader :written_data_bytes
-  # @return [Integer] Total amount of data transferred from all of a project's branches using the proxy.
-  attr_reader :data_transfer_bytes
-  # @return [Integer] Limit on the logical size of every project's branch. If a branch exceeds its `logical_size_bytes` quota, computes can still be started, but write operations will fail—allowing data to be deleted to free up space. Computes on other branches are not affected. Setting `logical_size_bytes` overrides any lower value set by the `neon.max_cluster_size` Postgres setting.
-  attr_reader :logical_size_bytes
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalProjectQuotaMetadata
+    FIELDS = {
+      active_time_seconds: 'active_time_seconds',
+      compute_time_seconds: 'compute_time_seconds',
+      written_data_bytes: 'written_data_bytes',
+      data_transfer_bytes: 'data_transfer_bytes',
+      logical_size_bytes: 'logical_size_bytes'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ProjectQuota.
+  # Per-project consumption quotas. If a quota is exceeded, all active computes are automatically suspended and cannot be started via API calls or incoming connections. The exception is `logical_size_bytes`, which is enforced per branch. If a branch exceeds its `logical_size_bytes` quota, computes can still be started, but write operations will fail—allowing data to be deleted to free up space. Computes on other branches are not affected. Setting `logical_size_bytes` overrides…
+  class ProjectQuota
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectQuotaMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectQuotaMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectQuotaMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalProjectRecoverResponseMetadata
-  FIELDS = {
-    project: "project",
-    branches: "branches",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    project
-    branches
-  ].freeze
-  DECODERS = {
-    project: lambda do |value|
-      ::OctridevNeon::Project.from_hash(value)
-    end,
-    branches: lambda do |value|
-      value&.map { |item| ::OctridevNeon::Branch.from_hash(item) }
-    end,
-  }.freeze
-end
+    # @return [Integer] The total amount of wall-clock time allowed to be spent by the project's compute endpoints.
+    attr_reader :active_time_seconds
+    # @return [Integer] The total amount of CPU seconds allowed to be spent by the project's compute endpoints.
+    attr_reader :compute_time_seconds
+    # @return [Integer] Total amount of data written to all of a project's branches.
+    attr_reader :written_data_bytes
+    # @return [Integer] Total amount of data transferred from all of a project's branches using the proxy.
+    attr_reader :data_transfer_bytes
+    # @return [Integer] Limit on the logical size of every project's branch. If a branch exceeds its `logical_size_bytes` quota, computes can still be started, but write operations will fail—allowing data to be deleted to free up space. Computes on other branches are not affected. Setting `logical_size_bytes` overrides any lower value set by the `neon.max_cluster_size` Postgres setting.
+    attr_reader :logical_size_bytes
 
-# API model for ProjectRecoverResponse.
-# Typed representation of the `ProjectRecoverResponse` API schema.
-class ProjectRecoverResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectRecoverResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectRecoverResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectRecoverResponseMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Project] Full details of the project, including configuration, consumption metrics, and ownership.
-  attr_reader :project
-  # @return [Array_of_Branch] Branches in the project. Each includes `id`, `name`, `current_state`, and `created_at`.
-  attr_reader :branches
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalProjectRecoverResponseMetadata
+    FIELDS = {
+      project: 'project',
+      branches: 'branches'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      project
+      branches
+    ].freeze
+    DECODERS = {
+      project: lambda do |value|
+        ::OctridevNeon::Project.from_hash(value)
+      end,
+      branches: lambda do |value|
+        value&.map { |item| ::OctridevNeon::Branch.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ProjectRecoverResponse.
+  # Typed representation of the `ProjectRecoverResponse` API schema.
+  class ProjectRecoverResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectRecoverResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectRecoverResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectRecoverResponseMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalProjectResponseMetadata
-  FIELDS = {
-    project: "project",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    project
-  ].freeze
-  DECODERS = {
-    project: lambda do |value|
-      ::OctridevNeon::Project.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [Project] Full details of the project, including configuration, consumption metrics, and ownership.
+    attr_reader :project
+    # @return [Array_of_Branch] Branches in the project. Each includes `id`, `name`, `current_state`, and `created_at`.
+    attr_reader :branches
 
-# API model for ProjectResponse.
-# Typed representation of the `ProjectResponse` API schema.
-class ProjectResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectResponseMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Project] Full details of the project, including configuration, consumption metrics, and ownership.
-  attr_reader :project
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalProjectResponseMetadata
+    FIELDS = {
+      project: 'project'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      project
+    ].freeze
+    DECODERS = {
+      project: lambda do |value|
+        ::OctridevNeon::Project.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ProjectResponse.
+  # Typed representation of the `ProjectResponse` API schema.
+  class ProjectResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectResponseMetadata::DECODERS
 
-# Defines the ProjectRole SDK namespace.
-module ProjectRole
-  VIEWER = 'viewer'
-  EDITOR = 'editor'
-  ADMIN = 'admin'
-  VALUES = ['viewer', 'editor', 'admin'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [Project] Full details of the project, including configuration, consumption metrics, and ownership.
+    attr_reader :project
 
-# Internal model hydration metadata.
-class SdkInternalProjectSettingsDataMetadata
-  FIELDS = {
-    quota: "quota",
-    allowed_ips: "allowed_ips",
-    enable_logical_replication: "enable_logical_replication",
-    maintenance_window: "maintenance_window",
-    block_public_connections: "block_public_connections",
-    block_vpc_connections: "block_vpc_connections",
-    audit_log_level: "audit_log_level",
-    hipaa: "hipaa",
-    preload_libraries: "preload_libraries",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    quota: lambda do |value|
-      ::OctridevNeon::ProjectQuota.from_hash(value)
-    end,
-    allowed_ips: lambda do |value|
-      ::OctridevNeon::AllowedIps.from_hash(value)
-    end,
-    maintenance_window: lambda do |value|
-      ::OctridevNeon::MaintenanceWindow.from_hash(value)
-    end,
-    audit_log_level: lambda do |value|
-      ::OctridevNeon::ProjectAuditLogLevel.from_value(value)
-    end,
-    preload_libraries: lambda do |value|
-      ::OctridevNeon::PreloadLibraries.from_hash(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for ProjectSettingsData.
-# Typed representation of the `ProjectSettingsData` API schema.
-class ProjectSettingsData
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectSettingsDataMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectSettingsDataMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectSettingsDataMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [ProjectQuota] Per-project consumption quotas. If a quota is exceeded, all active computes are automatically suspended and cannot be started via API calls or incoming connections. The exception is `logical_size_bytes`, which is enforced per branch. If a branch exceeds its `logical_size_bytes` quota, computes can still be started, but write operations will fail—allowing data to be deleted to free up space. Computes on other branches are not affected. Setting `logical_size_bytes` overrides…
-  attr_reader :quota
-  # @return [AllowedIps] A list of IP addresses that are allowed to connect to the compute endpoint. If the list is empty or not set, all IP addresses are allowed. If protected_branches_only is true, the list will be applied only to protected branches.
-  attr_reader :allowed_ips
-  # @return [Boolean] Sets wal_level=logical for all compute endpoints in this project. All active endpoints will be suspended. Once enabled, logical replication cannot be disabled.
-  attr_reader :enable_logical_replication
-  # @return [MaintenanceWindow] A maintenance window is a time period during which Neon may perform maintenance on the project's infrastructure. During this time, the project's compute endpoints may be unavailable and existing connections can be interrupted.
-  attr_reader :maintenance_window
-  # @return [Boolean] When set, connections from the public internet are disallowed. This supersedes the AllowedIPs list. This parameter is under active development and its semantics may change in the future.
-  attr_reader :block_public_connections
-  # @return [Boolean] When set, connections using VPC endpoints are disallowed. This parameter is under active development and its semantics may change in the future.
-  attr_reader :block_vpc_connections
-  # @return [ProjectAuditLogLevel] Audit logging level, set only on HIPAA-enabled organizations (absent otherwise). Values: `base`, `extended`, `full`; HIPAA defaults to `extended`. Cannot be lowered back to `base` once `extended` or `full`.
-  attr_reader :audit_log_level
-  # @return [Boolean] Enables HIPAA compliance mode for the project, including audit logging.
-  attr_reader :hipaa
-  # @return [PreloadLibraries] The shared libraries to preload into the project's compute instances.
-  attr_reader :preload_libraries
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ProjectRole SDK namespace.
+  module ProjectRole
+    VIEWER = 'viewer'
+    EDITOR = 'editor'
+    ADMIN = 'admin'
+    VALUES = %w[viewer editor admin].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalProjectTransferRequestResponseMetadata
-  FIELDS = {
-    id: "id",
-    project_id: "project_id",
-    created_at: "created_at",
-    expires_at: "expires_at",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    project_id
-    created_at
-    expires_at
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ProjectTransferRequestResponse.
-# Typed representation of the `ProjectTransferRequestResponse` API schema.
-class ProjectTransferRequestResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectTransferRequestResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectTransferRequestResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectTransferRequestResponseMetadata::DECODERS
-
-  # @return [String] The unique identifier for the transfer request
-  attr_reader :id
-  # @return [String] The ID of the project that is being transferred
-  attr_reader :project_id
-  # @return [String] The timestamp when the transfer request was created
-  attr_reader :created_at
-  # @return [String] The timestamp when the transfer request will expire
-  attr_reader :expires_at
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalProjectSettingsDataMetadata
+    FIELDS = {
+      quota: 'quota',
+      allowed_ips: 'allowed_ips',
+      enable_logical_replication: 'enable_logical_replication',
+      maintenance_window: 'maintenance_window',
+      block_public_connections: 'block_public_connections',
+      block_vpc_connections: 'block_vpc_connections',
+      audit_log_level: 'audit_log_level',
+      hipaa: 'hipaa',
+      preload_libraries: 'preload_libraries'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      quota: lambda do |value|
+        ::OctridevNeon::ProjectQuota.from_hash(value)
+      end,
+      allowed_ips: lambda do |value|
+        ::OctridevNeon::AllowedIps.from_hash(value)
+      end,
+      maintenance_window: lambda do |value|
+        ::OctridevNeon::MaintenanceWindow.from_hash(value)
+      end,
+      audit_log_level: lambda do |value|
+        ::OctridevNeon::ProjectAuditLogLevel.from_value(value)
+      end,
+      preload_libraries: lambda do |value|
+        ::OctridevNeon::PreloadLibraries.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ProjectSettingsData.
+  # Typed representation of the `ProjectSettingsData` API schema.
+  class ProjectSettingsData
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectSettingsDataMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectSettingsDataMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectSettingsDataMetadata::DECODERS
+
+    # @return [ProjectQuota] Per-project consumption quotas. If a quota is exceeded, all active computes are automatically suspended and cannot be started via API calls or incoming connections. The exception is `logical_size_bytes`, which is enforced per branch. If a branch exceeds its `logical_size_bytes` quota, computes can still be started, but write operations will fail—allowing data to be deleted to free up space. Computes on other branches are not affected. Setting `logical_size_bytes` overrides…
+    attr_reader :quota
+    # @return [AllowedIps] A list of IP addresses that are allowed to connect to the compute endpoint. If the list is empty or not set, all IP addresses are allowed. If protected_branches_only is true, the list will be applied only to protected branches.
+    attr_reader :allowed_ips
+    # @return [Boolean] Sets wal_level=logical for all compute endpoints in this project. All active endpoints will be suspended. Once enabled, logical replication cannot be disabled.
+    attr_reader :enable_logical_replication
+    # @return [MaintenanceWindow] A maintenance window is a time period during which Neon may perform maintenance on the project's infrastructure. During this time, the project's compute endpoints may be unavailable and existing connections can be interrupted.
+    attr_reader :maintenance_window
+    # @return [Boolean] When set, connections from the public internet are disallowed. This supersedes the AllowedIPs list. This parameter is under active development and its semantics may change in the future.
+    attr_reader :block_public_connections
+    # @return [Boolean] When set, connections using VPC endpoints are disallowed. This parameter is under active development and its semantics may change in the future.
+    attr_reader :block_vpc_connections
+    # @return [ProjectAuditLogLevel] Audit logging level, set only on HIPAA-enabled organizations (absent otherwise). Values: `base`, `extended`, `full`; HIPAA defaults to `extended`. Cannot be lowered back to `base` once `extended` or `full`.
+    attr_reader :audit_log_level
+    # @return [Boolean] Enables HIPAA compliance mode for the project, including audit logging.
+    attr_reader :hipaa
+    # @return [PreloadLibraries] The shared libraries to preload into the project's compute instances.
+    attr_reader :preload_libraries
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalProjectUpdateRequestProjectMetadata
-  FIELDS = {
-    settings: "settings",
-    name: "name",
-    default_endpoint_settings: "default_endpoint_settings",
-    history_retention_seconds: "history_retention_seconds",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    settings: lambda do |value|
-      ::OctridevNeon::ProjectSettingsData.from_hash(value)
-    end,
-    default_endpoint_settings: lambda do |value|
-      ::OctridevNeon::DefaultEndpointSettings.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ProjectUpdateRequestProject.
-# Required object value serialized in the `project` wire field.
-class ProjectUpdateRequestProject
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectUpdateRequestProjectMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectUpdateRequestProjectMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectUpdateRequestProjectMetadata::DECODERS
-
-  # @return [ProjectSettingsData] Project-level settings, for example `quota`, `allowed_ips`, `enable_logical_replication`, and `maintenance_window`.
-  attr_reader :settings
-  # @return [String] The project name
-  attr_reader :name
-  # @return [DefaultEndpointSettings] A collection of settings for a Neon endpoint
-  attr_reader :default_endpoint_settings
-  # @return [Integer] History window (point-in-time restore range) for all branches, in seconds. `0` disables it. Default 1 day (Free: 6 hours). Maximum depends on plan: Free 6 hours (21600), Launch 7 days (604800), Scale 30 days (2592000).
-  attr_reader :history_retention_seconds
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalProjectTransferRequestResponseMetadata
+    FIELDS = {
+      id: 'id',
+      project_id: 'project_id',
+      created_at: 'created_at',
+      expires_at: 'expires_at'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      project_id
+      created_at
+      expires_at
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ProjectTransferRequestResponse.
+  # Typed representation of the `ProjectTransferRequestResponse` API schema.
+  class ProjectTransferRequestResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectTransferRequestResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectTransferRequestResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectTransferRequestResponseMetadata::DECODERS
+
+    # @return [String] The unique identifier for the transfer request
+    attr_reader :id
+    # @return [String] The ID of the project that is being transferred
+    attr_reader :project_id
+    # @return [String] The timestamp when the transfer request was created
+    attr_reader :created_at
+    # @return [String] The timestamp when the transfer request will expire
+    attr_reader :expires_at
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalProjectUpdateRequestMetadata
-  FIELDS = {
-    project: "project",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    project
-  ].freeze
-  DECODERS = {
-    project: lambda do |value|
-      ::OctridevNeon::ProjectUpdateRequestProject.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ProjectUpdateRequest.
-# Typed representation of the `ProjectUpdateRequest` API schema.
-class ProjectUpdateRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectUpdateRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectUpdateRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectUpdateRequestMetadata::DECODERS
-
-  # @return [ProjectUpdateRequestProject] Required object value serialized in the `project` wire field.
-  attr_reader :project
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalProjectUpdateRequestProjectMetadata
+    FIELDS = {
+      settings: 'settings',
+      name: 'name',
+      default_endpoint_settings: 'default_endpoint_settings',
+      history_retention_seconds: 'history_retention_seconds'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      settings: lambda do |value|
+        ::OctridevNeon::ProjectSettingsData.from_hash(value)
+      end,
+      default_endpoint_settings: lambda do |value|
+        ::OctridevNeon::DefaultEndpointSettings.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ProjectUpdateRequestProject.
+  # Required object value serialized in the `project` wire field.
+  class ProjectUpdateRequestProject
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectUpdateRequestProjectMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectUpdateRequestProjectMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectUpdateRequestProjectMetadata::DECODERS
+
+    # @return [ProjectSettingsData] Project-level settings, for example `quota`, `allowed_ips`, `enable_logical_replication`, and `maintenance_window`.
+    attr_reader :settings
+    # @return [String] The project name
+    attr_reader :name
+    # @return [DefaultEndpointSettings] A collection of settings for a Neon endpoint
+    attr_reader :default_endpoint_settings
+    # @return [Integer] History window (point-in-time restore range) for all branches, in seconds. `0` disables it. Default 1 day (Free: 6 hours). Maximum depends on plan: Free 6 hours (21600), Launch 7 days (604800), Scale 30 days (2592000).
+    attr_reader :history_retention_seconds
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalProjectUpdateRequestMetadata
+    FIELDS = {
+      project: 'project'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      project
+    ].freeze
+    DECODERS = {
+      project: lambda do |value|
+        ::OctridevNeon::ProjectUpdateRequestProject.from_hash(value)
+      end
+    }.freeze
   end
-end
+
+  # API model for ProjectUpdateRequest.
+  # Typed representation of the `ProjectUpdateRequest` API schema.
+  class ProjectUpdateRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectUpdateRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectUpdateRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectUpdateRequestMetadata::DECODERS
+
+    # @return [ProjectUpdateRequestProject] Required object value serialized in the `project` wire field.
+    attr_reader :project
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end
