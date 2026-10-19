@@ -14,15 +14,16 @@ module OctridevNeon
         config:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
-          '/api_keys',
+          "/api_keys",
           config: config,
           return_type: [::OctridevNeon::ApiKeysListResponseItem],
           decoder: :json,
           operation_id: 'list_api_key',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -35,20 +36,21 @@ module OctridevNeon
         key_name:,
         request_options: nil
       )
+
         Validation.validate_length('key_name', key_name, max: 64)
 
         SdkClient.request(
           'POST',
-          '/api_keys',
+          "/api_keys",
           config: config,
           body: {
-            'key_name' => key_name
+            'key_name' => key_name,
           },
           return_type: ::OctridevNeon::ApiKeyCreateResponse,
           decoder: :json,
           operation_id: 'create_api_key',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -60,10 +62,11 @@ module OctridevNeon
         key_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/api_keys/',
+            "/api_keys/",
             SdkClient.encode_path_segment(key_id)
           ].join,
           config: config,
@@ -71,7 +74,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'revoke_api_key',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

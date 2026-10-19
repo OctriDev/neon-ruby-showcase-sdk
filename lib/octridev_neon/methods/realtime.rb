@@ -13,7 +13,13 @@ module OctridevNeon
       #
       # @param project_id [String] The project ID
       # @param branch_id [String] The branch ID
-      singleton_class.define_method(:get_realtime) do |config:, project_id:, branch_id:, request_options: nil|
+      singleton_class.define_method(:get_realtime) do |
+        config:,
+        project_id:,
+        branch_id:,
+        request_options: nil
+      |
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -21,18 +27,18 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/realtime'
+            "/realtime"
           ].join,
           config: config,
           return_type: ::OctridevNeon::Realtime,
           decoder: :json,
           operation_id: 'get_realtime',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -51,6 +57,7 @@ module OctridevNeon
         allowed_origins: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -62,20 +69,20 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/realtime'
+            "/realtime"
           ].join,
           config: config,
           body: {
-            'allowed_origins' => allowed_origins
+            'allowed_origins' => allowed_origins,
           },
           decoder: :empty,
           operation_id: 'enable_realtime',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -89,6 +96,7 @@ module OctridevNeon
         branch_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -96,17 +104,17 @@ module OctridevNeon
         SdkClient.request(
           'DELETE',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/realtime'
+            "/realtime"
           ].join,
           config: config,
           decoder: :empty,
           operation_id: 'disable_realtime',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -114,7 +122,13 @@ module OctridevNeon
       #
       # @param project_id [String] The project ID
       # @param branch_id [String] The branch ID
-      singleton_class.define_method(:get_realtime_secret) do |config:, project_id:, branch_id:, request_options: nil|
+      singleton_class.define_method(:get_realtime_secret) do |
+        config:,
+        project_id:,
+        branch_id:,
+        request_options: nil
+      |
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -122,18 +136,18 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/realtime/secret'
+            "/realtime/secret"
           ].join,
           config: config,
           return_type: ::OctridevNeon::RealtimeSecret,
           decoder: :json,
           operation_id: 'get_realtime_secret',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -147,6 +161,7 @@ module OctridevNeon
         branch_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -154,17 +169,17 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/realtime/rotate_secret'
+            "/realtime/rotate_secret"
           ].join,
           config: config,
           decoder: :empty,
           operation_id: 'rotate_realtime_secret',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

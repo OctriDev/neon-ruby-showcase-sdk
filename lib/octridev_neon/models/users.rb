@@ -5,611 +5,612 @@
 
 # users domain models
 module OctridevNeon
-  # Internal model hydration metadata.
-  class SdkInternalAuthDetailsResponseMetadata
-    FIELDS = {
-      account_id: 'account_id',
-      auth_method: 'auth_method',
-      auth_data: 'auth_data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      account_id
-      auth_method
-    ].freeze
-    DECODERS = {
-      auth_method: lambda do |value|
-        ::OctridevNeon::AuthDetailsResponseAuthMethod.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalAuthDetailsResponseMetadata
+  FIELDS = {
+    account_id: "account_id",
+    auth_method: "auth_method",
+    auth_data: "auth_data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    account_id
+    auth_method
+  ].freeze
+  DECODERS = {
+    auth_method: lambda do |value|
+      ::OctridevNeon::AuthDetailsResponseAuthMethod.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for AuthDetailsResponse.
+# Typed representation of the `AuthDetailsResponse` API schema.
+class AuthDetailsResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAuthDetailsResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAuthDetailsResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAuthDetailsResponseMetadata::DECODERS
+
+  # @return [String] The ID of the account associated with this authentication record.
+  attr_reader :account_id
+  # @return [AuthDetailsResponseAuthMethod] Authentication method used for the request: - `keycloak`: Keycloak identity provider authentication. - `session_cookie`: Browser session cookie authentication. - `api_key_user`: API key scoped to a user account. - `api_key_org`: API key scoped to an organization. - `oauth`: OAuth-based authentication.
+  attr_reader :auth_method
+  # @return [String] Optional `string` value serialized in the `auth_data` wire field.
+  attr_reader :auth_data
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for AuthDetailsResponse.
-  # Typed representation of the `AuthDetailsResponse` API schema.
-  class AuthDetailsResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAuthDetailsResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAuthDetailsResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAuthDetailsResponseMetadata::DECODERS
-
-    # @return [String] The ID of the account associated with this authentication record.
-    attr_reader :account_id
-    # @return [AuthDetailsResponseAuthMethod] Authentication method used for the request: - `keycloak`: Keycloak identity provider authentication. - `session_cookie`: Browser session cookie authentication. - `api_key_user`: API key scoped to a user account. - `api_key_org`: API key scoped to an organization. - `oauth`: OAuth-based authentication.
-    attr_reader :auth_method
-    # @return [String] Optional `string` value serialized in the `auth_data` wire field.
-    attr_reader :auth_data
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the AuthDetailsResponseAuthMethod SDK namespace.
-  module AuthDetailsResponseAuthMethod
-    KEYCLOAK = 'keycloak'
-    SESSION_COOKIE = 'session_cookie'
-    API_KEY_USER = 'api_key_user'
-    API_KEY_ORG = 'api_key_org'
-    OAUTH = 'oauth'
-    VALUES = %w[keycloak session_cookie api_key_user api_key_org oauth].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the AuthDetailsResponseAuthMethod SDK namespace.
+module AuthDetailsResponseAuthMethod
+  KEYCLOAK = 'keycloak'
+  SESSION_COOKIE = 'session_cookie'
+  API_KEY_USER = 'api_key_user'
+  API_KEY_ORG = 'api_key_org'
+  OAUTH = 'oauth'
+  VALUES = ['keycloak', 'session_cookie', 'api_key_user', 'api_key_org', 'oauth'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBillingAccountMetadata
+  FIELDS = {
+    state: "state",
+    payment_source: "payment_source",
+    subscription_type: "subscription_type",
+    payment_method: "payment_method",
+    quota_reset_at_last: "quota_reset_at_last",
+    name: "name",
+    email: "email",
+    address_city: "address_city",
+    address_country: "address_country",
+    address_country_name: "address_country_name",
+    address_line1: "address_line1",
+    address_line2: "address_line2",
+    address_postal_code: "address_postal_code",
+    address_state: "address_state",
+    orb_portal_url: "orb_portal_url",
+    tax_id: "tax_id",
+    tax_id_type: "tax_id_type",
+    plan_details: "plan_details",
+    spending_limit_cents: "spending_limit_cents",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    state
+    payment_source
+    subscription_type
+    payment_method
+    quota_reset_at_last
+    name
+    email
+    address_city
+    address_country
+    address_line1
+    address_line2
+    address_postal_code
+    address_state
+  ].freeze
+  DECODERS = {
+    state: lambda do |value|
+      ::OctridevNeon::BillingAccountState.from_value(value)
+    end,
+    payment_source: lambda do |value|
+      ::OctridevNeon::PaymentSource.from_hash(value)
+    end,
+    subscription_type: lambda do |value|
+      ::OctridevNeon::BillingSubscriptionType.from_value(value)
+    end,
+    payment_method: lambda do |value|
+      ::OctridevNeon::BillingPaymentMethod.from_value(value)
+    end,
+    plan_details: lambda do |value|
+      ::OctridevNeon::PlanDetails.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BillingAccount.
+# Typed representation of the `BillingAccount` API schema.
+class BillingAccount
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBillingAccountMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBillingAccountMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBillingAccountMetadata::DECODERS
+
+  # @return [BillingAccountState] State of the billing account. `UNKNOWN`: state is not determined. `active`: the account is active and in normal operation. `suspended`: the account has been suspended. `deactivated`: the account has been deactivated. `deleted`: the account has been deleted.
+  attr_reader :state
+  # @return [PaymentSource] Payment source attached to the billing account, such as a credit card on file.
+  attr_reader :payment_source
+  # @return [BillingSubscriptionType] Type of subscription to Neon Cloud. Notice that for users without billing account this will be "UNKNOWN"
+  attr_reader :subscription_type
+  # @return [BillingPaymentMethod] Indicates whether and how an account makes payments.
+  attr_reader :payment_method
+  # @return [String] Timestamp of the last quota reset. Set to the account creation time when the account is first created.
+  attr_reader :quota_reset_at_last
+  # @return [String] The full name of the individual or entity that owns the billing account. This name appears on invoices.
+  attr_reader :name
+  # @return [String] Billing email, to receive emails related to invoices and subscriptions.
+  attr_reader :email
+  # @return [String] Billing address city.
+  attr_reader :address_city
+  # @return [String] Billing address country code defined by ISO 3166-1 alpha-2.
+  attr_reader :address_country
+  # @return [String] Billing address country name.
+  attr_reader :address_country_name
+  # @return [String] Billing address line 1.
+  attr_reader :address_line1
+  # @return [String] Billing address line 2.
+  attr_reader :address_line2
+  # @return [String] Billing address postal code.
+  attr_reader :address_postal_code
+  # @return [String] Billing address state or region.
+  attr_reader :address_state
+  # @return [String] Orb user portal url
+  attr_reader :orb_portal_url
+  # @return [String] The tax identification number for the billing account, displayed on invoices.
+  attr_reader :tax_id
+  # @return [String] The type of the tax identification number based on the country.
+  attr_reader :tax_id_type
+  # @return [PlanDetails] Details of the subscription plan associated with the billing account.
+  attr_reader :plan_details
+  # @return [Integer] Monthly spending cap in cents for V3 paid plans. When set, notifications are sent at 80% and 100% of this limit. `null` means no limit is configured.
+  attr_reader :spending_limit_cents
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBillingAccountMetadata
-    FIELDS = {
-      state: 'state',
-      payment_source: 'payment_source',
-      subscription_type: 'subscription_type',
-      payment_method: 'payment_method',
-      quota_reset_at_last: 'quota_reset_at_last',
-      name: 'name',
-      email: 'email',
-      address_city: 'address_city',
-      address_country: 'address_country',
-      address_country_name: 'address_country_name',
-      address_line1: 'address_line1',
-      address_line2: 'address_line2',
-      address_postal_code: 'address_postal_code',
-      address_state: 'address_state',
-      orb_portal_url: 'orb_portal_url',
-      tax_id: 'tax_id',
-      tax_id_type: 'tax_id_type',
-      plan_details: 'plan_details',
-      spending_limit_cents: 'spending_limit_cents'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      state
-      payment_source
-      subscription_type
-      payment_method
-      quota_reset_at_last
-      name
-      email
-      address_city
-      address_country
-      address_line1
-      address_line2
-      address_postal_code
-      address_state
-    ].freeze
-    DECODERS = {
-      state: lambda do |value|
-        ::OctridevNeon::BillingAccountState.from_value(value)
-      end,
-      payment_source: lambda do |value|
-        ::OctridevNeon::PaymentSource.from_hash(value)
-      end,
-      subscription_type: lambda do |value|
-        ::OctridevNeon::BillingSubscriptionType.from_value(value)
-      end,
-      payment_method: lambda do |value|
-        ::OctridevNeon::BillingPaymentMethod.from_value(value)
-      end,
-      plan_details: lambda do |value|
-        ::OctridevNeon::PlanDetails.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BillingAccount.
-  # Typed representation of the `BillingAccount` API schema.
-  class BillingAccount
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBillingAccountMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBillingAccountMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBillingAccountMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [BillingAccountState] State of the billing account. `UNKNOWN`: state is not determined. `active`: the account is active and in normal operation. `suspended`: the account has been suspended. `deactivated`: the account has been deactivated. `deleted`: the account has been deleted.
-    attr_reader :state
-    # @return [PaymentSource] Payment source attached to the billing account, such as a credit card on file.
-    attr_reader :payment_source
-    # @return [BillingSubscriptionType] Type of subscription to Neon Cloud. Notice that for users without billing account this will be "UNKNOWN"
-    attr_reader :subscription_type
-    # @return [BillingPaymentMethod] Indicates whether and how an account makes payments.
-    attr_reader :payment_method
-    # @return [String] Timestamp of the last quota reset. Set to the account creation time when the account is first created.
-    attr_reader :quota_reset_at_last
-    # @return [String] The full name of the individual or entity that owns the billing account. This name appears on invoices.
-    attr_reader :name
-    # @return [String] Billing email, to receive emails related to invoices and subscriptions.
-    attr_reader :email
-    # @return [String] Billing address city.
-    attr_reader :address_city
-    # @return [String] Billing address country code defined by ISO 3166-1 alpha-2.
-    attr_reader :address_country
-    # @return [String] Billing address country name.
-    attr_reader :address_country_name
-    # @return [String] Billing address line 1.
-    attr_reader :address_line1
-    # @return [String] Billing address line 2.
-    attr_reader :address_line2
-    # @return [String] Billing address postal code.
-    attr_reader :address_postal_code
-    # @return [String] Billing address state or region.
-    attr_reader :address_state
-    # @return [String] Orb user portal url
-    attr_reader :orb_portal_url
-    # @return [String] The tax identification number for the billing account, displayed on invoices.
-    attr_reader :tax_id
-    # @return [String] The type of the tax identification number based on the country.
-    attr_reader :tax_id_type
-    # @return [PlanDetails] Details of the subscription plan associated with the billing account.
-    attr_reader :plan_details
-    # @return [Integer] Monthly spending cap in cents for V3 paid plans. When set, notifications are sent at 80% and 100% of this limit. `null` means no limit is configured.
-    attr_reader :spending_limit_cents
+# Defines the BillingAccountState SDK namespace.
+module BillingAccountState
+  UNKNOWN = 'UNKNOWN'
+  ACTIVE = 'active'
+  SUSPENDED = 'suspended'
+  DEACTIVATED = 'deactivated'
+  DELETED = 'deleted'
+  VALUES = ['UNKNOWN', 'active', 'suspended', 'deactivated', 'deleted'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Defines the BillingPaymentMethod SDK namespace.
+module BillingPaymentMethod
+  UNKNOWN = 'UNKNOWN'
+  NONE = 'none'
+  STRIPE = 'stripe'
+  DIRECT_PAYMENT = 'direct_payment'
+  AWS_MP = 'aws_mp'
+  AZURE_MP = 'azure_mp'
+  VERCEL_MP = 'vercel_mp'
+  STAFF = 'staff'
+  TRIAL = 'trial'
+  SPONSORSHIP = 'sponsorship'
+  SHARED_PAYMENT_TOKEN = 'shared_payment_token'
+  VALUES = [
+    'UNKNOWN', 'none', 'stripe', 'direct_payment', 'aws_mp', 'azure_mp', 'vercel_mp', 'staff',
+    'trial', 'sponsorship', 'shared_payment_token'
+  ].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# Internal model hydration metadata.
+class SdkInternalCurrentUserAuthAccountMetadata
+  FIELDS = {
+    email: "email",
+    image: "image",
+    login: "login",
+    name: "name",
+    provider: "provider",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    email
+    image
+    login
+    name
+    provider
+  ].freeze
+  DECODERS = {
+    provider: lambda do |value|
+      ::OctridevNeon::IdentityProviderId.from_value(value)
+    end,
+  }.freeze
+end
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# API model for CurrentUserAuthAccount.
+# Typed representation of the `CurrentUserAuthAccount` API schema.
+class CurrentUserAuthAccount
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCurrentUserAuthAccountMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCurrentUserAuthAccountMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCurrentUserAuthAccountMetadata::DECODERS
+
+  # @return [String] Email address associated with this auth account.
+  attr_reader :email
+  # @return [String] URL of the user's profile picture as provided by the identity provider.
+  attr_reader :image
+  # @return [String] Deprecated. Use the `email` field.
+  attr_reader :login
+  # @return [String] Display name of the account as provided by the identity provider.
+  attr_reader :name
+  # @return [IdentityProviderId] Identity provider id from keycloak
+  attr_reader :provider
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BillingAccountState SDK namespace.
-  module BillingAccountState
-    UNKNOWN = 'UNKNOWN'
-    ACTIVE = 'active'
-    SUSPENDED = 'suspended'
-    DEACTIVATED = 'deactivated'
-    DELETED = 'deleted'
-    VALUES = %w[UNKNOWN active suspended deactivated deleted].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BillingPaymentMethod SDK namespace.
-  module BillingPaymentMethod
-    UNKNOWN = 'UNKNOWN'
-    NONE = 'none'
-    STRIPE = 'stripe'
-    DIRECT_PAYMENT = 'direct_payment'
-    AWS_MP = 'aws_mp'
-    AZURE_MP = 'azure_mp'
-    VERCEL_MP = 'vercel_mp'
-    STAFF = 'staff'
-    TRIAL = 'trial'
-    SPONSORSHIP = 'sponsorship'
-    SHARED_PAYMENT_TOKEN = 'shared_payment_token'
-    VALUES = %w[
-      UNKNOWN none stripe direct_payment aws_mp azure_mp vercel_mp staff
-      trial sponsorship shared_payment_token
-    ].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCurrentUserInfoResponseMetadata
+  FIELDS = {
+    active_seconds_limit: "active_seconds_limit",
+    billing_account: "billing_account",
+    auth_accounts: "auth_accounts",
+    email: "email",
+    id: "id",
+    image: "image",
+    login: "login",
+    name: "name",
+    last_name: "last_name",
+    projects_limit: "projects_limit",
+    branches_limit: "branches_limit",
+    max_autoscaling_limit: "max_autoscaling_limit",
+    compute_seconds_limit: "compute_seconds_limit",
+    plan: "plan",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    active_seconds_limit
+    auth_accounts
+    email
+    id
+    image
+    login
+    name
+    last_name
+    projects_limit
+    branches_limit
+    max_autoscaling_limit
+    plan
+  ].freeze
+  DECODERS = {
+    billing_account: lambda do |value|
+      ::OctridevNeon::BillingAccount.from_hash(value)
+    end,
+    auth_accounts: lambda do |value|
+      value&.map { |item| ::OctridevNeon::CurrentUserAuthAccount.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for CurrentUserInfoResponse.
+# Typed representation of the `CurrentUserInfoResponse` API schema.
+class CurrentUserInfoResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCurrentUserInfoResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCurrentUserInfoResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCurrentUserInfoResponseMetadata::DECODERS
+
+  # @return [Integer] Control plane observes active endpoints of a user this amount of wall-clock time.
+  attr_reader :active_seconds_limit
+  # @return [BillingAccount] Billing account associated with the current user, including plan and subscription details.
+  attr_reader :billing_account
+  # @return [Array_of_CurrentUserAuthAccount] Authentication provider accounts linked to the current user.
+  attr_reader :auth_accounts
+  # @return [String] Email address of the authenticated user.
+  attr_reader :email
+  # @return [String] The Neon user ID.
+  attr_reader :id
+  # @return [String] URL of the user's profile avatar image.
+  attr_reader :image
+  # @return [String] Deprecated. Use the `email` field.
+  attr_reader :login
+  # @return [String] First name of the current user.
+  attr_reader :name
+  # @return [String] Last name of the current user.
+  attr_reader :last_name
+  # @return [Integer] Maximum number of projects the account is allowed to create under the current plan.
+  attr_reader :projects_limit
+  # @return [Integer] Maximum number of branches allowed for the account under the current plan.
+  attr_reader :branches_limit
+  # @return [Float] The maximum autoscaling limit in Compute Units. A value of 0 indicates no limit is configured.
+  attr_reader :max_autoscaling_limit
+  # @return [Integer] Maximum Postgres compute time, in seconds, allowed under the account's current plan.
+  attr_reader :compute_seconds_limit
+  # @return [String] Current billing plan for the user's account.
+  attr_reader :plan
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCurrentUserAuthAccountMetadata
-    FIELDS = {
-      email: 'email',
-      image: 'image',
-      login: 'login',
-      name: 'name',
-      provider: 'provider'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      email
-      image
-      login
-      name
-      provider
-    ].freeze
-    DECODERS = {
-      provider: lambda do |value|
-        ::OctridevNeon::IdentityProviderId.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for CurrentUserAuthAccount.
-  # Typed representation of the `CurrentUserAuthAccount` API schema.
-  class CurrentUserAuthAccount
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCurrentUserAuthAccountMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCurrentUserAuthAccountMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCurrentUserAuthAccountMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] Email address associated with this auth account.
-    attr_reader :email
-    # @return [String] URL of the user's profile picture as provided by the identity provider.
-    attr_reader :image
-    # @return [String] Deprecated. Use the `email` field.
-    attr_reader :login
-    # @return [String] Display name of the account as provided by the identity provider.
-    attr_reader :name
-    # @return [IdentityProviderId] Identity provider id from keycloak
-    attr_reader :provider
+# Defines the IdentityProviderId SDK namespace.
+module IdentityProviderId
+  GITHUB = 'github'
+  GOOGLE = 'google'
+  HASURA = 'hasura'
+  MICROSOFT = 'microsoft'
+  MICROSOFTV2 = 'microsoftv2'
+  VERCELMP = 'vercelmp'
+  KEYCLOAK = 'keycloak'
+  VALUES = ['github', 'google', 'hasura', 'microsoft', 'microsoftv2', 'vercelmp', 'keycloak'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalOrganizationsResponseMetadata
+  FIELDS = {
+    organizations: "organizations",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    organizations
+  ].freeze
+  DECODERS = {
+    organizations: lambda do |value|
+      value&.map { |item| ::OctridevNeon::Organization.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for OrganizationsResponse.
+# Typed representation of the `OrganizationsResponse` API schema.
+class OrganizationsResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalOrganizationsResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalOrganizationsResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalOrganizationsResponseMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [Array_of_Organization] Organizations returned by the request. Each includes `id`, `name`, `handle`, and `plan`.
+  attr_reader :organizations
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCurrentUserInfoResponseMetadata
-    FIELDS = {
-      active_seconds_limit: 'active_seconds_limit',
-      billing_account: 'billing_account',
-      auth_accounts: 'auth_accounts',
-      email: 'email',
-      id: 'id',
-      image: 'image',
-      login: 'login',
-      name: 'name',
-      last_name: 'last_name',
-      projects_limit: 'projects_limit',
-      branches_limit: 'branches_limit',
-      max_autoscaling_limit: 'max_autoscaling_limit',
-      compute_seconds_limit: 'compute_seconds_limit',
-      plan: 'plan'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      active_seconds_limit
-      auth_accounts
-      email
-      id
-      image
-      login
-      name
-      last_name
-      projects_limit
-      branches_limit
-      max_autoscaling_limit
-      plan
-    ].freeze
-    DECODERS = {
-      billing_account: lambda do |value|
-        ::OctridevNeon::BillingAccount.from_hash(value)
-      end,
-      auth_accounts: lambda do |value|
-        value&.map { |item| ::OctridevNeon::CurrentUserAuthAccount.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for CurrentUserInfoResponse.
-  # Typed representation of the `CurrentUserInfoResponse` API schema.
-  class CurrentUserInfoResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCurrentUserInfoResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCurrentUserInfoResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCurrentUserInfoResponseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Integer] Control plane observes active endpoints of a user this amount of wall-clock time.
-    attr_reader :active_seconds_limit
-    # @return [BillingAccount] Billing account associated with the current user, including plan and subscription details.
-    attr_reader :billing_account
-    # @return [Array_of_CurrentUserAuthAccount] Authentication provider accounts linked to the current user.
-    attr_reader :auth_accounts
-    # @return [String] Email address of the authenticated user.
-    attr_reader :email
-    # @return [String] The Neon user ID.
-    attr_reader :id
-    # @return [String] URL of the user's profile avatar image.
-    attr_reader :image
-    # @return [String] Deprecated. Use the `email` field.
-    attr_reader :login
-    # @return [String] First name of the current user.
-    attr_reader :name
-    # @return [String] Last name of the current user.
-    attr_reader :last_name
-    # @return [Integer] Maximum number of projects the account is allowed to create under the current plan.
-    attr_reader :projects_limit
-    # @return [Integer] Maximum number of branches allowed for the account under the current plan.
-    attr_reader :branches_limit
-    # @return [Float] The maximum autoscaling limit in Compute Units. A value of 0 indicates no limit is configured.
-    attr_reader :max_autoscaling_limit
-    # @return [Integer] Maximum Postgres compute time, in seconds, allowed under the account's current plan.
-    attr_reader :compute_seconds_limit
-    # @return [String] Current billing plan for the user's account.
-    attr_reader :plan
+# Internal model hydration metadata.
+class SdkInternalPaymentSourceMetadata
+  FIELDS = {
+    type: "type",
+    card: "card",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    card: lambda do |value|
+      ::OctridevNeon::PaymentSourceBankCard.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for PaymentSource.
+# Typed representation of the `PaymentSource` API schema.
+class PaymentSource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalPaymentSourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalPaymentSourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalPaymentSourceMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] Type of payment source. E.g. "card".
+  attr_reader :type
+  # @return [PaymentSourceBankCard] Bank card details for this payment source.
+  attr_reader :card
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the IdentityProviderId SDK namespace.
-  module IdentityProviderId
-    GITHUB = 'github'
-    GOOGLE = 'google'
-    HASURA = 'hasura'
-    MICROSOFT = 'microsoft'
-    MICROSOFTV2 = 'microsoftv2'
-    VERCELMP = 'vercelmp'
-    KEYCLOAK = 'keycloak'
-    VALUES = %w[github google hasura microsoft microsoftv2 vercelmp keycloak].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalOrganizationsResponseMetadata
-    FIELDS = {
-      organizations: 'organizations'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      organizations
-    ].freeze
-    DECODERS = {
-      organizations: lambda do |value|
-        value&.map { |item| ::OctridevNeon::Organization.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalPaymentSourceBankCardMetadata
+  FIELDS = {
+    last4: "last4",
+    brand: "brand",
+    exp_month: "exp_month",
+    exp_year: "exp_year",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    last4
+  ].freeze
+  DECODERS = {
+    brand: lambda do |value|
+      ::OctridevNeon::PaymentSourceBankCardBrand.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for PaymentSourceBankCard.
+# Typed representation of the `PaymentSourceBankCard` API schema.
+class PaymentSourceBankCard
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalPaymentSourceBankCardMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalPaymentSourceBankCardMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalPaymentSourceBankCardMetadata::DECODERS
+
+  # @return [String] Last 4 digits of the card.
+  attr_reader :last4
+  # @return [PaymentSourceBankCardBrand] Card network reported by the payment processor. Set to `unknown` when the network cannot be determined.
+  attr_reader :brand
+  # @return [Integer] Credit card expiration month
+  attr_reader :exp_month
+  # @return [Integer] Credit card expiration year
+  attr_reader :exp_year
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for OrganizationsResponse.
-  # Typed representation of the `OrganizationsResponse` API schema.
-  class OrganizationsResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalOrganizationsResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalOrganizationsResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalOrganizationsResponseMetadata::DECODERS
-
-    # @return [Array_of_Organization] Organizations returned by the request. Each includes `id`, `name`, `handle`, and `plan`.
-    attr_reader :organizations
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalPaymentSourceMetadata
-    FIELDS = {
-      type: 'type',
-      card: 'card'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      card: lambda do |value|
-        ::OctridevNeon::PaymentSourceBankCard.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the PaymentSourceBankCardBrand SDK namespace.
+module PaymentSourceBankCardBrand
+  AMEX = 'amex'
+  DINERS = 'diners'
+  DISCOVER = 'discover'
+  JCB = 'jcb'
+  MASTERCARD = 'mastercard'
+  UNIONPAY = 'unionpay'
+  UNKNOWN = 'unknown'
+  VISA = 'visa'
+  VALUES = ['amex', 'diners', 'discover', 'jcb', 'mastercard', 'unionpay', 'unknown', 'visa'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalPlanDetailsMetadata
+  FIELDS = {
+    name: "name",
+    version: "version",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+  ].freeze
+  DECODERS = {
+    version: lambda do |value|
+      ::OctridevNeon::PlanVersion.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for PlanDetails.
+# Typed representation of the `PlanDetails` API schema.
+class PlanDetails
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalPlanDetailsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalPlanDetailsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalPlanDetailsMetadata::DECODERS
+
+  # @return [String] Plan name, for example `free`, `launch`, or `scale`.
+  attr_reader :name
+  # @return [PlanVersion] Version of the plan, expressed as `major` and `minor` components.
+  attr_reader :version
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for PaymentSource.
-  # Typed representation of the `PaymentSource` API schema.
-  class PaymentSource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPaymentSourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPaymentSourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPaymentSourceMetadata::DECODERS
-
-    # @return [String] Type of payment source. E.g. "card".
-    attr_reader :type
-    # @return [PaymentSourceBankCard] Bank card details for this payment source.
-    attr_reader :card
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalPaymentSourceBankCardMetadata
-    FIELDS = {
-      last4: 'last4',
-      brand: 'brand',
-      exp_month: 'exp_month',
-      exp_year: 'exp_year'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      last4
-    ].freeze
-    DECODERS = {
-      brand: lambda do |value|
-        ::OctridevNeon::PaymentSourceBankCardBrand.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalPlanVersionMetadata
+  FIELDS = {
+    major: "major",
+    minor: "minor",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    major
+    minor
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for PlanVersion.
+# Typed representation of the `PlanVersion` API schema.
+class PlanVersion
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalPlanVersionMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalPlanVersionMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalPlanVersionMetadata::DECODERS
+
+  # @return [Integer] Required `integer` value serialized in the `major` wire field.
+  attr_reader :major
+  # @return [Integer] Required `integer` value serialized in the `minor` wire field.
+  attr_reader :minor
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for PaymentSourceBankCard.
-  # Typed representation of the `PaymentSourceBankCard` API schema.
-  class PaymentSourceBankCard
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPaymentSourceBankCardMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPaymentSourceBankCardMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPaymentSourceBankCardMetadata::DECODERS
-
-    # @return [String] Last 4 digits of the card.
-    attr_reader :last4
-    # @return [PaymentSourceBankCardBrand] Card network reported by the payment processor. Set to `unknown` when the network cannot be determined.
-    attr_reader :brand
-    # @return [Integer] Credit card expiration month
-    attr_reader :exp_month
-    # @return [Integer] Credit card expiration year
-    attr_reader :exp_year
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the PaymentSourceBankCardBrand SDK namespace.
-  module PaymentSourceBankCardBrand
-    AMEX = 'amex'
-    DINERS = 'diners'
-    DISCOVER = 'discover'
-    JCB = 'jcb'
-    MASTERCARD = 'mastercard'
-    UNIONPAY = 'unionpay'
-    UNKNOWN = 'unknown'
-    VISA = 'visa'
-    VALUES = %w[amex diners discover jcb mastercard unionpay unknown visa].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
-
-  # Internal model hydration metadata.
-  class SdkInternalPlanDetailsMetadata
-    FIELDS = {
-      name: 'name',
-      version: 'version'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-    ].freeze
-    DECODERS = {
-      version: lambda do |value|
-        ::OctridevNeon::PlanVersion.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for PlanDetails.
-  # Typed representation of the `PlanDetails` API schema.
-  class PlanDetails
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPlanDetailsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPlanDetailsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPlanDetailsMetadata::DECODERS
-
-    # @return [String] Plan name, for example `free`, `launch`, or `scale`.
-    attr_reader :name
-    # @return [PlanVersion] Version of the plan, expressed as `major` and `minor` components.
-    attr_reader :version
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalPlanVersionMetadata
-    FIELDS = {
-      major: 'major',
-      minor: 'minor'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      major
-      minor
-    ].freeze
-    DECODERS = {}.freeze
-  end
-
-  # API model for PlanVersion.
-  # Typed representation of the `PlanVersion` API schema.
-  class PlanVersion
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPlanVersionMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPlanVersionMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPlanVersionMetadata::DECODERS
-
-    # @return [Integer] Required `integer` value serialized in the `major` wire field.
-    attr_reader :major
-    # @return [Integer] Required `integer` value serialized in the `minor` wire field.
-    attr_reader :minor
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
+end
 end

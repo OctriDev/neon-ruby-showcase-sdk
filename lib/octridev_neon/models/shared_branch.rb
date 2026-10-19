@@ -5,351 +5,354 @@
 
 # shared_branch domain models
 module OctridevNeon
-  # Internal model hydration metadata.
-  class SdkInternalBranchCreatedByMetadata
-    FIELDS = {
-      name: 'name',
-      image: 'image'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalBranchCreatedByMetadata
+  FIELDS = {
+    name: "name",
+    image: "image",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for BranchCreatedBy.
+# The resolved user model that contains details of the user/org/integration/api_key used for branch creation. This field is filled only in listing/get/create/get/update/delete methods, if it is empty when calling other handlers, it does not mean that it is empty in the system.
+class BranchCreatedBy
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBranchCreatedByMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBranchCreatedByMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBranchCreatedByMetadata::DECODERS
+
+  # @return [String] Display name of the user who created the branch.
+  attr_reader :name
+  # @return [String] The URL to the user's avatar image.
+  attr_reader :image
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BranchCreatedBy.
-  # The resolved user model that contains details of the user/org/integration/api_key used for branch creation. This field is filled only in listing/get/create/get/update/delete methods, if it is empty when calling other handlers, it does not mean that it is empty in the system.
-  class BranchCreatedBy
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBranchCreatedByMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBranchCreatedByMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBranchCreatedByMetadata::DECODERS
-
-    # @return [String] Display name of the user who created the branch.
-    attr_reader :name
-    # @return [String] The URL to the user's avatar image.
-    attr_reader :image
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBranchMetadata
-    FIELDS = {
-      id: 'id',
-      project_id: 'project_id',
-      parent_id: 'parent_id',
-      parent_lsn: 'parent_lsn',
-      parent_timestamp: 'parent_timestamp',
-      name: 'name',
-      current_state: 'current_state',
-      pending_state: 'pending_state',
-      state_changed_at: 'state_changed_at',
-      logical_size: 'logical_size',
-      creation_source: 'creation_source',
-      primary: 'primary',
-      default: 'default',
-      protected: 'protected',
-      cpu_used_sec: 'cpu_used_sec',
-      compute_time_seconds: 'compute_time_seconds',
-      active_time_seconds: 'active_time_seconds',
-      written_data_bytes: 'written_data_bytes',
-      data_transfer_bytes: 'data_transfer_bytes',
-      created_at: 'created_at',
-      updated_at: 'updated_at',
-      ttl_interval_seconds: 'ttl_interval_seconds',
-      expires_at: 'expires_at',
-      last_reset_at: 'last_reset_at',
-      created_by: 'created_by',
-      init_source: 'init_source',
-      restore_status: 'restore_status',
-      restored_from: 'restored_from',
-      restored_as: 'restored_as',
-      restricted_actions: 'restricted_actions',
-      recovery: 'recovery'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      project_id
-      name
-      current_state
-      state_changed_at
-      creation_source
-      default
-      protected
-      cpu_used_sec
-      compute_time_seconds
-      active_time_seconds
-      written_data_bytes
-      data_transfer_bytes
-      created_at
-      updated_at
-    ].freeze
-    DECODERS = {
-      current_state: lambda do |value|
-        ::OctridevNeon::BranchState.from_value(value)
-      end,
-      pending_state: lambda do |value|
-        ::OctridevNeon::BranchState.from_value(value)
-      end,
-      created_by: lambda do |value|
-        ::OctridevNeon::BranchCreatedBy.from_hash(value)
-      end,
-      restore_status: lambda do |value|
-        ::OctridevNeon::BranchRestoreStatus.from_value(value)
-      end,
-      restricted_actions: lambda do |value|
-        value&.map { |item| ::OctridevNeon::BranchRestrictedAction.from_hash(item) }
-      end,
-      recovery: lambda do |value|
-        ::OctridevNeon::BranchRecoveryInfo.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBranchMetadata
+  FIELDS = {
+    id: "id",
+    project_id: "project_id",
+    parent_id: "parent_id",
+    parent_lsn: "parent_lsn",
+    parent_timestamp: "parent_timestamp",
+    name: "name",
+    current_state: "current_state",
+    pending_state: "pending_state",
+    state_changed_at: "state_changed_at",
+    logical_size: "logical_size",
+    creation_source: "creation_source",
+    primary: "primary",
+    default: "default",
+    protected: "protected",
+    cpu_used_sec: "cpu_used_sec",
+    compute_time_seconds: "compute_time_seconds",
+    active_time_seconds: "active_time_seconds",
+    written_data_bytes: "written_data_bytes",
+    data_transfer_bytes: "data_transfer_bytes",
+    created_at: "created_at",
+    updated_at: "updated_at",
+    ttl_interval_seconds: "ttl_interval_seconds",
+    expires_at: "expires_at",
+    last_reset_at: "last_reset_at",
+    created_by: "created_by",
+    init_source: "init_source",
+    restore_status: "restore_status",
+    restored_from: "restored_from",
+    restored_as: "restored_as",
+    restricted_actions: "restricted_actions",
+    recovery: "recovery",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    project_id
+    name
+    current_state
+    state_changed_at
+    creation_source
+    default
+    protected
+    cpu_used_sec
+    compute_time_seconds
+    active_time_seconds
+    written_data_bytes
+    data_transfer_bytes
+    created_at
+    updated_at
+  ].freeze
+  DECODERS = {
+    current_state: lambda do |value|
+      ::OctridevNeon::BranchState.from_value(value)
+    end,
+    pending_state: lambda do |value|
+      ::OctridevNeon::BranchState.from_value(value)
+    end,
+    created_by: lambda do |value|
+      ::OctridevNeon::BranchCreatedBy.from_hash(value)
+    end,
+    restore_status: lambda do |value|
+      ::OctridevNeon::BranchRestoreStatus.from_value(value)
+    end,
+    restricted_actions: lambda do |value|
+      value&.map { |item| ::OctridevNeon::BranchRestrictedAction.from_hash(item) }
+    end,
+    recovery: lambda do |value|
+      ::OctridevNeon::BranchRecoveryInfo.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for Branch.
+# Typed representation of the `Branch` API schema.
+class Branch
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBranchMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBranchMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBranchMetadata::DECODERS
+
+  # @return [String] The branch ID. This value is generated when a branch is created. A `branch_id` value has a `br` prefix. For example: `br-small-term-683261`.
+  attr_reader :id
+  # @return [String] The ID of the project this branch belongs to.
+  attr_reader :project_id
+  # @return [String] The `branch_id` of the parent branch
+  attr_reader :parent_id
+  # @return [String] The Log Sequence Number (LSN) on the parent branch from which this branch was created. When restoring a branch using the `POST /projects/{project_id}/branches/{branch_id}/restore` endpoint, this value isn’t finalized until all operations related to the restore have completed successfully.
+  attr_reader :parent_lsn
+  # @return [String] The point in time on the parent branch from which this branch was created. When restoring a branch using the `POST /projects/{project_id}/branches/{branch_id}/restore` endpoint, this value isn’t finalized until all operations related to the restore have completed successfully. After all the operations completed, this value might stay empty.
+  attr_reader :parent_timestamp
+  # @return [String] The branch name
+  attr_reader :name
+  # @return [BranchState] The branch’s state, indicating if it is initializing, ready for use, or archived. * 'init' - the branch is being created but is not available for querying. * 'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying. * 'ready' - the branch is fully operational and ready for querying. Expect normal query response times. * 'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query…
+  attr_reader :current_state
+  # @return [BranchState] The branch’s state, indicating if it is initializing, ready for use, or archived. * 'init' - the branch is being created but is not available for querying. * 'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying. * 'ready' - the branch is fully operational and ready for querying. Expect normal query response times. * 'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query…
+  attr_reader :pending_state
+  # @return [String] A UTC timestamp indicating when the `current_state` began
+  attr_reader :state_changed_at
+  # @return [Integer] The logical size of the branch, in bytes
+  attr_reader :logical_size
+  # @return [String] The branch creation source
+  attr_reader :creation_source
+  # @return [Boolean] Deprecated. Use the `default` field. Whether the branch is the project's primary branch.
+  attr_reader :primary
+  # @return [Boolean] Whether the branch is the project's default branch
+  attr_reader :default
+  # @return [Boolean] Whether the branch is protected. Protected branches (and their computes) cannot be deleted, archived, or reset, and block deletion of the project.
+  attr_reader :protected
+  # @return [Integer] Deprecated. Use `compute_time_seconds` instead. CPU seconds used by all of the branch's compute endpoints, including deleted ones. This value is reset at the beginning of each billing period.
+  attr_reader :cpu_used_sec
+  # @return [Integer] Total Postgres compute time consumed by this branch during the current billing period, in CU-seconds (weighted by compute size). Divide by 3600 for CU-hours.
+  attr_reader :compute_time_seconds
+  # @return [Integer] Total time this branch's compute has been active during the current billing period, in seconds (not weighted by compute size). Distinct from `compute_time_seconds`, which is CU-weighted.
+  attr_reader :active_time_seconds
+  # @return [Integer] Data written by this branch during the current billing period, in bytes.
+  attr_reader :written_data_bytes
+  # @return [Integer] Total data transferred out of the branch, in bytes. Used as a consumption metric.
+  attr_reader :data_transfer_bytes
+  # @return [String] A timestamp indicating when the branch was created
+  attr_reader :created_at
+  # @return [String] A timestamp indicating when the branch was last updated
+  attr_reader :updated_at
+  # @return [Integer] The time-to-live (TTL) duration originally configured for the branch, in seconds. This read-only value represents the interval between the time `expires_at` was set and the expiration timestamp itself. It is preserved to ensure the same TTL duration is reapplied when resetting the branch from its parent, and only updates when a new `expires_at` value is set. Access to this feature is currently limited to participants in the Early Access Program.
+  attr_reader :ttl_interval_seconds
+  # @return [String] The timestamp when the branch is scheduled to expire and be automatically deleted. Must be set by the client following the RFC 3339, section 5.6 format with precision up to seconds (such as 2025-06-09T18:02:16Z). Deletion is performed by a background job and may not occur exactly at the specified time. Access to this feature is currently limited to participants in the Early Access Program.
+  attr_reader :expires_at
+  # @return [String] A timestamp indicating when the branch was last reset
+  attr_reader :last_reset_at
+  # @return [BranchCreatedBy] The resolved user model that contains details of the user/org/integration/api_key used for branch creation. This field is filled only in listing/get/create/get/update/delete methods, if it is empty when calling other handlers, it does not mean that it is empty in the system.
+  attr_reader :created_by
+  # @return [String] Source of initialization for the branch. `parent-data` (default) copies schema and data from the parent. `parent-schema` copies schema only from the parent. `schema-only` creates a root branch with schema only. `import` initializes from an external import.
+  attr_reader :init_source
+  # @return [BranchRestoreStatus] Could be `restored`, `finalized` or `detaching`. A `restored` branch becomes permanently `finalized` when you call `finalizeRestoreBranch` A `restored` or `finalized` branch may begin `detaching` as a one-time performance optimisation, after which it will continue in its original state
+  attr_reader :restore_status
+  # @return [String] ID of the snapshot that was the restore source for this branch
+  attr_reader :restored_from
+  # @return [String] ID of the target branch which was replaced when this branch was restored
+  attr_reader :restored_as
+  # @return [Array_of_BranchRestrictedAction] A list of actions that are currently restricted for this branch and the reason why.
+  attr_reader :restricted_actions
+  # @return [BranchRecoveryInfo] Recovery information for a deleted branch. Only present when listing deleted branches with `include_deleted=true`. This is part of the Branch Recovery feature, which is in preview and not available to all users.
+  attr_reader :recovery
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for Branch.
-  # Typed representation of the `Branch` API schema.
-  class Branch
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBranchMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBranchMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBranchMetadata::DECODERS
-
-    # @return [String] The branch ID. This value is generated when a branch is created. A `branch_id` value has a `br` prefix. For example: `br-small-term-683261`.
-    attr_reader :id
-    # @return [String] The ID of the project this branch belongs to.
-    attr_reader :project_id
-    # @return [String] The `branch_id` of the parent branch
-    attr_reader :parent_id
-    # @return [String] The Log Sequence Number (LSN) on the parent branch from which this branch was created. When restoring a branch using the `POST /projects/{project_id}/branches/{branch_id}/restore` endpoint, this value isn’t finalized until all operations related to the restore have completed successfully.
-    attr_reader :parent_lsn
-    # @return [String] The point in time on the parent branch from which this branch was created. When restoring a branch using the `POST /projects/{project_id}/branches/{branch_id}/restore` endpoint, this value isn’t finalized until all operations related to the restore have completed successfully. After all the operations completed, this value might stay empty.
-    attr_reader :parent_timestamp
-    # @return [String] The branch name
-    attr_reader :name
-    # @return [BranchState] The branch’s state, indicating if it is initializing, ready for use, or archived. * 'init' - the branch is being created but is not available for querying. * 'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying. * 'ready' - the branch is fully operational and ready for querying. Expect normal query response times. * 'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query…
-    attr_reader :current_state
-    # @return [BranchState] The branch’s state, indicating if it is initializing, ready for use, or archived. * 'init' - the branch is being created but is not available for querying. * 'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying. * 'ready' - the branch is fully operational and ready for querying. Expect normal query response times. * 'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query…
-    attr_reader :pending_state
-    # @return [String] A UTC timestamp indicating when the `current_state` began
-    attr_reader :state_changed_at
-    # @return [Integer] The logical size of the branch, in bytes
-    attr_reader :logical_size
-    # @return [String] The branch creation source
-    attr_reader :creation_source
-    # @return [Boolean] Deprecated. Use the `default` field. Whether the branch is the project's primary branch.
-    attr_reader :primary
-    # @return [Boolean] Whether the branch is the project's default branch
-    attr_reader :default
-    # @return [Boolean] Whether the branch is protected. Protected branches (and their computes) cannot be deleted, archived, or reset, and block deletion of the project.
-    attr_reader :protected
-    # @return [Integer] Deprecated. Use `compute_time_seconds` instead. CPU seconds used by all of the branch's compute endpoints, including deleted ones. This value is reset at the beginning of each billing period.
-    attr_reader :cpu_used_sec
-    # @return [Integer] Total Postgres compute time consumed by this branch during the current billing period, in CU-seconds (weighted by compute size). Divide by 3600 for CU-hours.
-    attr_reader :compute_time_seconds
-    # @return [Integer] Total time this branch's compute has been active during the current billing period, in seconds (not weighted by compute size). Distinct from `compute_time_seconds`, which is CU-weighted.
-    attr_reader :active_time_seconds
-    # @return [Integer] Data written by this branch during the current billing period, in bytes.
-    attr_reader :written_data_bytes
-    # @return [Integer] Total data transferred out of the branch, in bytes. Used as a consumption metric.
-    attr_reader :data_transfer_bytes
-    # @return [String] A timestamp indicating when the branch was created
-    attr_reader :created_at
-    # @return [String] A timestamp indicating when the branch was last updated
-    attr_reader :updated_at
-    # @return [Integer] The time-to-live (TTL) duration originally configured for the branch, in seconds. This read-only value represents the interval between the time `expires_at` was set and the expiration timestamp itself. It is preserved to ensure the same TTL duration is reapplied when resetting the branch from its parent, and only updates when a new `expires_at` value is set. Access to this feature is currently limited to participants in the Early Access Program.
-    attr_reader :ttl_interval_seconds
-    # @return [String] The timestamp when the branch is scheduled to expire and be automatically deleted. Must be set by the client following the RFC 3339, section 5.6 format with precision up to seconds (such as 2025-06-09T18:02:16Z). Deletion is performed by a background job and may not occur exactly at the specified time. Access to this feature is currently limited to participants in the Early Access Program.
-    attr_reader :expires_at
-    # @return [String] A timestamp indicating when the branch was last reset
-    attr_reader :last_reset_at
-    # @return [BranchCreatedBy] The resolved user model that contains details of the user/org/integration/api_key used for branch creation. This field is filled only in listing/get/create/get/update/delete methods, if it is empty when calling other handlers, it does not mean that it is empty in the system.
-    attr_reader :created_by
-    # @return [String] Source of initialization for the branch. `parent-data` (default) copies schema and data from the parent. `parent-schema` copies schema only from the parent. `schema-only` creates a root branch with schema only. `import` initializes from an external import.
-    attr_reader :init_source
-    # @return [BranchRestoreStatus] Could be `restored`, `finalized` or `detaching`. A `restored` branch becomes permanently `finalized` when you call `finalizeRestoreBranch` A `restored` or `finalized` branch may begin `detaching` as a one-time performance optimisation, after which it will continue in its original state
-    attr_reader :restore_status
-    # @return [String] ID of the snapshot that was the restore source for this branch
-    attr_reader :restored_from
-    # @return [String] ID of the target branch which was replaced when this branch was restored
-    attr_reader :restored_as
-    # @return [Array_of_BranchRestrictedAction] A list of actions that are currently restricted for this branch and the reason why.
-    attr_reader :restricted_actions
-    # @return [BranchRecoveryInfo] Recovery information for a deleted branch. Only present when listing deleted branches with `include_deleted=true`. This is part of the Branch Recovery feature, which is in preview and not available to all users.
-    attr_reader :recovery
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBranchRecoveryInfoMetadata
-    FIELDS = {
-      deleted_at: 'deleted_at',
-      recoverable_until: 'recoverable_until',
-      deletion_method: 'deletion_method'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      deleted_at
-      recoverable_until
-      deletion_method
-    ].freeze
-    DECODERS = {
-      deletion_method: lambda do |value|
-        ::OctridevNeon::BranchRecoveryInfoDeletionMethod.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBranchRecoveryInfoMetadata
+  FIELDS = {
+    deleted_at: "deleted_at",
+    recoverable_until: "recoverable_until",
+    deletion_method: "deletion_method",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    deleted_at
+    recoverable_until
+    deletion_method
+  ].freeze
+  DECODERS = {
+    deletion_method: lambda do |value|
+      ::OctridevNeon::BranchRecoveryInfoDeletionMethod.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BranchRecoveryInfo.
+# Recovery information for a deleted branch. Only present when listing deleted branches with `include_deleted=true`. This is part of the Branch Recovery feature, which is in preview and not available to all users.
+class BranchRecoveryInfo
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBranchRecoveryInfoMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBranchRecoveryInfoMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBranchRecoveryInfoMetadata::DECODERS
+
+  # @return [String] Timestamp when the branch was deleted
+  attr_reader :deleted_at
+  # @return [String] Timestamp when the recovery window expires and the branch will be permanently deleted
+  attr_reader :recoverable_until
+  # @return [BranchRecoveryInfoDeletionMethod] How the branch was deleted: 'user' for manual deletion, 'ttl' for TTL expiration
+  attr_reader :deletion_method
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BranchRecoveryInfo.
-  # Recovery information for a deleted branch. Only present when listing deleted branches with `include_deleted=true`. This is part of the Branch Recovery feature, which is in preview and not available to all users.
-  class BranchRecoveryInfo
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBranchRecoveryInfoMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBranchRecoveryInfoMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBranchRecoveryInfoMetadata::DECODERS
-
-    # @return [String] Timestamp when the branch was deleted
-    attr_reader :deleted_at
-    # @return [String] Timestamp when the recovery window expires and the branch will be permanently deleted
-    attr_reader :recoverable_until
-    # @return [BranchRecoveryInfoDeletionMethod] How the branch was deleted: 'user' for manual deletion, 'ttl' for TTL expiration
-    attr_reader :deletion_method
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BranchRecoveryInfoDeletionMethod SDK namespace.
-  module BranchRecoveryInfoDeletionMethod
-    USER = 'user'
-    TTL = 'ttl'
-    VALUES = %w[user ttl].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BranchRecoveryInfoDeletionMethod SDK namespace.
+module BranchRecoveryInfoDeletionMethod
+  USER = 'user'
+  TTL = 'ttl'
+  VALUES = ['user', 'ttl'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBranchResponseMetadata
+  FIELDS = {
+    branch: "branch",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    branch
+  ].freeze
+  DECODERS = {
+    branch: lambda do |value|
+      ::OctridevNeon::Branch.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BranchResponse.
+# Typed representation of the `BranchResponse` API schema.
+class BranchResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBranchResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBranchResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBranchResponseMetadata::DECODERS
+
+  # @return [Branch] Branch returned by the request.
+  attr_reader :branch
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBranchResponseMetadata
-    FIELDS = {
-      branch: 'branch'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      branch
-    ].freeze
-    DECODERS = {
-      branch: lambda do |value|
-        ::OctridevNeon::Branch.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BranchResponse.
-  # Typed representation of the `BranchResponse` API schema.
-  class BranchResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBranchResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBranchResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBranchResponseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Branch] Branch returned by the request.
-    attr_reader :branch
+# Defines the BranchRestoreStatus SDK value decoder.
+module BranchRestoreStatus
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalBranchRestrictedActionMetadata
+  FIELDS = {
+    name: "name",
+    reason: "reason",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+    reason
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for BranchRestrictedAction.
+# An action that is currently restricted for the branch and the reason why.
+class BranchRestrictedAction
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBranchRestrictedActionMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBranchRestrictedActionMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBranchRestrictedActionMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] The name of a restricted action on a branch. `restore`: the branch cannot be used as a restore target. `delete-rw-endpoint`: the read-write endpoint for the branch cannot be deleted.
+  attr_reader :name
+  # @return [String] A human-readable explanation of why the action is restricted.
+  attr_reader :reason
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BranchRestoreStatus SDK value decoder.
-  module BranchRestoreStatus
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBranchRestrictedActionMetadata
-    FIELDS = {
-      name: 'name',
-      reason: 'reason'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-      reason
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for BranchRestrictedAction.
-  # An action that is currently restricted for the branch and the reason why.
-  class BranchRestrictedAction
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBranchRestrictedActionMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBranchRestrictedActionMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBranchRestrictedActionMetadata::DECODERS
-
-    # @return [String] The name of a restricted action on a branch. `restore`: the branch cannot be used as a restore target. `delete-rw-endpoint`: the read-write endpoint for the branch cannot be deleted.
-    attr_reader :name
-    # @return [String] A human-readable explanation of why the action is restricted.
-    attr_reader :reason
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# Defines the BranchState SDK value decoder.
+module BranchState
+  def self.from_value(value)
+    value
   end
-
-  # Defines the BranchState SDK value decoder.
-  module BranchState
-    def self.from_value(value)
-      value
-    end
-  end
+end
 end
