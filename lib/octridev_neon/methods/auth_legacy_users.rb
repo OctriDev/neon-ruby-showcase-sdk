@@ -21,22 +21,21 @@ module OctridevNeon
         auth_user_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/auth/users/",
+            '/auth/users/',
             SdkClient.encode_path_segment(auth_user_id)
           ].join,
           config: config,
           decoder: :empty,
           operation_id: 'delete_auth_legacy_user',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

@@ -14,14 +14,7 @@ module OctridevNeon
       # @param project_id [String] The Neon project ID
       # @param branch_id [String] The branch ID
       # @param role_name [String] The role name
-      singleton_class.define_method(:get_branch_role_password) do |
-        config:,
-        project_id:,
-        branch_id:,
-        role_name:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_branch_role_password) do |config:, project_id:, branch_id:, role_name:, request_options: nil|
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -29,20 +22,20 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/roles/",
+            '/roles/',
             SdkClient.encode_path_segment(role_name),
-            "/reveal_password"
+            '/reveal_password'
           ].join,
           config: config,
           return_type: ::OctridevNeon::RolePasswordResponse,
           decoder: :json,
           operation_id: 'get_branch_role_password',
           request_options: request_options,
-          errors: { '404' => ::OctridevNeon::GeneralError, '412' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError },
+          errors: { '404' => ::OctridevNeon::GeneralError, '412' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

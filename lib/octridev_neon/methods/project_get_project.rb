@@ -12,18 +12,13 @@ module OctridevNeon
       # Retrieves information about the specified project. Returned details include the project settings, compute configuration, history retention, owner information, and current usage metrics.
       #
       # @param project_id [String] The Neon project ID
-      singleton_class.define_method(:get_project) do |
-        config:,
-        project_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_project) do |config:, project_id:, request_options: nil|
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id)
           ].join,
           config: config,
@@ -31,7 +26,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'get_project',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

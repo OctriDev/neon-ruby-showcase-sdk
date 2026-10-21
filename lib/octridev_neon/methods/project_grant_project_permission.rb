@@ -20,7 +20,6 @@ module OctridevNeon
         email:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_length('email', email, min: 1, max: 256)
@@ -29,19 +28,19 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/permissions"
+            '/permissions'
           ].join,
           config: config,
           body: {
-            'email' => email,
+            'email' => email
           },
           return_type: ::OctridevNeon::ProjectPermission,
           decoder: :json,
           operation_id: 'grant_project_permission',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

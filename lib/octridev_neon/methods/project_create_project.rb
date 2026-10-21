@@ -18,19 +18,18 @@ module OctridevNeon
         project:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/projects",
+          '/projects',
           config: config,
           body: {
-            'project' => project,
+            'project' => project
           },
           return_type: ::OctridevNeon::CreateProjectResponse,
           decoder: :json,
           operation_id: 'create_project',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

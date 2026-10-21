@@ -23,7 +23,6 @@ module OctridevNeon
         confirm_self_demotion: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_uuid('member_id', member_id)
@@ -31,24 +30,24 @@ module OctridevNeon
         SdkClient.request(
           'PUT',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/members/",
+            '/members/',
             SdkClient.encode_path_segment(member_id),
-            "/role"
+            '/role'
           ].join,
           config: config,
           query: {
-            'confirm_self_demotion' => QueryValue.new(confirm_self_demotion, style: 'form', explode: true),
+            'confirm_self_demotion' => QueryValue.new(confirm_self_demotion, style: 'form', explode: true)
           },
           body: {
-            'role' => role,
+            'role' => role
           },
           return_type: ::OctridevNeon::ProjectMemberRoleResponse,
           decoder: :json,
           operation_id: 'set_project_member_role',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

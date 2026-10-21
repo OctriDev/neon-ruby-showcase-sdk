@@ -12,18 +12,13 @@ module OctridevNeon
       # Retrieves details for the specified organization, including its name, plan, and configuration.
       #
       # @param org_id [String] The Neon organization ID
-      singleton_class.define_method(:get_organization) do |
-        config:,
-        org_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_organization) do |config:, org_id:, request_options: nil|
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id)
           ].join,
           config: config,
@@ -31,7 +26,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'get_organization',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

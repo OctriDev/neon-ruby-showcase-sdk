@@ -48,7 +48,6 @@ module OctridevNeon
         settings: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -58,11 +57,11 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/data-api/",
+            '/data-api/',
             SdkClient.encode_path_segment(database_name)
           ].join,
           config: config,
@@ -73,13 +72,13 @@ module OctridevNeon
             'jwt_audience' => jwt_audience,
             'add_default_grants' => add_default_grants,
             'skip_auth_schema' => skip_auth_schema,
-            'settings' => settings,
+            'settings' => settings
           },
           return_type: ::OctridevNeon::DataAPICreateResponse,
           decoder: :json,
           operation_id: 'create_data_api',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -98,7 +97,6 @@ module OctridevNeon
         settings: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -106,22 +104,22 @@ module OctridevNeon
         SdkClient.request(
           'PATCH',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/data-api/",
+            '/data-api/',
             SdkClient.encode_path_segment(database_name)
           ].join,
           config: config,
           body: {
-            'settings' => settings,
+            'settings' => settings
           },
           return_type: ::OctridevNeon::EmptyResponse,
           decoder: :json,
           operation_id: 'update_data_api',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -137,7 +135,6 @@ module OctridevNeon
         database_name:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -145,11 +142,11 @@ module OctridevNeon
         SdkClient.request(
           'DELETE',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/data-api/",
+            '/data-api/',
             SdkClient.encode_path_segment(database_name)
           ].join,
           config: config,
@@ -157,7 +154,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'delete_data_api',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -166,14 +163,7 @@ module OctridevNeon
       # @param project_id [String] The Neon project ID
       # @param branch_id [String] The Neon branch ID
       # @param database_name [String] The database name
-      singleton_class.define_method(:get_data_api) do |
-        config:,
-        project_id:,
-        branch_id:,
-        database_name:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_data_api) do |config:, project_id:, branch_id:, database_name:, request_options: nil|
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -181,11 +171,11 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/data-api/",
+            '/data-api/',
             SdkClient.encode_path_segment(database_name)
           ].join,
           config: config,
@@ -193,7 +183,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'get_data_api',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

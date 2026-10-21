@@ -75,7 +75,6 @@ module OctridevNeon
         logql: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -101,11 +100,11 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/logs/query"
+            '/logs/query'
           ].join,
           config: config,
           body: {
@@ -122,13 +121,13 @@ module OctridevNeon
             'severity_text' => severity_text,
             'body_contains' => body_contains,
             'trace_id' => trace_id,
-            'logql' => logql,
+            'logql' => logql
           },
           return_type: ::OctridevNeon::ProjectBranchLogsQueryResponse,
           decoder: :json,
           operation_id: 'query_logs',
           request_options: request_options,
-          errors: { '400' => ::OctridevNeon::ProjectBranchLogsInvalidQuery, '404' => ::OctridevNeon::ProjectBranchLogsNotAvailable, 'default' => ::OctridevNeon::GeneralError },
+          errors: { '400' => ::OctridevNeon::ProjectBranchLogsInvalidQuery, '404' => ::OctridevNeon::ProjectBranchLogsNotAvailable, 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -142,7 +141,6 @@ module OctridevNeon
         branch_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -150,18 +148,18 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/logs/fields"
+            '/logs/fields'
           ].join,
           config: config,
           return_type: ::OctridevNeon::ProjectBranchLogFieldsResponse,
           decoder: :json,
           operation_id: 'list_logs_fields',
           request_options: request_options,
-          errors: { '404' => ::OctridevNeon::ProjectBranchLogsNotAvailable, 'default' => ::OctridevNeon::GeneralError },
+          errors: { '404' => ::OctridevNeon::ProjectBranchLogsNotAvailable, 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -196,7 +194,6 @@ module OctridevNeon
         limit: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -214,13 +211,13 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/logs/fields/",
+            '/logs/fields/',
             SdkClient.encode_path_segment(field_name),
-            "/values"
+            '/values'
           ].join,
           config: config,
           query: {
@@ -228,13 +225,13 @@ module OctridevNeon
             'start_time' => QueryValue.new(start_time, style: 'form', explode: true),
             'end_time' => QueryValue.new(end_time, style: 'form', explode: true),
             'source' => QueryValue.new(source, style: 'form', explode: true),
-            'limit' => QueryValue.new(limit, style: 'form', explode: true),
+            'limit' => QueryValue.new(limit, style: 'form', explode: true)
           },
           return_type: ::OctridevNeon::ProjectBranchLogFieldValuesResponse,
           decoder: :json,
           operation_id: 'list_logs_field_values',
           request_options: request_options,
-          errors: { '400' => ::OctridevNeon::ProjectBranchLogsInvalidQuery, '404' => ::OctridevNeon::ProjectBranchLogsNotAvailable, 'default' => ::OctridevNeon::GeneralError },
+          errors: { '400' => ::OctridevNeon::ProjectBranchLogsInvalidQuery, '404' => ::OctridevNeon::ProjectBranchLogsNotAvailable, 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

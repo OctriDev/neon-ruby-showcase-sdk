@@ -24,22 +24,21 @@ module OctridevNeon
         auth_provider:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
-          "/projects/auth/keys",
+          '/projects/auth/keys',
           config: config,
           body: {
             'project_id' => project_id,
-            'auth_provider' => auth_provider,
+            'auth_provider' => auth_provider
           },
           return_type: ::OctridevNeon::NeonAuthCreateIntegrationResponse,
           decoder: :json,
           operation_id: 'create_auth_legacy_provider_sdk_keys',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

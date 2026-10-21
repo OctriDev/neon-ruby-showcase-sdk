@@ -23,7 +23,6 @@ module OctridevNeon
         org_id: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('request_id', request_id, '^[a-z0-9-]{1,60}$')
@@ -33,19 +32,19 @@ module OctridevNeon
         SdkClient.request(
           'PUT',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/transfer_requests/",
+            '/transfer_requests/',
             SdkClient.encode_path_segment(request_id)
           ].join,
           config: config,
           body: {
-            'org_id' => org_id,
+            'org_id' => org_id
           },
           decoder: :empty,
           operation_id: 'accept_project_transfer_request',
           request_options: request_options,
-          errors: { '406' => ::OctridevNeon::AcceptProjectTransferRequestSatisfiesPlanError, 'default' => ::OctridevNeon::GeneralError },
+          errors: { '406' => ::OctridevNeon::AcceptProjectTransferRequestSatisfiesPlanError, 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

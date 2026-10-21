@@ -25,7 +25,6 @@ module OctridevNeon
         limit: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 500) }
@@ -33,20 +32,20 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/members"
+            '/members'
           ].join,
           config: config,
           query: {
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
-            'limit' => QueryValue.new(limit, style: 'form', explode: true),
+            'limit' => QueryValue.new(limit, style: 'form', explode: true)
           },
           return_type: ::OctridevNeon::ProjectMembers,
           decoder: :json,
           operation_id: 'list_project_members',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

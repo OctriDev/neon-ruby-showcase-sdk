@@ -37,7 +37,6 @@ module OctridevNeon
         skip_role_creation: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.if_given(branch_id) do
@@ -49,9 +48,9 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/jwks"
+            '/jwks'
           ].join,
           config: config,
           body: {
@@ -60,13 +59,13 @@ module OctridevNeon
             'branch_id' => branch_id,
             'jwt_audience' => jwt_audience,
             'role_names' => role_names,
-            'skip_role_creation' => skip_role_creation,
+            'skip_role_creation' => skip_role_creation
           },
           return_type: ::OctridevNeon::JWKSCreationOperation,
           decoder: :json,
           operation_id: 'add_project_jwks',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

@@ -20,16 +20,7 @@ module OctridevNeon
       # @param min_severity [GetProjectAdvisorSecurityIssuesParameter] Minimum
       #   severity level to include. For example, WARN returns WARN and ERROR issues,
       #   excluding INFO.
-      singleton_class.define_method(:get_project_advisor_security_issues) do |
-        config:,
-        project_id:,
-        branch_id: NOT_GIVEN,
-        database_name: NOT_GIVEN,
-        category: NOT_GIVEN,
-        min_severity: NOT_GIVEN,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_project_advisor_security_issues) do |config:, project_id:, branch_id: NOT_GIVEN, database_name: NOT_GIVEN, category: NOT_GIVEN, min_severity: NOT_GIVEN, request_options: nil|
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.if_given(branch_id) do
@@ -39,22 +30,22 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/advisors"
+            '/advisors'
           ].join,
           config: config,
           query: {
             'branch_id' => QueryValue.new(branch_id, style: 'form', explode: true),
             'database_name' => QueryValue.new(database_name, style: 'form', explode: true),
             'category' => QueryValue.new(category, style: 'form', explode: true),
-            'min_severity' => QueryValue.new(min_severity, style: 'form', explode: true),
+            'min_severity' => QueryValue.new(min_severity, style: 'form', explode: true)
           },
           return_type: ::OctridevNeon::Methods::Project::GetProjectAdvisorSecurityIssuesResponse,
           decoder: :json,
           operation_id: 'get_project_advisor_security_issues',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

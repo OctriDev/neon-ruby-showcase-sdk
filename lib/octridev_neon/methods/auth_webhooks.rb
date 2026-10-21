@@ -13,13 +13,7 @@ module OctridevNeon
       #
       # @param project_id [String] The Neon project ID
       # @param branch_id [String] The Neon branch ID
-      singleton_class.define_method(:get_auth_webhook_config) do |
-        config:,
-        project_id:,
-        branch_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_auth_webhook_config) do |config:, project_id:, branch_id:, request_options: nil|
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -27,18 +21,18 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/auth/webhooks"
+            '/auth/webhooks'
           ].join,
           config: config,
           return_type: ::OctridevNeon::NeonAuthWebhookConfig,
           decoder: :json,
           operation_id: 'get_auth_webhook_config',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -65,7 +59,6 @@ module OctridevNeon
         timeout_seconds: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -77,24 +70,24 @@ module OctridevNeon
         SdkClient.request(
           'PUT',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/auth/webhooks"
+            '/auth/webhooks'
           ].join,
           config: config,
           body: {
             'enabled' => enabled,
             'webhook_url' => webhook_url,
             'enabled_events' => enabled_events,
-            'timeout_seconds' => timeout_seconds,
+            'timeout_seconds' => timeout_seconds
           },
           return_type: ::OctridevNeon::NeonAuthWebhookConfig,
           decoder: :json,
           operation_id: 'update_auth_webhook_config',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

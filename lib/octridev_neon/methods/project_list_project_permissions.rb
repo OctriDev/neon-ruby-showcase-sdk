@@ -17,22 +17,21 @@ module OctridevNeon
         project_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/permissions"
+            '/permissions'
           ].join,
           config: config,
           return_type: ::OctridevNeon::ProjectPermissions,
           decoder: :json,
           operation_id: 'list_project_permissions',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

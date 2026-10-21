@@ -17,22 +17,21 @@ module OctridevNeon
         org_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/vpc/vpc_endpoints"
+            '/vpc/vpc_endpoints'
           ].join,
           config: config,
           return_type: ::OctridevNeon::VPCEndpointsWithRegionResponse,
           decoder: :json,
           operation_id: 'list_organization_vpc_endpoints_all_regions',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -46,24 +45,23 @@ module OctridevNeon
         region_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/vpc/region/",
+            '/vpc/region/',
             SdkClient.encode_path_segment(region_id),
-            "/vpc_endpoints"
+            '/vpc_endpoints'
           ].join,
           config: config,
           return_type: ::OctridevNeon::VPCEndpointsResponse,
           decoder: :json,
           operation_id: 'list_organization_vpc_endpoints',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -73,24 +71,17 @@ module OctridevNeon
       # @param region_id [String] The Neon region ID. Azure regions are currently
       #   not supported.
       # @param vpc_endpoint_id [String] The VPC endpoint ID
-      singleton_class.define_method(:get_organizations_vpc_endpoint) do |
-        config:,
-        org_id:,
-        region_id:,
-        vpc_endpoint_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_organizations_vpc_endpoint) do |config:, org_id:, region_id:, vpc_endpoint_id:, request_options: nil|
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/vpc/region/",
+            '/vpc/region/',
             SdkClient.encode_path_segment(region_id),
-            "/vpc_endpoints/",
+            '/vpc_endpoints/',
             SdkClient.encode_path_segment(vpc_endpoint_id)
           ].join,
           config: config,
@@ -98,7 +89,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'get_organizations_vpc_endpoint',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -118,27 +109,26 @@ module OctridevNeon
         label:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/vpc/region/",
+            '/vpc/region/',
             SdkClient.encode_path_segment(region_id),
-            "/vpc_endpoints/",
+            '/vpc_endpoints/',
             SdkClient.encode_path_segment(vpc_endpoint_id)
           ].join,
           config: config,
           body: {
-            'label' => label,
+            'label' => label
           },
           decoder: :empty,
           operation_id: 'assign_organization_vpc_endpoint',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -155,24 +145,23 @@ module OctridevNeon
         vpc_endpoint_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/vpc/region/",
+            '/vpc/region/',
             SdkClient.encode_path_segment(region_id),
-            "/vpc_endpoints/",
+            '/vpc_endpoints/',
             SdkClient.encode_path_segment(vpc_endpoint_id)
           ].join,
           config: config,
           decoder: :empty,
           operation_id: 'delete_organization_vpc_endpoint',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

@@ -19,25 +19,24 @@ module OctridevNeon
         search: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/count"
+            '/branches/count'
           ].join,
           config: config,
           query: {
-            'search' => QueryValue.new(search, style: 'form', explode: true),
+            'search' => QueryValue.new(search, style: 'form', explode: true)
           },
           return_type: ::OctridevNeon::BranchesCountResponse,
           decoder: :json,
           operation_id: 'count_branch',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end
