@@ -55,7 +55,20 @@ module OctridevNeon
       #   consumption history v2 endpoints instead) - `data_storage_bytes_hour`
       #   (deprecated: always returns 0; use the consumption history v2 endpoints
       #   instead) - `logical_size_bytes` -…
-      singleton_class.define_method(:get_consumption_history_per_project) do |config:, from:, to:, granularity:, cursor: NOT_GIVEN, limit: NOT_GIVEN, project_ids: NOT_GIVEN, org_id: NOT_GIVEN, include_v1_metrics: NOT_GIVEN, metrics: NOT_GIVEN, request_options: nil|
+      singleton_class.define_method(:get_consumption_history_per_project) do |
+        config:,
+        from:,
+        to:,
+        granularity:,
+        cursor: NOT_GIVEN,
+        limit: NOT_GIVEN,
+        project_ids: NOT_GIVEN,
+        org_id: NOT_GIVEN,
+        include_v1_metrics: NOT_GIVEN,
+        metrics: NOT_GIVEN,
+        request_options: nil
+      |
+
         Validation.validate_date_time('from', from)
 
         Validation.validate_date_time('to', to)
@@ -70,7 +83,7 @@ module OctridevNeon
 
         SdkClient.request(
           'GET',
-          '/consumption_history/projects',
+          "/consumption_history/projects",
           config: config,
           query: {
             'from' => QueryValue.new(from, style: 'form', explode: true),
@@ -81,13 +94,13 @@ module OctridevNeon
             'project_ids' => QueryValue.new(project_ids, style: 'form', explode: true),
             'org_id' => QueryValue.new(org_id, style: 'form', explode: true),
             'include_v1_metrics' => QueryValue.new(include_v1_metrics, style: 'form', explode: true),
-            'metrics' => QueryValue.new(metrics, style: 'form', explode: true)
+            'metrics' => QueryValue.new(metrics, style: 'form', explode: true),
           },
           return_type: ::OctridevNeon::GetConsumptionHistoryPerProjectResponse,
           decoder: :json,
           operation_id: 'get_consumption_history_per_project',
           request_options: request_options,
-          errors: { '403' => ::OctridevNeon::GeneralError, '404' => ::OctridevNeon::GeneralError, '406' => ::OctridevNeon::GeneralError, '429' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError }
+          errors: { '403' => ::OctridevNeon::GeneralError, '404' => ::OctridevNeon::GeneralError, '406' => ::OctridevNeon::GeneralError, '429' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -131,7 +144,19 @@ module OctridevNeon
       #   parameters or a comma-separated list: -
       #   `project_ids=cold-poetry-09157238&project_ids=quiet-snow-71788278` -
       #   `project_ids=cold-poetry-09157238,quiet-snow-71788278`
-      singleton_class.define_method(:get_consumption_history_per_project_v2) do |config:, from:, to:, granularity:, org_id:, metrics:, cursor: NOT_GIVEN, limit: NOT_GIVEN, project_ids: NOT_GIVEN, request_options: nil|
+      singleton_class.define_method(:get_consumption_history_per_project_v2) do |
+        config:,
+        from:,
+        to:,
+        granularity:,
+        org_id:,
+        metrics:,
+        cursor: NOT_GIVEN,
+        limit: NOT_GIVEN,
+        project_ids: NOT_GIVEN,
+        request_options: nil
+      |
+
         Validation.validate_date_time('from', from)
 
         Validation.validate_date_time('to', to)
@@ -146,7 +171,7 @@ module OctridevNeon
 
         SdkClient.request(
           'GET',
-          '/consumption_history/v2/projects',
+          "/consumption_history/v2/projects",
           config: config,
           query: {
             'from' => QueryValue.new(from, style: 'form', explode: true),
@@ -156,13 +181,13 @@ module OctridevNeon
             'metrics' => QueryValue.new(metrics, style: 'form', explode: true),
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'project_ids' => QueryValue.new(project_ids, style: 'form', explode: true)
+            'project_ids' => QueryValue.new(project_ids, style: 'form', explode: true),
           },
           return_type: ::OctridevNeon::GetConsumptionHistoryPerProjectV2Response,
           decoder: :json,
           operation_id: 'get_consumption_history_per_project_v2',
           request_options: request_options,
-          errors: { '403' => ::OctridevNeon::GeneralError, '404' => ::OctridevNeon::GeneralError, '406' => ::OctridevNeon::GeneralError, '429' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError }
+          errors: { '403' => ::OctridevNeon::GeneralError, '404' => ::OctridevNeon::GeneralError, '406' => ::OctridevNeon::GeneralError, '429' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -211,7 +236,20 @@ module OctridevNeon
       #   comma-separated list: -
       #   `branch_ids=br-aged-salad-637688&branch_ids=br-sweet-breeze-497520` -
       #   `branch_ids=br-aged-salad-637688,br-sweet-breeze-497520`
-      singleton_class.define_method(:get_consumption_history_per_branch_v2) do |config:, project_ids:, from:, to:, granularity:, org_id:, metrics:, cursor: NOT_GIVEN, limit: NOT_GIVEN, branch_ids: NOT_GIVEN, request_options: nil|
+      singleton_class.define_method(:get_consumption_history_per_branch_v2) do |
+        config:,
+        project_ids:,
+        from:,
+        to:,
+        granularity:,
+        org_id:,
+        metrics:,
+        cursor: NOT_GIVEN,
+        limit: NOT_GIVEN,
+        branch_ids: NOT_GIVEN,
+        request_options: nil
+      |
+
         Validation.validate_items('project_ids', project_ids, min: 1, max: 100)
 
         Validation.validate_date_time('from', from)
@@ -226,7 +264,7 @@ module OctridevNeon
 
         SdkClient.request(
           'GET',
-          '/consumption_history/v2/branches',
+          "/consumption_history/v2/branches",
           config: config,
           query: {
             'project_ids' => QueryValue.new(project_ids, style: 'form', explode: true),
@@ -237,13 +275,13 @@ module OctridevNeon
             'metrics' => QueryValue.new(metrics, style: 'form', explode: true),
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'branch_ids' => QueryValue.new(branch_ids, style: 'form', explode: true)
+            'branch_ids' => QueryValue.new(branch_ids, style: 'form', explode: true),
           },
           return_type: ::OctridevNeon::GetConsumptionHistoryPerBranchV2Response,
           decoder: :json,
           operation_id: 'get_consumption_history_per_branch_v2',
           request_options: request_options,
-          errors: { '403' => ::OctridevNeon::GeneralError, '404' => ::OctridevNeon::GeneralError, '406' => ::OctridevNeon::GeneralError, '429' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError }
+          errors: { '403' => ::OctridevNeon::GeneralError, '404' => ::OctridevNeon::GeneralError, '406' => ::OctridevNeon::GeneralError, '429' => ::OctridevNeon::GeneralError, 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

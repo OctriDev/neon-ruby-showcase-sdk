@@ -38,6 +38,7 @@ module OctridevNeon
         recipient_email:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -48,11 +49,11 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/auth/send_test_email'
+            "/auth/send_test_email"
           ].join,
           config: config,
           body: {
@@ -62,13 +63,13 @@ module OctridevNeon
             'password' => password,
             'sender_email' => sender_email,
             'sender_name' => sender_name,
-            'recipient_email' => recipient_email
+            'recipient_email' => recipient_email,
           },
           return_type: ::OctridevNeon::SendNeonAuthTestEmailResponse,
           decoder: :json,
           operation_id: 'send_auth_test_email',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

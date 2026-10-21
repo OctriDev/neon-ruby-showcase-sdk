@@ -10,30 +10,38 @@ module OctridevNeon
     # Defines the Users SDK namespace.
     module Users
       # Retrieves information about the currently authenticated Neon user, including account identifiers, plan details, and linked auth accounts.
-      singleton_class.define_method(:get_current_user_info) do |config:, request_options: nil|
+      singleton_class.define_method(:get_current_user_info) do |
+        config:,
+        request_options: nil
+      |
+
         SdkClient.request(
           'GET',
-          '/users/me',
+          "/users/me",
           config: config,
           return_type: ::OctridevNeon::CurrentUserInfoResponse,
           decoder: :json,
           operation_id: 'get_current_user_info',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
       # Retrieves the organizations that the currently authenticated user belongs to. When called with an organization- or project-scoped API key (which is not tied to a user), this returns the single organization that owns the key.
-      singleton_class.define_method(:get_current_user_organizations) do |config:, request_options: nil|
+      singleton_class.define_method(:get_current_user_organizations) do |
+        config:,
+        request_options: nil
+      |
+
         SdkClient.request(
           'GET',
-          '/users/me/organizations',
+          "/users/me/organizations",
           config: config,
           return_type: ::OctridevNeon::OrganizationsResponse,
           decoder: :json,
           operation_id: 'get_current_user_organizations',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -50,37 +58,42 @@ module OctridevNeon
         project_ids:,
         request_options: nil
       )
+
         Validation.validate_pattern('destination_org_id', destination_org_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_items('project_ids', project_ids, min: 1, max: 400)
 
         SdkClient.request(
           'POST',
-          '/users/me/projects/transfer',
+          "/users/me/projects/transfer",
           config: config,
           body: {
             'destination_org_id' => destination_org_id,
-            'project_ids' => project_ids
+            'project_ids' => project_ids,
           },
           return_type: ::OctridevNeon::EmptyResponse,
           decoder: :json,
           operation_id: 'transfer_users_projects',
           request_options: request_options,
-          errors: { '406' => ::OctridevNeon::LimitsUnsatisfiedResponse, '422' => ::OctridevNeon::ProjectsWithIntegrationResponse, 'default' => ::OctridevNeon::GeneralError }
+          errors: { '406' => ::OctridevNeon::LimitsUnsatisfiedResponse, '422' => ::OctridevNeon::ProjectsWithIntegrationResponse, 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
       # Returns authentication details for the credentials used in the request, including the credential type (API key, Bearer token, or OAuth session) and the associated identity.
-      singleton_class.define_method(:get_auth_details) do |config:, request_options: nil|
+      singleton_class.define_method(:get_auth_details) do |
+        config:,
+        request_options: nil
+      |
+
         SdkClient.request(
           'GET',
-          '/auth',
+          "/auth",
           config: config,
           return_type: ::OctridevNeon::AuthDetailsResponse,
           decoder: :json,
           operation_id: 'get_auth_details',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

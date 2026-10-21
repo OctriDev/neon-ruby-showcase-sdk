@@ -22,6 +22,7 @@ module OctridevNeon
         masking_rules:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -29,21 +30,21 @@ module OctridevNeon
         SdkClient.request(
           'PATCH',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/masking_rules'
+            "/masking_rules"
           ].join,
           config: config,
           body: {
-            'masking_rules' => masking_rules
+            'masking_rules' => masking_rules,
           },
           return_type: ::OctridevNeon::MaskingRulesResponse,
           decoder: :json,
           operation_id: 'update_masking_rules',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

@@ -29,6 +29,7 @@ module OctridevNeon
         limit: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 500) }
@@ -36,22 +37,22 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            '/organizations/',
+            "/organizations/",
             SdkClient.encode_path_segment(org_id),
-            '/members'
+            "/members"
           ].join,
           config: config,
           query: {
             'sort_by' => QueryValue.new(sort_by, style: 'form', explode: true),
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
             'sort_order' => QueryValue.new(sort_order, style: 'form', explode: true),
-            'limit' => QueryValue.new(limit, style: 'form', explode: true)
+            'limit' => QueryValue.new(limit, style: 'form', explode: true),
           },
           return_type: ::OctridevNeon::ListOrganizationsMembersResponse,
           decoder: :json,
           operation_id: 'list_organizations_members',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -59,7 +60,13 @@ module OctridevNeon
       #
       # @param org_id [String] The Neon organization ID
       # @param member_id [String] The Neon organization member ID
-      singleton_class.define_method(:get_organization_member) do |config:, org_id:, member_id:, request_options: nil|
+      singleton_class.define_method(:get_organization_member) do |
+        config:,
+        org_id:,
+        member_id:,
+        request_options: nil
+      |
+
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_uuid('member_id', member_id)
@@ -67,9 +74,9 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            '/organizations/',
+            "/organizations/",
             SdkClient.encode_path_segment(org_id),
-            '/members/',
+            "/members/",
             SdkClient.encode_path_segment(member_id)
           ].join,
           config: config,
@@ -77,7 +84,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'get_organization_member',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -97,6 +104,7 @@ module OctridevNeon
         role:,
         request_options: nil
       )
+
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_uuid('member_id', member_id)
@@ -104,20 +112,20 @@ module OctridevNeon
         SdkClient.request(
           'PATCH',
           [
-            '/organizations/',
+            "/organizations/",
             SdkClient.encode_path_segment(org_id),
-            '/members/',
+            "/members/",
             SdkClient.encode_path_segment(member_id)
           ].join,
           config: config,
           body: {
-            'role' => role
+            'role' => role,
           },
           return_type: ::OctridevNeon::Member,
           decoder: :json,
           operation_id: 'update_organization_member',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -131,6 +139,7 @@ module OctridevNeon
         member_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_uuid('member_id', member_id)
@@ -138,9 +147,9 @@ module OctridevNeon
         SdkClient.request(
           'DELETE',
           [
-            '/organizations/',
+            "/organizations/",
             SdkClient.encode_path_segment(org_id),
-            '/members/',
+            "/members/",
             SdkClient.encode_path_segment(member_id)
           ].join,
           config: config,
@@ -148,7 +157,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'remove_organization_member',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

@@ -24,21 +24,22 @@ module OctridevNeon
         auth_provider:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
-          '/projects/auth/transfer_ownership',
+          "/projects/auth/transfer_ownership",
           config: config,
           body: {
             'project_id' => project_id,
-            'auth_provider' => auth_provider
+            'auth_provider' => auth_provider,
           },
           return_type: ::OctridevNeon::NeonAuthTransferAuthProviderProjectResponse,
           decoder: :json,
           operation_id: 'transfer_auth_legacy_provider',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

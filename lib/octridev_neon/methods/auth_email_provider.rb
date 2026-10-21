@@ -21,6 +21,7 @@ module OctridevNeon
         recipient_email:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -31,21 +32,21 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/auth/email_provider/test'
+            "/auth/email_provider/test"
           ].join,
           config: config,
           body: {
-            'recipient_email' => recipient_email
+            'recipient_email' => recipient_email,
           },
           return_type: ::OctridevNeon::SendNeonAuthTestEmailResponse,
           decoder: :json,
           operation_id: 'send_auth_email_provider_test',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -53,7 +54,13 @@ module OctridevNeon
       #
       # @param project_id [String] The Neon project ID
       # @param branch_id [String] The Neon branch ID
-      singleton_class.define_method(:get_auth_email_provider) do |config:, project_id:, branch_id:, request_options: nil|
+      singleton_class.define_method(:get_auth_email_provider) do |
+        config:,
+        project_id:,
+        branch_id:,
+        request_options: nil
+      |
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -61,18 +68,18 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/auth/email_provider'
+            "/auth/email_provider"
           ].join,
           config: config,
           return_type: ::OctridevNeon::NeonAuthEmailServerConfigResponse,
           decoder: :json,
           operation_id: 'get_auth_email_provider',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -89,6 +96,7 @@ module OctridevNeon
         body:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -96,11 +104,11 @@ module OctridevNeon
         SdkClient.request(
           'PATCH',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/auth/email_provider'
+            "/auth/email_provider"
           ].join,
           config: config,
           body: body,
@@ -108,7 +116,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'update_auth_email_provider',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

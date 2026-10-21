@@ -17,21 +17,22 @@ module OctridevNeon
         org_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            '/organizations/',
+            "/organizations/",
             SdkClient.encode_path_segment(org_id),
-            '/invitations'
+            "/invitations"
           ].join,
           config: config,
           return_type: ::OctridevNeon::OrganizationInvitationsResponse,
           decoder: :json,
           operation_id: 'list_organizations_invitations',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -46,24 +47,25 @@ module OctridevNeon
         invitations:,
         request_options: nil
       )
+
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
           [
-            '/organizations/',
+            "/organizations/",
             SdkClient.encode_path_segment(org_id),
-            '/invitations'
+            "/invitations"
           ].join,
           config: config,
           body: {
-            'invitations' => invitations
+            'invitations' => invitations,
           },
           return_type: ::OctridevNeon::OrganizationInvitationsResponse,
           decoder: :json,
           operation_id: 'create_organization_invitations',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

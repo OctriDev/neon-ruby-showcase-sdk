@@ -38,6 +38,7 @@ module OctridevNeon
         preserve_under_name: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -51,24 +52,24 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/restore'
+            "/restore"
           ].join,
           config: config,
           body: {
             'source_branch_id' => source_branch_id,
             'source_lsn' => source_lsn,
             'source_timestamp' => source_timestamp,
-            'preserve_under_name' => preserve_under_name
+            'preserve_under_name' => preserve_under_name,
           },
           return_type: ::OctridevNeon::BranchOperations,
           decoder: :json,
           operation_id: 'restore_branch',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

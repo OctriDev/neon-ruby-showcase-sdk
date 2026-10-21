@@ -20,24 +20,25 @@ module OctridevNeon
         ttl_seconds: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/transfer_requests'
+            "/transfer_requests"
           ].join,
           config: config,
           body: {
-            'ttl_seconds' => ttl_seconds
+            'ttl_seconds' => ttl_seconds,
           },
           return_type: ::OctridevNeon::ProjectTransferRequestResponse,
           decoder: :json,
           operation_id: 'create_project_transfer_request',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

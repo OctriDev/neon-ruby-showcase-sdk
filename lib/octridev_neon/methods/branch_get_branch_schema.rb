@@ -21,7 +21,17 @@ module OctridevNeon
       #   retrieved
       # @param format [String] The format of the schema to retrieve. Possible
       #   values: - `sql` (default) - `json`
-      singleton_class.define_method(:get_branch_schema) do |config:, project_id:, branch_id:, db_name:, lsn: NOT_GIVEN, timestamp: NOT_GIVEN, format: NOT_GIVEN, request_options: nil|
+      singleton_class.define_method(:get_branch_schema) do |
+        config:,
+        project_id:,
+        branch_id:,
+        db_name:,
+        lsn: NOT_GIVEN,
+        timestamp: NOT_GIVEN,
+        format: NOT_GIVEN,
+        request_options: nil
+      |
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -31,24 +41,24 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/schema'
+            "/schema"
           ].join,
           config: config,
           query: {
             'db_name' => QueryValue.new(db_name, style: 'form', explode: true),
             'lsn' => QueryValue.new(lsn, style: 'form', explode: true),
             'timestamp' => QueryValue.new(timestamp, style: 'form', explode: true),
-            'format' => QueryValue.new(format, style: 'form', explode: true)
+            'format' => QueryValue.new(format, style: 'form', explode: true),
           },
           return_type: ::OctridevNeon::BranchSchemaResponse,
           decoder: :json,
           operation_id: 'get_branch_schema',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

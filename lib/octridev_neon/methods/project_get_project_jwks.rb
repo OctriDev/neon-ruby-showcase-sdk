@@ -12,22 +12,27 @@ module OctridevNeon
       # Returns the JWKS URLs available for verifying JWTs used as the authentication mechanism for the specified project.
       #
       # @param project_id [String] The Neon project ID
-      singleton_class.define_method(:get_project_jwks) do |config:, project_id:, request_options: nil|
+      singleton_class.define_method(:get_project_jwks) do |
+        config:,
+        project_id:,
+        request_options: nil
+      |
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/jwks'
+            "/jwks"
           ].join,
           config: config,
           return_type: ::OctridevNeon::ProjectJWKSResponse,
           decoder: :json,
           operation_id: 'get_project_jwks',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

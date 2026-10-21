@@ -12,10 +12,12 @@ module OctridevNeon
       # Internal model hydration metadata.
       class SdkInternalFinalizeRestoreBranchMetadata
         FIELDS = {
-          name: 'name'
+          name: "name",
         }.freeze
-        REQUIRED_FIELDS = %i[].freeze
-        DECODERS = {}.freeze
+        REQUIRED_FIELDS = %i[
+        ].freeze
+        DECODERS = {
+        }.freeze
       end
 
       # API model for FinalizeRestoreBranch.
@@ -47,7 +49,7 @@ module OctridevNeon
         NAME = 'name'
         CREATED_AT = 'created_at'
         UPDATED_AT = 'updated_at'
-        VALUES = %w[name created_at updated_at].freeze
+        VALUES = ['name', 'created_at', 'updated_at'].freeze
         def self.from_value(value)
           value
         end

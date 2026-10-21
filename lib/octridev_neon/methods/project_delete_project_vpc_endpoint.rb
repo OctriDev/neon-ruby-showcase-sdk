@@ -19,21 +19,22 @@ module OctridevNeon
         vpc_endpoint_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/vpc_endpoints/',
+            "/vpc_endpoints/",
             SdkClient.encode_path_segment(vpc_endpoint_id)
           ].join,
           config: config,
           decoder: :empty,
           operation_id: 'delete_project_vpc_endpoint',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

@@ -17,21 +17,22 @@ module OctridevNeon
         project_id:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/recover'
+            "/recover"
           ].join,
           config: config,
           return_type: ::OctridevNeon::ProjectRecoverResponse,
           decoder: :json,
           operation_id: 'recover_project',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

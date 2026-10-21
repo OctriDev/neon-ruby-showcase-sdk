@@ -38,16 +38,17 @@ module OctridevNeon
         include_deleted: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
-        Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 10_000) }
+        Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 10000) }
 
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches'
+            "/branches"
           ].join,
           config: config,
           query: {
@@ -56,13 +57,13 @@ module OctridevNeon
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
             'sort_order' => QueryValue.new(sort_order, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'include_deleted' => QueryValue.new(include_deleted, style: 'form', explode: true)
+            'include_deleted' => QueryValue.new(include_deleted, style: 'form', explode: true),
           },
           return_type: ::OctridevNeon::ListBranchResponse,
           decoder: :json,
           operation_id: 'list_branch',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

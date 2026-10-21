@@ -36,15 +36,16 @@ module OctridevNeon
         recoverable: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 400) }
 
         Validation.if_given(org_id) { Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$') }
 
-        Validation.if_given(timeout) { Validation.validate_range('timeout', timeout, min: 100, max: 30_000) }
+        Validation.if_given(timeout) { Validation.validate_range('timeout', timeout, min: 100, max: 30000) }
 
         SdkClient.request(
           'GET',
-          '/projects',
+          "/projects",
           config: config,
           query: {
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
@@ -52,13 +53,13 @@ module OctridevNeon
             'search' => QueryValue.new(search, style: 'form', explode: true),
             'org_id' => QueryValue.new(org_id, style: 'form', explode: true),
             'timeout' => QueryValue.new(timeout, style: 'form', explode: true),
-            'recoverable' => QueryValue.new(recoverable, style: 'form', explode: true)
+            'recoverable' => QueryValue.new(recoverable, style: 'form', explode: true),
           },
           return_type: ::OctridevNeon::ListProjectsResponse,
           decoder: :json,
           operation_id: 'list_projects',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

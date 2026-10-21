@@ -13,7 +13,13 @@ module OctridevNeon
       #
       # @param project_id [String] The Neon project ID
       # @param branch_id [String] The Neon branch ID
-      singleton_class.define_method(:get_auth_email_and_password_config) do |config:, project_id:, branch_id:, request_options: nil|
+      singleton_class.define_method(:get_auth_email_and_password_config) do |
+        config:,
+        project_id:,
+        branch_id:,
+        request_options: nil
+      |
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -21,18 +27,18 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/auth/email_and_password'
+            "/auth/email_and_password"
           ].join,
           config: config,
           return_type: ::OctridevNeon::NeonAuthEmailAndPasswordConfig,
           decoder: :json,
           operation_id: 'get_auth_email_and_password_config',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -70,6 +76,7 @@ module OctridevNeon
         disable_sign_up: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -77,11 +84,11 @@ module OctridevNeon
         SdkClient.request(
           'PATCH',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/auth/email_and_password'
+            "/auth/email_and_password"
           ].join,
           config: config,
           body: {
@@ -91,13 +98,13 @@ module OctridevNeon
             'auto_sign_in_after_verification' => auto_sign_in_after_verification,
             'send_verification_email_on_sign_up' => send_verification_email_on_sign_up,
             'send_verification_email_on_sign_in' => send_verification_email_on_sign_in,
-            'disable_sign_up' => disable_sign_up
+            'disable_sign_up' => disable_sign_up,
           },
           return_type: ::OctridevNeon::NeonAuthEmailAndPasswordConfig,
           decoder: :json,
           operation_id: 'update_auth_email_and_password_config',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

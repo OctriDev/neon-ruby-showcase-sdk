@@ -13,7 +13,13 @@ module OctridevNeon
       #
       # @param project_id [String] The Neon project ID
       # @param branch_id [String] The Neon branch ID
-      singleton_class.define_method(:get_auth_allow_localhost) do |config:, project_id:, branch_id:, request_options: nil|
+      singleton_class.define_method(:get_auth_allow_localhost) do |
+        config:,
+        project_id:,
+        branch_id:,
+        request_options: nil
+      |
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -21,18 +27,18 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/auth/allow_localhost'
+            "/auth/allow_localhost"
           ].join,
           config: config,
           return_type: ::OctridevNeon::NeonAuthAllowLocalhostResponse,
           decoder: :json,
           operation_id: 'get_auth_allow_localhost',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
 
@@ -48,6 +54,7 @@ module OctridevNeon
         allow_localhost:,
         request_options: nil
       )
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -55,21 +62,21 @@ module OctridevNeon
         SdkClient.request(
           'PATCH',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/auth/allow_localhost'
+            "/auth/allow_localhost"
           ].join,
           config: config,
           body: {
-            'allow_localhost' => allow_localhost
+            'allow_localhost' => allow_localhost,
           },
           return_type: ::OctridevNeon::NeonAuthAllowLocalhostResponse,
           decoder: :json,
           operation_id: 'update_auth_allow_localhost',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError }
+          errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end

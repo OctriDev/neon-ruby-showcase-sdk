@@ -46,7 +46,14 @@ module OctridevNeon
     end
 
     # Analyzes the database for security and performance issues. Returns a list of issues categorized by severity (ERROR, WARN, INFO). Requires read access to the project and Data API enabled.
-    define_method(:get_advisor_security_issues) do |project_id:, branch_id: NOT_GIVEN, database_name: NOT_GIVEN, category: NOT_GIVEN, min_severity: NOT_GIVEN, request_options: nil|
+    define_method(:get_advisor_security_issues) do |
+      project_id:,
+      branch_id: NOT_GIVEN,
+      database_name: NOT_GIVEN,
+      category: NOT_GIVEN,
+      min_severity: NOT_GIVEN,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Project.get_project_advisor_security_issues(
         config: @config,
         project_id: project_id,
@@ -259,7 +266,10 @@ module OctridevNeon
     # Lists the shared preload libraries available for the specified project's Postgres version. Use the list to choose libraries for the project's `settings.preload_libraries` configuration; activating these libraries requires a compute restart.
     #
     # Returns the shared preload libraries available for the specified project's Postgres version. Shared preload libraries are Postgres extensions that require the `shared_preload_libraries` setting and a compute restart to activate. Use this list to determine which libraries can be enabled in the project's `settings.preload_libraries` configuration.
-    define_method(:get_available_preload_libraries) do |project_id:, request_options: nil|
+    define_method(:get_available_preload_libraries) do |
+      project_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Project.get_available_preload_libraries(
         config: @config,
         project_id: project_id,
@@ -298,7 +308,10 @@ module OctridevNeon
     end
 
     # Returns the JWKS URLs available for verifying JWTs used as the authentication mechanism for the specified project.
-    define_method(:get_jwks) do |project_id:, request_options: nil|
+    define_method(:get_jwks) do |
+      project_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Project.get_project_jwks(
         config: @config,
         project_id: project_id,
@@ -345,7 +358,15 @@ module OctridevNeon
     end
 
     # Retrieves a connection URI for the specified database. The URI uses the standard PostgreSQL connection string format. Set `pooled=true` to include the `-pooler` suffix for a connection pooler URI.
-    define_method(:get_connection_uri) do |project_id:, database_name:, role_name:, branch_id: NOT_GIVEN, endpoint_id: NOT_GIVEN, pooled: NOT_GIVEN, request_options: nil|
+    define_method(:get_connection_uri) do |
+      project_id:,
+      database_name:,
+      role_name:,
+      branch_id: NOT_GIVEN,
+      endpoint_id: NOT_GIVEN,
+      pooled: NOT_GIVEN,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Project.get_connection_uri(
         config: @config,
         project_id: project_id,
@@ -399,6 +420,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the ApiKeyNamespace SDK type.
@@ -427,6 +449,7 @@ module OctridevNeon
     )
       ::OctridevNeon::Methods::ApiKey.revoke_api_key(config: @config, key_id: key_id, request_options: request_options)
     end
+
   end
 
   # Defines the OperationNamespace SDK type.
@@ -464,6 +487,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the DataApiNamespace SDK type.
@@ -551,6 +575,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the AuthLegacyNamespace SDK type.
@@ -786,7 +811,10 @@ module OctridevNeon
     # Deprecated. Use `/projects/{project_id}/branches/{branch_id}/auth/email_provider` instead. Removal scheduled for March 1, 2026.
     #
     # @deprecated This operation is deprecated and may be removed in a future release.
-    define_method(:get_email_server) do |project_id:, request_options: nil|
+    define_method(:get_email_server) do |
+      project_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::AuthLegacy.get_auth_legacy_email_server(
         config: @config,
         project_id: project_id,
@@ -829,6 +857,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the AuthNamespace SDK type.
@@ -1108,7 +1137,11 @@ module OctridevNeon
     end
 
     # Retrieves the email and password authentication configuration for the specified branch's Neon Auth integration, including whether it is enabled and the email verification method.
-    define_method(:get_email_and_password_config) do |project_id:, branch_id:, request_options: nil|
+    define_method(:get_email_and_password_config) do |
+      project_id:,
+      branch_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Auth.get_auth_email_and_password_config(
         config: @config,
         project_id: project_id,
@@ -1146,7 +1179,11 @@ module OctridevNeon
     end
 
     # Retrieves the email provider configuration for the specified branch's Neon Auth integration, including the provider type and server settings.
-    define_method(:get_email_provider) do |project_id:, branch_id:, request_options: nil|
+    define_method(:get_email_provider) do |
+      project_id:,
+      branch_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Auth.get_auth_email_provider(
         config: @config,
         project_id: project_id,
@@ -1174,7 +1211,11 @@ module OctridevNeon
     end
 
     # Retrieves the localhost allow setting for the specified branch's Neon Auth integration. When enabled, authentication flows work from `localhost` without adding it to the redirect URI whitelist.
-    define_method(:get_allow_localhost) do |project_id:, branch_id:, request_options: nil|
+    define_method(:get_allow_localhost) do |
+      project_id:,
+      branch_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Auth.get_auth_allow_localhost(
         config: @config,
         project_id: project_id,
@@ -1200,7 +1241,11 @@ module OctridevNeon
     end
 
     # Returns all plugin configurations for Neon Auth in a single response. This endpoint aggregates organization, email provider, email and password, OAuth providers, and localhost settings.
-    define_method(:get_plugin_configs) do |project_id:, branch_id:, request_options: nil|
+    define_method(:get_plugin_configs) do |
+      project_id:,
+      branch_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Auth.get_auth_plugin_configs(
         config: @config,
         project_id: project_id,
@@ -1270,7 +1315,11 @@ module OctridevNeon
     end
 
     # Returns the phone number plugin configuration for Neon Auth. The phone number plugin enables phone-based OTP authentication.
-    define_method(:get_phone_number_plugin) do |project_id:, branch_id:, request_options: nil|
+    define_method(:get_phone_number_plugin) do |
+      project_id:,
+      branch_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Auth.get_auth_phone_number_plugin(
         config: @config,
         project_id: project_id,
@@ -1298,7 +1347,11 @@ module OctridevNeon
     end
 
     # Returns the OAuth provider plugin configuration for Neon Auth. The OAuth provider plugin lets Neon Auth act as an OAuth 2.1 authorization server for your own clients, such as MCP clients.
-    define_method(:get_oauth_provider_plugin) do |project_id:, branch_id:, request_options: nil|
+    define_method(:get_oauth_provider_plugin) do |
+      project_id:,
+      branch_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Auth.get_auth_oauth_provider_plugin(
         config: @config,
         project_id: project_id,
@@ -1370,7 +1423,12 @@ module OctridevNeon
     end
 
     # Returns an OAuth client registered with the branch's Neon Auth OAuth provider. The client secret is never returned.
-    define_method(:get_oauth_client) do |project_id:, branch_id:, client_id:, request_options: nil|
+    define_method(:get_oauth_client) do |
+      project_id:,
+      branch_id:,
+      client_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Auth.get_auth_oauth_client(
         config: @config,
         project_id: project_id,
@@ -1439,7 +1497,11 @@ module OctridevNeon
     end
 
     # Returns the webhook configuration for the specified branch's Neon Auth integration, including the endpoint URL and the events that trigger it.
-    define_method(:get_webhook_config) do |project_id:, branch_id:, request_options: nil|
+    define_method(:get_webhook_config) do |
+      project_id:,
+      branch_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Auth.get_auth_webhook_config(
         config: @config,
         project_id: project_id,
@@ -1469,6 +1531,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the BranchNamespace SDK type.
@@ -1612,7 +1675,15 @@ module OctridevNeon
     end
 
     # Retrieves the database schema. Specify `lsn` or `timestamp` (not both) to read at a point in time; omit both to read from the database's head.
-    define_method(:get_schema) do |project_id:, branch_id:, db_name:, lsn: NOT_GIVEN, timestamp: NOT_GIVEN, format: NOT_GIVEN, request_options: nil|
+    define_method(:get_schema) do |
+      project_id:,
+      branch_id:,
+      db_name:,
+      lsn: NOT_GIVEN,
+      timestamp: NOT_GIVEN,
+      format: NOT_GIVEN,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Branch.get_branch_schema(
         config: @config,
         project_id: project_id,
@@ -1652,7 +1723,11 @@ module OctridevNeon
     end
 
     # Retrieves the masking rules for the specified anonymized branch. Masking rules define how sensitive data should be anonymized using PostgreSQL Anonymizer. **Note**: This endpoint is currently in Beta.
-    define_method(:get_masking_rules) do |project_id:, branch_id:, request_options: nil|
+    define_method(:get_masking_rules) do |
+      project_id:,
+      branch_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Branch.get_masking_rules(
         config: @config,
         project_id: project_id,
@@ -1678,7 +1753,11 @@ module OctridevNeon
     end
 
     # Retrieves the current status of an anonymized branch, including its state and progress information. This endpoint allows you to monitor the anonymization process from initialization through completion. Only anonymized branches will have status information available. **Note**: This endpoint is currently in Beta.
-    define_method(:get_anonymized_status) do |project_id:, branch_id:, request_options: nil|
+    define_method(:get_anonymized_status) do |
+      project_id:,
+      branch_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Branch.get_anonymized_branch_status(
         config: @config,
         project_id: project_id,
@@ -1778,7 +1857,12 @@ module OctridevNeon
     end
 
     # Retrieves information about the specified database. For related information, see Manage databases.
-    define_method(:get_database) do |project_id:, branch_id:, database_name:, request_options: nil|
+    define_method(:get_database) do |
+      project_id:,
+      branch_id:,
+      database_name:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Branch.get_branch_database(
         config: @config,
         project_id: project_id,
@@ -1853,7 +1937,12 @@ module OctridevNeon
     end
 
     # Retrieves details about the specified role. In Neon, the terms "role" and "user" are synonymous. For related information, see Manage roles.
-    define_method(:get_role) do |project_id:, branch_id:, role_name:, request_options: nil|
+    define_method(:get_role) do |
+      project_id:,
+      branch_id:,
+      role_name:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Branch.get_branch_role(
         config: @config,
         project_id: project_id,
@@ -1880,7 +1969,12 @@ module OctridevNeon
     end
 
     # Retrieves the password for the specified Postgres role, if possible. For related information, see Manage roles.
-    define_method(:get_role_password) do |project_id:, branch_id:, role_name:, request_options: nil|
+    define_method(:get_role_password) do |
+      project_id:,
+      branch_id:,
+      role_name:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Branch.get_branch_role_password(
         config: @config,
         project_id: project_id,
@@ -1905,6 +1999,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the RealtimeNamespace SDK type.
@@ -1958,7 +2053,11 @@ module OctridevNeon
     end
 
     # Retrieves the secret the application backend issues Realtime tokens with. Requires permission to read the project's credentials. Returns 404 while Realtime is disabled or before the secret is provisioned. After a rotation, this returns the previous secret until `pending` is false.
-    define_method(:get_secret) do |project_id:, branch_id:, request_options: nil|
+    define_method(:get_secret) do |
+      project_id:,
+      branch_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Realtime.get_realtime_secret(
         config: @config,
         project_id: project_id,
@@ -1980,6 +2079,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the EndpointNamespace SDK type.
@@ -2099,6 +2199,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the ConsumptionNamespace SDK type.
@@ -2108,7 +2209,18 @@ module OctridevNeon
     end
 
     # Retrieves consumption metrics for Scale, Business, and Enterprise plan projects. History begins at the time of upgrade. Results are ordered by time in ascending order (oldest to newest). Issuing a call to this API does not wake a project's compute endpoint.
-    define_method(:get_history_per_project) do |from:, to:, granularity:, cursor: NOT_GIVEN, limit: NOT_GIVEN, project_ids: NOT_GIVEN, org_id: NOT_GIVEN, include_v1_metrics: NOT_GIVEN, metrics: NOT_GIVEN, request_options: nil|
+    define_method(:get_history_per_project) do |
+      from:,
+      to:,
+      granularity:,
+      cursor: NOT_GIVEN,
+      limit: NOT_GIVEN,
+      project_ids: NOT_GIVEN,
+      org_id: NOT_GIVEN,
+      include_v1_metrics: NOT_GIVEN,
+      metrics: NOT_GIVEN,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Consumption.get_consumption_history_per_project(
         config: @config,
         from: from,
@@ -2125,7 +2237,17 @@ module OctridevNeon
     end
 
     # Returns consumption metrics for up to `limit` projects per page. If `project_ids` is omitted, projects in the organization are included across pages (use `cursor`). If `project_ids` is provided, the response is limited to those projects (up to 100). Available for accounts on Launch, Scale, Agent, Business, and Enterprise plans. History starts when the account upgrades to an eligible plan. The `metrics` query parameter is required. Supported values: `compute_unit_seconds`,…
-    define_method(:get_history_per_project_v2) do |from:, to:, granularity:, org_id:, metrics:, cursor: NOT_GIVEN, limit: NOT_GIVEN, project_ids: NOT_GIVEN, request_options: nil|
+    define_method(:get_history_per_project_v2) do |
+      from:,
+      to:,
+      granularity:,
+      org_id:,
+      metrics:,
+      cursor: NOT_GIVEN,
+      limit: NOT_GIVEN,
+      project_ids: NOT_GIVEN,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Consumption.get_consumption_history_per_project_v2(
         config: @config,
         from: from,
@@ -2141,7 +2263,18 @@ module OctridevNeon
     end
 
     # Returns consumption metrics for each branch across one or more projects listed in `project_ids` (1 to 100 projects). Available for accounts on paid usage-based Launch, Scale, Agent, and Enterprise plans. History starts when the account first ingests branch-level consumption data. The `metrics` query parameter is required. Only these six values are supported on this endpoint: `compute_unit_seconds`, `root_branch_bytes_month`, `child_branch_bytes_month`,…
-    define_method(:get_history_per_branch_v2) do |project_ids:, from:, to:, granularity:, org_id:, metrics:, cursor: NOT_GIVEN, limit: NOT_GIVEN, branch_ids: NOT_GIVEN, request_options: nil|
+    define_method(:get_history_per_branch_v2) do |
+      project_ids:,
+      from:,
+      to:,
+      granularity:,
+      org_id:,
+      metrics:,
+      cursor: NOT_GIVEN,
+      limit: NOT_GIVEN,
+      branch_ids: NOT_GIVEN,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Consumption.get_consumption_history_per_branch_v2(
         config: @config,
         project_ids: project_ids,
@@ -2156,6 +2289,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the OrganizationsNamespace SDK type.
@@ -2217,7 +2351,10 @@ module OctridevNeon
     end
 
     # Returns the configured monthly spending limit for the specified organization. `spending_limit_cents: null` indicates that no limit is currently set. Available to organization members with read access on Launch and Scale plans only.
-    define_method(:get_spending_limit) do |org_id:, request_options: nil|
+    define_method(:get_spending_limit) do |
+      org_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Organizations.get_organization_spending_limit(
         config: @config,
         org_id: org_id,
@@ -2272,7 +2409,11 @@ module OctridevNeon
     end
 
     # Retrieves information about the specified organization member.
-    define_method(:get_member) do |org_id:, member_id:, request_options: nil|
+    define_method(:get_member) do |
+      org_id:,
+      member_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Organizations.get_organization_member(
         config: @config,
         org_id: org_id,
@@ -2380,7 +2521,12 @@ module OctridevNeon
     end
 
     # Retrieves the current state and configuration details of a specified VPC endpoint.
-    define_method(:get_vpc_endpoint) do |org_id:, region_id:, vpc_endpoint_id:, request_options: nil|
+    define_method(:get_vpc_endpoint) do |
+      org_id:,
+      region_id:,
+      vpc_endpoint_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Organizations.get_organizations_vpc_endpoint(
         config: @config,
         org_id: org_id,
@@ -2423,6 +2569,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the RegionNamespace SDK type.
@@ -2432,9 +2579,13 @@ module OctridevNeon
     end
 
     # Lists supported Neon regions. **Note:** Not all regions are available to all organizations. Pass the `org_id` parameter to get an accurate list of regions available to your organization.
-    define_method(:get_active) do |org_id: NOT_GIVEN, request_options: nil|
+    define_method(:get_active) do |
+      org_id: NOT_GIVEN,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Region.get_active_regions(config: @config, org_id: org_id, request_options: request_options)
     end
+
   end
 
   # Defines the UsersNamespace SDK type.
@@ -2473,6 +2624,7 @@ module OctridevNeon
     define_method(:get_auth_details) do |request_options: nil|
       ::OctridevNeon::Methods::Users.get_auth_details(config: @config, request_options: request_options)
     end
+
   end
 
   # Defines the SnapshotNamespace SDK type.
@@ -2572,7 +2724,11 @@ module OctridevNeon
     end
 
     # Returns the backup schedule for the specified branch, including the configured snapshot frequencies.
-    define_method(:get_schedule) do |project_id:, branch_id:, request_options: nil|
+    define_method(:get_schedule) do |
+      project_id:,
+      branch_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Snapshot.get_snapshot_schedule(
         config: @config,
         project_id: project_id,
@@ -2596,6 +2752,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the BucketsNamespace SDK type.
@@ -2710,7 +2867,13 @@ module OctridevNeon
     end
 
     # Streams the raw bytes of the named object from the bucket on the specified branch, including objects inherited from ancestor branches. Served by the user's session (no customer S3 credentials required). The body is returned as `application/octet-stream` so a browser treats it as a download; the `Content-Length` and `ETag` response headers echo the stored object metadata. BINARY-STREAM EXCEPTION TO THE BUILD-GENERATED-TYPES RULE (#7029): the successful 200 body is the raw…
-    define_method(:get_object) do |project_id:, branch_id:, bucket_name:, object_key:, request_options: nil|
+    define_method(:get_object) do |
+      project_id:,
+      branch_id:,
+      bucket_name:,
+      object_key:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Buckets.get_buckets_object(
         config: @config,
         project_id: project_id,
@@ -2762,6 +2925,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the StorageNamespace SDK type.
@@ -2783,6 +2947,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the AiGatewayNamespace SDK type.
@@ -2804,6 +2969,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the LogsNamespace SDK type.
@@ -2893,6 +3059,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the CredentialsNamespace SDK type.
@@ -2984,6 +3151,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the FunctionsNamespace SDK type.
@@ -3117,7 +3285,12 @@ module OctridevNeon
     end
 
     # Returns the trigger visible on the branch. The supported trigger types are `schedule` and `storage_object_created`. **Note**: This endpoint is currently in Beta.
-    define_method(:get_trigger) do |project_id:, branch_id:, trigger_id:, request_options: nil|
+    define_method(:get_trigger) do |
+      project_id:,
+      branch_id:,
+      trigger_id:,
+      request_options: nil
+    |
       ::OctridevNeon::Methods::Functions.get_functions_trigger(
         config: @config,
         project_id: project_id,
@@ -3216,6 +3389,7 @@ module OctridevNeon
         request_options: request_options
       )
     end
+
   end
 
   # Defines the Neon SDK type.
@@ -3244,7 +3418,7 @@ module OctridevNeon
       ai_gateway: AiGatewayNamespace,
       logs: LogsNamespace,
       credentials: CredentialsNamespace,
-      functions: FunctionsNamespace
+      functions: FunctionsNamespace,
     }.freeze
     private_constant :SUB_NAMESPACES
 
@@ -3273,5 +3447,6 @@ module OctridevNeon
       end
       logging
     end
+
   end
 end

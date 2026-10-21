@@ -5,253 +5,257 @@
 
 # shared_api domain models
 module OctridevNeon
-  # Internal model hydration metadata.
-  class SdkInternalApiKeyCreateRequestMetadata
-    FIELDS = {
-      key_name: 'key_name'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      key_name
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalApiKeyCreateRequestMetadata
+  FIELDS = {
+    key_name: "key_name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    key_name
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ApiKeyCreateRequest.
+# Typed representation of the `ApiKeyCreateRequest` API schema.
+class ApiKeyCreateRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalApiKeyCreateRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalApiKeyCreateRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalApiKeyCreateRequestMetadata::DECODERS
+
+  # @return [String] A user-specified API key name. This value is required when creating an API key.
+  attr_reader :key_name
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ApiKeyCreateRequest.
-  # Typed representation of the `ApiKeyCreateRequest` API schema.
-  class ApiKeyCreateRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalApiKeyCreateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalApiKeyCreateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalApiKeyCreateRequestMetadata::DECODERS
-
-    # @return [String] A user-specified API key name. This value is required when creating an API key.
-    attr_reader :key_name
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalApiKeyCreateResponseMetadata
-    FIELDS = {
-      id: 'id',
-      key: 'key',
-      name: 'name',
-      created_at: 'created_at',
-      created_by: 'created_by'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      key
-      name
-      created_at
-      created_by
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalApiKeyCreateResponseMetadata
+  FIELDS = {
+    id: "id",
+    key: "key",
+    name: "name",
+    created_at: "created_at",
+    created_by: "created_by",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    key
+    name
+    created_at
+    created_by
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ApiKeyCreateResponse.
+# Typed representation of the `ApiKeyCreateResponse` API schema.
+class ApiKeyCreateResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalApiKeyCreateResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalApiKeyCreateResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalApiKeyCreateResponseMetadata::DECODERS
+
+  # @return [Integer] The API key's unique numeric ID. Distinct from the API key token (`key`).
+  attr_reader :id
+  # @return [String] The generated 64-bit token required to access the Neon API
+  attr_reader :key
+  # @return [String] The user-specified API key name
+  attr_reader :name
+  # @return [String] A timestamp indicating when the API key was created
+  attr_reader :created_at
+  # @return [String] ID of the user who created this API key
+  attr_reader :created_by
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ApiKeyCreateResponse.
-  # Typed representation of the `ApiKeyCreateResponse` API schema.
-  class ApiKeyCreateResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalApiKeyCreateResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalApiKeyCreateResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalApiKeyCreateResponseMetadata::DECODERS
-
-    # @return [Integer] The API key's unique numeric ID. Distinct from the API key token (`key`).
-    attr_reader :id
-    # @return [String] The generated 64-bit token required to access the Neon API
-    attr_reader :key
-    # @return [String] The user-specified API key name
-    attr_reader :name
-    # @return [String] A timestamp indicating when the API key was created
-    attr_reader :created_at
-    # @return [String] ID of the user who created this API key
-    attr_reader :created_by
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalApiKeyCreatorDataMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name',
-      image: 'image'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      name
-      image
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalApiKeyCreatorDataMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+    image: "image",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    name
+    image
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ApiKeyCreatorData.
+# The user data of the user that created this API key.
+class ApiKeyCreatorData
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalApiKeyCreatorDataMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalApiKeyCreatorDataMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalApiKeyCreatorDataMetadata::DECODERS
+
+  # @return [String] ID of the user who created this API key
+  attr_reader :id
+  # @return [String] Display name of the user who created the API key.
+  attr_reader :name
+  # @return [String] The URL to the user's avatar image.
+  attr_reader :image
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ApiKeyCreatorData.
-  # The user data of the user that created this API key.
-  class ApiKeyCreatorData
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalApiKeyCreatorDataMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalApiKeyCreatorDataMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalApiKeyCreatorDataMetadata::DECODERS
-
-    # @return [String] ID of the user who created this API key
-    attr_reader :id
-    # @return [String] Display name of the user who created the API key.
-    attr_reader :name
-    # @return [String] The URL to the user's avatar image.
-    attr_reader :image
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalApiKeyRevokeResponseMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name',
-      created_at: 'created_at',
-      created_by: 'created_by',
-      last_used_at: 'last_used_at',
-      last_used_from_addr: 'last_used_from_addr',
-      revoked: 'revoked'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      name
-      created_at
-      created_by
-      last_used_from_addr
-      revoked
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalApiKeyRevokeResponseMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+    created_at: "created_at",
+    created_by: "created_by",
+    last_used_at: "last_used_at",
+    last_used_from_addr: "last_used_from_addr",
+    revoked: "revoked",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    name
+    created_at
+    created_by
+    last_used_from_addr
+    revoked
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ApiKeyRevokeResponse.
+# Typed representation of the `ApiKeyRevokeResponse` API schema.
+class ApiKeyRevokeResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalApiKeyRevokeResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalApiKeyRevokeResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalApiKeyRevokeResponseMetadata::DECODERS
+
+  # @return [Integer] The API key's unique numeric ID. Distinct from the API key token (`key`).
+  attr_reader :id
+  # @return [String] The user-specified API key name
+  attr_reader :name
+  # @return [String] A timestamp indicating when the API key was created
+  attr_reader :created_at
+  # @return [String] ID of the user who created this API key
+  attr_reader :created_by
+  # @return [String] A timestamp indicating when the API was last used
+  attr_reader :last_used_at
+  # @return [String] The IP address from which the API key was last used
+  attr_reader :last_used_from_addr
+  # @return [Boolean] A `true` or `false` value indicating whether the API key is revoked
+  attr_reader :revoked
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ApiKeyRevokeResponse.
-  # Typed representation of the `ApiKeyRevokeResponse` API schema.
-  class ApiKeyRevokeResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalApiKeyRevokeResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalApiKeyRevokeResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalApiKeyRevokeResponseMetadata::DECODERS
-
-    # @return [Integer] The API key's unique numeric ID. Distinct from the API key token (`key`).
-    attr_reader :id
-    # @return [String] The user-specified API key name
-    attr_reader :name
-    # @return [String] A timestamp indicating when the API key was created
-    attr_reader :created_at
-    # @return [String] ID of the user who created this API key
-    attr_reader :created_by
-    # @return [String] A timestamp indicating when the API was last used
-    attr_reader :last_used_at
-    # @return [String] The IP address from which the API key was last used
-    attr_reader :last_used_from_addr
-    # @return [Boolean] A `true` or `false` value indicating whether the API key is revoked
-    attr_reader :revoked
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalApiKeysListResponseItemMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name',
-      created_at: 'created_at',
-      created_by: 'created_by',
-      last_used_at: 'last_used_at',
-      last_used_from_addr: 'last_used_from_addr'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      name
-      created_at
-      created_by
-      last_used_from_addr
-    ].freeze
-    DECODERS = {
-      created_by: lambda do |value|
-        ::OctridevNeon::ApiKeyCreatorData.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalApiKeysListResponseItemMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+    created_at: "created_at",
+    created_by: "created_by",
+    last_used_at: "last_used_at",
+    last_used_from_addr: "last_used_from_addr",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    name
+    created_at
+    created_by
+    last_used_from_addr
+  ].freeze
+  DECODERS = {
+    created_by: lambda do |value|
+      ::OctridevNeon::ApiKeyCreatorData.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for ApiKeysListResponseItem.
+# Typed representation of the `ApiKeysListResponseItem` API schema.
+class ApiKeysListResponseItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalApiKeysListResponseItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalApiKeysListResponseItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalApiKeysListResponseItemMetadata::DECODERS
+
+  # @return [Integer] The API key's unique numeric ID. Distinct from the API key token (`key`).
+  attr_reader :id
+  # @return [String] The user-specified API key name
+  attr_reader :name
+  # @return [String] A timestamp indicating when the API key was created
+  attr_reader :created_at
+  # @return [ApiKeyCreatorData] The user data of the user that created this API key.
+  attr_reader :created_by
+  # @return [String] A timestamp indicating when the API was last used
+  attr_reader :last_used_at
+  # @return [String] The IP address from which the API key was last used
+  attr_reader :last_used_from_addr
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ApiKeysListResponseItem.
-  # Typed representation of the `ApiKeysListResponseItem` API schema.
-  class ApiKeysListResponseItem
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalApiKeysListResponseItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalApiKeysListResponseItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalApiKeysListResponseItemMetadata::DECODERS
-
-    # @return [Integer] The API key's unique numeric ID. Distinct from the API key token (`key`).
-    attr_reader :id
-    # @return [String] The user-specified API key name
-    attr_reader :name
-    # @return [String] A timestamp indicating when the API key was created
-    attr_reader :created_at
-    # @return [ApiKeyCreatorData] The user data of the user that created this API key.
-    attr_reader :created_by
-    # @return [String] A timestamp indicating when the API was last used
-    attr_reader :last_used_at
-    # @return [String] The IP address from which the API key was last used
-    attr_reader :last_used_from_addr
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 end

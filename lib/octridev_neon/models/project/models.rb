@@ -5,75 +5,77 @@
 
 # tagged_models_project domain models
 module OctridevNeon
-  # Internal model hydration metadata.
-  class SdkInternalProjectsApplicationsMapResponseMetadata
-    FIELDS = {
-      applications: 'applications'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      applications
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalProjectsApplicationsMapResponseMetadata
+  FIELDS = {
+    applications: "applications",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    applications
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ProjectsApplicationsMapResponse.
+# A map where key is a project ID and a value is a list of installed applications.
+class ProjectsApplicationsMapResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProjectsApplicationsMapResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProjectsApplicationsMapResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProjectsApplicationsMapResponseMetadata::DECODERS
+
+  # @return [Hash] Map of project IDs to their installed applications. Each key is a project ID; each value is an array of application types (for example, `vercel`, `github`).
+  attr_reader :applications
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ProjectsApplicationsMapResponse.
-  # A map where key is a project ID and a value is a list of installed applications.
-  class ProjectsApplicationsMapResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProjectsApplicationsMapResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProjectsApplicationsMapResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProjectsApplicationsMapResponseMetadata::DECODERS
-
-    # @return [Hash] Map of project IDs to their installed applications. Each key is a project ID; each value is an array of application types (for example, `vercel`, `github`).
-    attr_reader :applications
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalProjectsIntegrationsMapResponseMetadata
-    FIELDS = {
-      integrations: 'integrations'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      integrations
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalProjectsIntegrationsMapResponseMetadata
+  FIELDS = {
+    integrations: "integrations",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    integrations
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ProjectsIntegrationsMapResponse.
+# A map where key is a project ID and a value is a list of installed integrations.
+class ProjectsIntegrationsMapResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProjectsIntegrationsMapResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProjectsIntegrationsMapResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProjectsIntegrationsMapResponseMetadata::DECODERS
+
+  # @return [Hash] Map of project IDs to their associated integration details.
+  attr_reader :integrations
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ProjectsIntegrationsMapResponse.
-  # A map where key is a project ID and a value is a list of installed integrations.
-  class ProjectsIntegrationsMapResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProjectsIntegrationsMapResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProjectsIntegrationsMapResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProjectsIntegrationsMapResponseMetadata::DECODERS
-
-    # @return [Hash] Map of project IDs to their associated integration details.
-    attr_reader :integrations
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 end

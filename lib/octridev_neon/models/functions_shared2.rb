@@ -5,626 +5,617 @@
 
 # functions domain models
 module OctridevNeon
-  # Internal model hydration metadata.
-  class SdkInternalScheduleTriggerMetadata
-    FIELDS = {
-      type: 'type',
-      trigger_id: 'trigger_id',
-      function_slug: 'function_slug',
-      name: 'name',
-      function_path: 'function_path',
-      schedule: 'schedule',
-      enabled: 'enabled',
-      version: 'version',
-      next_run_at: 'next_run_at',
-      inherited: 'inherited'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      trigger_id
-      function_slug
-      name
-      function_path
-      schedule
-      enabled
-      version
-      next_run_at
-      inherited
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevNeon::ScheduleTriggerType.from_value(value)
-      end,
-      trigger_id: lambda do |value|
-        ::OctridevNeon::TriggerID.from_value(value)
-      end,
-      schedule: lambda do |value|
-        ::OctridevNeon::FunctionTriggerSchedule.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      next_run_at
-    ].freeze
+# Internal model hydration metadata.
+class SdkInternalScheduleTriggerMetadata
+  FIELDS = {
+    type: "type",
+    trigger_id: "trigger_id",
+    function_slug: "function_slug",
+    name: "name",
+    function_path: "function_path",
+    schedule: "schedule",
+    enabled: "enabled",
+    version: "version",
+    next_run_at: "next_run_at",
+    inherited: "inherited",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    trigger_id
+    function_slug
+    name
+    function_path
+    schedule
+    enabled
+    version
+    next_run_at
+    inherited
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevNeon::ScheduleTriggerType.from_value(value)
+    end,
+    trigger_id: lambda do |value|
+      ::OctridevNeon::TriggerID.from_value(value)
+    end,
+    schedule: lambda do |value|
+      ::OctridevNeon::FunctionTriggerSchedule.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    next_run_at
+  ].freeze
+end
+
+# API model for ScheduleTrigger.
+# A branch-effective schedule trigger for a Function.
+class ScheduleTrigger
+  include Trigger
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalScheduleTriggerMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalScheduleTriggerMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalScheduleTriggerMetadata::DECODERS
+
+  # @return [ScheduleTriggerType] Trigger type discriminator.
+  attr_reader :type
+  # @return [TriggerID] Opaque, server-minted project-wide trigger identifier.
+  attr_reader :trigger_id
+  # @return [String] The branch-local Function slug resolved when an occurrence is consumed.
+  attr_reader :function_slug
+  # @return [String] Human-readable trigger name.
+  attr_reader :name
+  # @return [String] Path passed to the target Function.
+  attr_reader :function_path
+  # @return [FunctionTriggerSchedule] A numeric five-field cron schedule interpreted in UTC.
+  attr_reader :schedule
+  # @return [Boolean] Required `boolean` value serialized in the `enabled` wire field.
+  attr_reader :enabled
+  # @return [Integer] Monotonic configuration version.
+  attr_reader :version
+  # @return [String] Next scheduled occurrence as an RFC 3339 UTC timestamp, or null while disabled or inherited and not explicitly enabled on this branch.
+  attr_reader :next_run_at
+  # @return [Boolean] True when the effective configuration was authored on an ancestor branch.
+  attr_reader :inherited
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ScheduleTrigger.
-  # A branch-effective schedule trigger for a Function.
-  class ScheduleTrigger
-    include Trigger
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalScheduleTriggerMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalScheduleTriggerMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalScheduleTriggerMetadata::DECODERS
-
-    # @return [ScheduleTriggerType] Trigger type discriminator.
-    attr_reader :type
-    # @return [TriggerID] Opaque, server-minted project-wide trigger identifier.
-    attr_reader :trigger_id
-    # @return [String] The branch-local Function slug resolved when an occurrence is consumed.
-    attr_reader :function_slug
-    # @return [String] Human-readable trigger name.
-    attr_reader :name
-    # @return [String] Path passed to the target Function.
-    attr_reader :function_path
-    # @return [FunctionTriggerSchedule] A numeric five-field cron schedule interpreted in UTC.
-    attr_reader :schedule
-    # @return [Boolean] Required `boolean` value serialized in the `enabled` wire field.
-    attr_reader :enabled
-    # @return [Integer] Monotonic configuration version.
-    attr_reader :version
-    # @return [String] Next scheduled occurrence as an RFC 3339 UTC timestamp, or null while disabled or inherited and not explicitly enabled on this branch.
-    attr_reader :next_run_at
-    # @return [Boolean] True when the effective configuration was authored on an ancestor branch.
-    attr_reader :inherited
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalScheduleTriggerMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalScheduleTriggerMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the ScheduleTriggerType SDK namespace.
-  module ScheduleTriggerType
-    SCHEDULE = 'schedule'
-    VALUES = ['schedule'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('ScheduleTriggerType', 'enum', "Unknown ScheduleTriggerType: #{value}")
-    end
+# Defines the ScheduleTriggerType SDK namespace.
+module ScheduleTriggerType
+  SCHEDULE = 'schedule'
+  VALUES = ['schedule'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ScheduleTriggerType', 'enum', "Unknown ScheduleTriggerType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalScheduleTriggerCreateRequestMetadata
+  FIELDS = {
+    type: "type",
+    function_slug: "function_slug",
+    name: "name",
+    function_path: "function_path",
+    schedule: "schedule",
+    enabled: "enabled",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    function_slug
+    name
+    schedule
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevNeon::ScheduleTriggerCreateRequestType.from_value(value)
+    end,
+    schedule: lambda do |value|
+      ::OctridevNeon::FunctionTriggerSchedule.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for ScheduleTriggerCreateRequest.
+# Typed representation of the `ScheduleTriggerCreateRequest` API schema.
+class ScheduleTriggerCreateRequest
+  include TriggerCreateRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalScheduleTriggerCreateRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalScheduleTriggerCreateRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalScheduleTriggerCreateRequestMetadata::DECODERS
+
+  # @return [ScheduleTriggerCreateRequestType] Trigger type discriminator.
+  attr_reader :type
+  # @return [String] The branch-local Function slug to invoke.
+  attr_reader :function_slug
+  # @return [String] Human-readable name, unique among triggers visible on the branch.
+  attr_reader :name
+  # @return [String] Path passed to the target Function. Defaults to `/`.
+  attr_reader :function_path
+  # @return [FunctionTriggerSchedule] A numeric five-field cron schedule interpreted in UTC.
+  attr_reader :schedule
+  # @return [Boolean] Whether future occurrences should be scheduled.
+  attr_reader :enabled
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalScheduleTriggerCreateRequestMetadata
-    FIELDS = {
-      type: 'type',
-      function_slug: 'function_slug',
-      name: 'name',
-      function_path: 'function_path',
-      schedule: 'schedule',
-      enabled: 'enabled'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      function_slug
-      name
-      schedule
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevNeon::ScheduleTriggerCreateRequestType.from_value(value)
-      end,
-      schedule: lambda do |value|
-        ::OctridevNeon::FunctionTriggerSchedule.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ScheduleTriggerCreateRequest.
-  # Typed representation of the `ScheduleTriggerCreateRequest` API schema.
-  class ScheduleTriggerCreateRequest
-    include TriggerCreateRequest
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalScheduleTriggerCreateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalScheduleTriggerCreateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalScheduleTriggerCreateRequestMetadata::DECODERS
+# Defines the ScheduleTriggerCreateRequestType SDK namespace.
+module ScheduleTriggerCreateRequestType
+  SCHEDULE = 'schedule'
+  VALUES = ['schedule'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [ScheduleTriggerCreateRequestType] Trigger type discriminator.
-    attr_reader :type
-    # @return [String] The branch-local Function slug to invoke.
-    attr_reader :function_slug
-    # @return [String] Human-readable name, unique among triggers visible on the branch.
-    attr_reader :name
-    # @return [String] Path passed to the target Function. Defaults to `/`.
-    attr_reader :function_path
-    # @return [FunctionTriggerSchedule] A numeric five-field cron schedule interpreted in UTC.
-    attr_reader :schedule
-    # @return [Boolean] Whether future occurrences should be scheduled.
-    attr_reader :enabled
+    raise SdkValidationError.new('ScheduleTriggerCreateRequestType', 'enum', "Unknown ScheduleTriggerCreateRequestType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalScheduleTriggerUpdateRequestMetadata
+  FIELDS = {
+    type: "type",
+    function_slug: "function_slug",
+    name: "name",
+    function_path: "function_path",
+    schedule: "schedule",
+    enabled: "enabled",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevNeon::ScheduleTriggerUpdateRequestType.from_value(value)
+    end,
+    schedule: lambda do |value|
+      ::OctridevNeon::FunctionTriggerSchedule.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for ScheduleTriggerUpdateRequest.
+# Typed representation of the `ScheduleTriggerUpdateRequest` API schema.
+class ScheduleTriggerUpdateRequest
+  include TriggerUpdateRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalScheduleTriggerUpdateRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalScheduleTriggerUpdateRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalScheduleTriggerUpdateRequestMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [ScheduleTriggerUpdateRequestType] Trigger type discriminator; it does not change the trigger type.
+  attr_reader :type
+  # @return [String] Replacement branch-local Function slug.
+  attr_reader :function_slug
+  # @return [String] Optional `string` value serialized in the `name` wire field.
+  attr_reader :name
+  # @return [String] Optional `string` value serialized in the `function_path` wire field.
+  attr_reader :function_path
+  # @return [FunctionTriggerSchedule] A numeric five-field cron schedule interpreted in UTC.
+  attr_reader :schedule
+  # @return [Boolean] True enables and false disables future scheduling.
+  attr_reader :enabled
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ScheduleTriggerCreateRequestType SDK namespace.
-  module ScheduleTriggerCreateRequestType
-    SCHEDULE = 'schedule'
-    VALUES = ['schedule'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ScheduleTriggerCreateRequestType', 'enum', "Unknown ScheduleTriggerCreateRequestType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalScheduleTriggerUpdateRequestMetadata
-    FIELDS = {
-      type: 'type',
-      function_slug: 'function_slug',
-      name: 'name',
-      function_path: 'function_path',
-      schedule: 'schedule',
-      enabled: 'enabled'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevNeon::ScheduleTriggerUpdateRequestType.from_value(value)
-      end,
-      schedule: lambda do |value|
-        ::OctridevNeon::FunctionTriggerSchedule.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ScheduleTriggerUpdateRequestType SDK namespace.
+module ScheduleTriggerUpdateRequestType
+  SCHEDULE = 'schedule'
+  VALUES = ['schedule'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ScheduleTriggerUpdateRequestType', 'enum', "Unknown ScheduleTriggerUpdateRequestType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalStorageObjectCreatedTriggerMetadata
+  FIELDS = {
+    type: "type",
+    trigger_id: "trigger_id",
+    function_slug: "function_slug",
+    name: "name",
+    function_path: "function_path",
+    storage_object_created: "storage_object_created",
+    enabled: "enabled",
+    version: "version",
+    inherited: "inherited",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    trigger_id
+    function_slug
+    name
+    function_path
+    storage_object_created
+    enabled
+    version
+    inherited
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevNeon::StorageObjectCreatedTriggerType.from_value(value)
+    end,
+    trigger_id: lambda do |value|
+      ::OctridevNeon::TriggerID.from_value(value)
+    end,
+    storage_object_created: lambda do |value|
+      ::OctridevNeon::FunctionTriggerStorageObjectCreated.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for StorageObjectCreatedTrigger.
+# A branch-effective trigger that invokes a Function after a successful upload matching its exact bucket and optional object-key prefix.
+class StorageObjectCreatedTrigger
+  include Trigger
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalStorageObjectCreatedTriggerMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalStorageObjectCreatedTriggerMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalStorageObjectCreatedTriggerMetadata::DECODERS
+
+  # @return [StorageObjectCreatedTriggerType] Trigger type discriminator.
+  attr_reader :type
+  # @return [TriggerID] Opaque, server-minted project-wide trigger identifier.
+  attr_reader :trigger_id
+  # @return [String] The branch-local Function slug resolved when an invocation is consumed.
+  attr_reader :function_slug
+  # @return [String] Human-readable trigger name.
+  attr_reader :name
+  # @return [String] Path passed to the target Function.
+  attr_reader :function_path
+  # @return [FunctionTriggerStorageObjectCreated] Matches successful uploads to one exact bucket and, when configured, an object-key prefix. The Function receives a JSON request body with `type` set to `storage_object_created` and a `data` object containing exactly `bucket_name` and `object_key`.
+  attr_reader :storage_object_created
+  # @return [Boolean] Required `boolean` value serialized in the `enabled` wire field.
+  attr_reader :enabled
+  # @return [Integer] Monotonic configuration version.
+  attr_reader :version
+  # @return [Boolean] True when the effective configuration was authored on an ancestor branch.
+  attr_reader :inherited
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ScheduleTriggerUpdateRequest.
-  # Typed representation of the `ScheduleTriggerUpdateRequest` API schema.
-  class ScheduleTriggerUpdateRequest
-    include TriggerUpdateRequest
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalScheduleTriggerUpdateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalScheduleTriggerUpdateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalScheduleTriggerUpdateRequestMetadata::DECODERS
-
-    # @return [ScheduleTriggerUpdateRequestType] Trigger type discriminator; it does not change the trigger type.
-    attr_reader :type
-    # @return [String] Replacement branch-local Function slug.
-    attr_reader :function_slug
-    # @return [String] Optional `string` value serialized in the `name` wire field.
-    attr_reader :name
-    # @return [String] Optional `string` value serialized in the `function_path` wire field.
-    attr_reader :function_path
-    # @return [FunctionTriggerSchedule] A numeric five-field cron schedule interpreted in UTC.
-    attr_reader :schedule
-    # @return [Boolean] True enables and false disables future scheduling.
-    attr_reader :enabled
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ScheduleTriggerUpdateRequestType SDK namespace.
-  module ScheduleTriggerUpdateRequestType
-    SCHEDULE = 'schedule'
-    VALUES = ['schedule'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('ScheduleTriggerUpdateRequestType', 'enum', "Unknown ScheduleTriggerUpdateRequestType: #{value}")
-    end
+# Defines the StorageObjectCreatedTriggerType SDK namespace.
+module StorageObjectCreatedTriggerType
+  STORAGE_OBJECT_CREATED = 'storage_object_created'
+  VALUES = ['storage_object_created'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('StorageObjectCreatedTriggerType', 'enum', "Unknown StorageObjectCreatedTriggerType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalStorageObjectCreatedTriggerCreateRequestMetadata
+  FIELDS = {
+    type: "type",
+    function_slug: "function_slug",
+    name: "name",
+    function_path: "function_path",
+    storage_object_created: "storage_object_created",
+    enabled: "enabled",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    function_slug
+    name
+    storage_object_created
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevNeon::StorageObjectCreatedTriggerCreateRequestType.from_value(value)
+    end,
+    storage_object_created: lambda do |value|
+      ::OctridevNeon::FunctionTriggerStorageObjectCreated.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for StorageObjectCreatedTriggerCreateRequest.
+# Typed representation of the `StorageObjectCreatedTriggerCreateRequest` API schema.
+class StorageObjectCreatedTriggerCreateRequest
+  include TriggerCreateRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalStorageObjectCreatedTriggerCreateRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalStorageObjectCreatedTriggerCreateRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalStorageObjectCreatedTriggerCreateRequestMetadata::DECODERS
+
+  # @return [StorageObjectCreatedTriggerCreateRequestType] Trigger type discriminator.
+  attr_reader :type
+  # @return [String] The branch-local Function slug to invoke.
+  attr_reader :function_slug
+  # @return [String] Human-readable name, unique among triggers visible on the branch.
+  attr_reader :name
+  # @return [String] Path passed to the target Function. Defaults to `/`.
+  attr_reader :function_path
+  # @return [FunctionTriggerStorageObjectCreated] Matches successful uploads to one exact bucket and, when configured, an object-key prefix. The Function receives a JSON request body with `type` set to `storage_object_created` and a `data` object containing exactly `bucket_name` and `object_key`.
+  attr_reader :storage_object_created
+  # @return [Boolean] Whether successful matching uploads should invoke the Function.
+  attr_reader :enabled
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalStorageObjectCreatedTriggerMetadata
-    FIELDS = {
-      type: 'type',
-      trigger_id: 'trigger_id',
-      function_slug: 'function_slug',
-      name: 'name',
-      function_path: 'function_path',
-      storage_object_created: 'storage_object_created',
-      enabled: 'enabled',
-      version: 'version',
-      inherited: 'inherited'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      trigger_id
-      function_slug
-      name
-      function_path
-      storage_object_created
-      enabled
-      version
-      inherited
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevNeon::StorageObjectCreatedTriggerType.from_value(value)
-      end,
-      trigger_id: lambda do |value|
-        ::OctridevNeon::TriggerID.from_value(value)
-      end,
-      storage_object_created: lambda do |value|
-        ::OctridevNeon::FunctionTriggerStorageObjectCreated.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for StorageObjectCreatedTrigger.
-  # A branch-effective trigger that invokes a Function after a successful upload matching its exact bucket and optional object-key prefix.
-  class StorageObjectCreatedTrigger
-    include Trigger
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalStorageObjectCreatedTriggerMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalStorageObjectCreatedTriggerMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalStorageObjectCreatedTriggerMetadata::DECODERS
+# Defines the StorageObjectCreatedTriggerCreateRequestType SDK namespace.
+module StorageObjectCreatedTriggerCreateRequestType
+  STORAGE_OBJECT_CREATED = 'storage_object_created'
+  VALUES = ['storage_object_created'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [StorageObjectCreatedTriggerType] Trigger type discriminator.
-    attr_reader :type
-    # @return [TriggerID] Opaque, server-minted project-wide trigger identifier.
-    attr_reader :trigger_id
-    # @return [String] The branch-local Function slug resolved when an invocation is consumed.
-    attr_reader :function_slug
-    # @return [String] Human-readable trigger name.
-    attr_reader :name
-    # @return [String] Path passed to the target Function.
-    attr_reader :function_path
-    # @return [FunctionTriggerStorageObjectCreated] Matches successful uploads to one exact bucket and, when configured, an object-key prefix. The Function receives a JSON request body with `type` set to `storage_object_created` and a `data` object containing exactly `bucket_name` and `object_key`.
-    attr_reader :storage_object_created
-    # @return [Boolean] Required `boolean` value serialized in the `enabled` wire field.
-    attr_reader :enabled
-    # @return [Integer] Monotonic configuration version.
-    attr_reader :version
-    # @return [Boolean] True when the effective configuration was authored on an ancestor branch.
-    attr_reader :inherited
+    raise SdkValidationError.new('StorageObjectCreatedTriggerCreateRequestType', 'enum', "Unknown StorageObjectCreatedTriggerCreateRequestType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalStorageObjectCreatedTriggerUpdateRequestMetadata
+  FIELDS = {
+    type: "type",
+    function_slug: "function_slug",
+    name: "name",
+    function_path: "function_path",
+    storage_object_created: "storage_object_created",
+    enabled: "enabled",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevNeon::StorageObjectCreatedTriggerUpdateRequestType.from_value(value)
+    end,
+    storage_object_created: lambda do |value|
+      ::OctridevNeon::FunctionTriggerStorageObjectCreated.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for StorageObjectCreatedTriggerUpdateRequest.
+# Typed representation of the `StorageObjectCreatedTriggerUpdateRequest` API schema.
+class StorageObjectCreatedTriggerUpdateRequest
+  include TriggerUpdateRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalStorageObjectCreatedTriggerUpdateRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalStorageObjectCreatedTriggerUpdateRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalStorageObjectCreatedTriggerUpdateRequestMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [StorageObjectCreatedTriggerUpdateRequestType] Trigger type discriminator; it does not change the trigger type.
+  attr_reader :type
+  # @return [String] Replacement branch-local Function slug.
+  attr_reader :function_slug
+  # @return [String] Optional `string` value serialized in the `name` wire field.
+  attr_reader :name
+  # @return [String] Optional `string` value serialized in the `function_path` wire field.
+  attr_reader :function_path
+  # @return [FunctionTriggerStorageObjectCreated] Matches successful uploads to one exact bucket and, when configured, an object-key prefix. The Function receives a JSON request body with `type` set to `storage_object_created` and a `data` object containing exactly `bucket_name` and `object_key`.
+  attr_reader :storage_object_created
+  # @return [Boolean] True enables and false disables future matching uploads.
+  attr_reader :enabled
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the StorageObjectCreatedTriggerType SDK namespace.
-  module StorageObjectCreatedTriggerType
-    STORAGE_OBJECT_CREATED = 'storage_object_created'
-    VALUES = ['storage_object_created'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('StorageObjectCreatedTriggerType', 'enum', "Unknown StorageObjectCreatedTriggerType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalStorageObjectCreatedTriggerCreateRequestMetadata
-    FIELDS = {
-      type: 'type',
-      function_slug: 'function_slug',
-      name: 'name',
-      function_path: 'function_path',
-      storage_object_created: 'storage_object_created',
-      enabled: 'enabled'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      function_slug
-      name
-      storage_object_created
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevNeon::StorageObjectCreatedTriggerCreateRequestType.from_value(value)
-      end,
-      storage_object_created: lambda do |value|
-        ::OctridevNeon::FunctionTriggerStorageObjectCreated.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the StorageObjectCreatedTriggerUpdateRequestType SDK namespace.
+module StorageObjectCreatedTriggerUpdateRequestType
+  STORAGE_OBJECT_CREATED = 'storage_object_created'
+  VALUES = ['storage_object_created'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('StorageObjectCreatedTriggerUpdateRequestType', 'enum', "Unknown StorageObjectCreatedTriggerUpdateRequestType: #{value}")
+  end
+end
+
+# Defines the Trigger SDK namespace.
+module Trigger
+  DISCRIMINATOR_MAPPING = {
+    "schedule" => -> { ScheduleTrigger },
+    "storage_object_created" => -> { StorageObjectCreatedTrigger },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('Trigger', 'variant', "Unknown Trigger discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Defines the TriggerCreateRequest SDK namespace.
+module TriggerCreateRequest
+  DISCRIMINATOR_MAPPING = {
+    "schedule" => -> { ScheduleTriggerCreateRequest },
+    "storage_object_created" => -> { StorageObjectCreatedTriggerCreateRequest },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('TriggerCreateRequest', 'variant', "Unknown TriggerCreateRequest discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Defines the TriggerID SDK value decoder.
+module TriggerID
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalTriggerResponseMetadata
+  FIELDS = {
+    trigger: "trigger",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    trigger
+  ].freeze
+  DECODERS = {
+    trigger: lambda do |value|
+      ::OctridevNeon::Trigger.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for TriggerResponse.
+# Typed representation of the `TriggerResponse` API schema.
+class TriggerResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTriggerResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTriggerResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTriggerResponseMetadata::DECODERS
+
+  # @return [Trigger] A branch-effective trigger discriminated by `type`. The supported trigger types are `schedule` and `storage_object_created`.
+  attr_reader :trigger
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for StorageObjectCreatedTriggerCreateRequest.
-  # Typed representation of the `StorageObjectCreatedTriggerCreateRequest` API schema.
-  class StorageObjectCreatedTriggerCreateRequest
-    include TriggerCreateRequest
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalStorageObjectCreatedTriggerCreateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalStorageObjectCreatedTriggerCreateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalStorageObjectCreatedTriggerCreateRequestMetadata::DECODERS
-
-    # @return [StorageObjectCreatedTriggerCreateRequestType] Trigger type discriminator.
-    attr_reader :type
-    # @return [String] The branch-local Function slug to invoke.
-    attr_reader :function_slug
-    # @return [String] Human-readable name, unique among triggers visible on the branch.
-    attr_reader :name
-    # @return [String] Path passed to the target Function. Defaults to `/`.
-    attr_reader :function_path
-    # @return [FunctionTriggerStorageObjectCreated] Matches successful uploads to one exact bucket and, when configured, an object-key prefix. The Function receives a JSON request body with `type` set to `storage_object_created` and a `data` object containing exactly `bucket_name` and `object_key`.
-    attr_reader :storage_object_created
-    # @return [Boolean] Whether successful matching uploads should invoke the Function.
-    attr_reader :enabled
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the StorageObjectCreatedTriggerCreateRequestType SDK namespace.
-  module StorageObjectCreatedTriggerCreateRequestType
-    STORAGE_OBJECT_CREATED = 'storage_object_created'
-    VALUES = ['storage_object_created'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('StorageObjectCreatedTriggerCreateRequestType', 'enum', "Unknown StorageObjectCreatedTriggerCreateRequestType: #{value}")
-    end
+# Internal model hydration metadata.
+class SdkInternalTriggersListResponseMetadata
+  FIELDS = {
+    triggers: "triggers",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    triggers
+  ].freeze
+  DECODERS = {
+    triggers: lambda do |value|
+      value&.map { |item| ::OctridevNeon::Trigger.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for TriggersListResponse.
+# Typed representation of the `TriggersListResponse` API schema.
+class TriggersListResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTriggersListResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTriggersListResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTriggersListResponseMetadata::DECODERS
+
+  # @return [Array_of_Trigger] Required array value serialized in the `triggers` wire field.
+  attr_reader :triggers
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalStorageObjectCreatedTriggerUpdateRequestMetadata
-    FIELDS = {
-      type: 'type',
-      function_slug: 'function_slug',
-      name: 'name',
-      function_path: 'function_path',
-      storage_object_created: 'storage_object_created',
-      enabled: 'enabled'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevNeon::StorageObjectCreatedTriggerUpdateRequestType.from_value(value)
-      end,
-      storage_object_created: lambda do |value|
-        ::OctridevNeon::FunctionTriggerStorageObjectCreated.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for StorageObjectCreatedTriggerUpdateRequest.
-  # Typed representation of the `StorageObjectCreatedTriggerUpdateRequest` API schema.
-  class StorageObjectCreatedTriggerUpdateRequest
-    include TriggerUpdateRequest
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalStorageObjectCreatedTriggerUpdateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalStorageObjectCreatedTriggerUpdateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalStorageObjectCreatedTriggerUpdateRequestMetadata::DECODERS
-
-    # @return [StorageObjectCreatedTriggerUpdateRequestType] Trigger type discriminator; it does not change the trigger type.
-    attr_reader :type
-    # @return [String] Replacement branch-local Function slug.
-    attr_reader :function_slug
-    # @return [String] Optional `string` value serialized in the `name` wire field.
-    attr_reader :name
-    # @return [String] Optional `string` value serialized in the `function_path` wire field.
-    attr_reader :function_path
-    # @return [FunctionTriggerStorageObjectCreated] Matches successful uploads to one exact bucket and, when configured, an object-key prefix. The Function receives a JSON request body with `type` set to `storage_object_created` and a `data` object containing exactly `bucket_name` and `object_key`.
-    attr_reader :storage_object_created
-    # @return [Boolean] True enables and false disables future matching uploads.
-    attr_reader :enabled
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the StorageObjectCreatedTriggerUpdateRequestType SDK namespace.
-  module StorageObjectCreatedTriggerUpdateRequestType
-    STORAGE_OBJECT_CREATED = 'storage_object_created'
-    VALUES = ['storage_object_created'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the TriggerUpdateRequest SDK namespace.
+module TriggerUpdateRequest
+  DISCRIMINATOR_MAPPING = {
+    "schedule" => -> { ScheduleTriggerUpdateRequest },
+    "storage_object_created" => -> { StorageObjectCreatedTriggerUpdateRequest },
+  }.freeze
 
-      raise SdkValidationError.new('StorageObjectCreatedTriggerUpdateRequestType', 'enum', "Unknown StorageObjectCreatedTriggerUpdateRequestType: #{value}")
-    end
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('TriggerUpdateRequest', 'variant', "Unknown TriggerUpdateRequest discriminator: #{hash["type"].inspect}")
   end
-
-  # Defines the Trigger SDK namespace.
-  module Trigger
-    DISCRIMINATOR_MAPPING = {
-      'schedule' => -> { ScheduleTrigger },
-      'storage_object_created' => -> { StorageObjectCreatedTrigger }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('Trigger', 'variant', "Unknown Trigger discriminator: #{hash['type'].inspect}")
-    end
-  end
-
-  # Defines the TriggerCreateRequest SDK namespace.
-  module TriggerCreateRequest
-    DISCRIMINATOR_MAPPING = {
-      'schedule' => -> { ScheduleTriggerCreateRequest },
-      'storage_object_created' => -> { StorageObjectCreatedTriggerCreateRequest }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('TriggerCreateRequest', 'variant', "Unknown TriggerCreateRequest discriminator: #{hash['type'].inspect}")
-    end
-  end
-
-  # Defines the TriggerID SDK value decoder.
-  module TriggerID
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalTriggerResponseMetadata
-    FIELDS = {
-      trigger: 'trigger'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      trigger
-    ].freeze
-    DECODERS = {
-      trigger: lambda do |value|
-        ::OctridevNeon::Trigger.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for TriggerResponse.
-  # Typed representation of the `TriggerResponse` API schema.
-  class TriggerResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTriggerResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTriggerResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTriggerResponseMetadata::DECODERS
-
-    # @return [Trigger] A branch-effective trigger discriminated by `type`. The supported trigger types are `schedule` and `storage_object_created`.
-    attr_reader :trigger
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalTriggersListResponseMetadata
-    FIELDS = {
-      triggers: 'triggers'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      triggers
-    ].freeze
-    DECODERS = {
-      triggers: lambda do |value|
-        value&.map { |item| ::OctridevNeon::Trigger.from_hash(item) }
-      end
-    }.freeze
-  end
-
-  # API model for TriggersListResponse.
-  # Typed representation of the `TriggersListResponse` API schema.
-  class TriggersListResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTriggersListResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTriggersListResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTriggersListResponseMetadata::DECODERS
-
-    # @return [Array_of_Trigger] Required array value serialized in the `triggers` wire field.
-    attr_reader :triggers
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the TriggerUpdateRequest SDK namespace.
-  module TriggerUpdateRequest
-    DISCRIMINATOR_MAPPING = {
-      'schedule' => -> { ScheduleTriggerUpdateRequest },
-      'storage_object_created' => -> { StorageObjectCreatedTriggerUpdateRequest }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('TriggerUpdateRequest', 'variant', "Unknown TriggerUpdateRequest discriminator: #{hash['type'].inspect}")
-    end
-  end
+end
 end

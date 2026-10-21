@@ -5,652 +5,659 @@
 
 # branch domain models
 module OctridevNeon
-  # API model for BranchSchemaJSONTablesItemConstraintsItem.
-  # Required object value serialized in the `constraints[]` wire field.
-  class BranchSchemaJSONTablesItemConstraintsItem
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBranchSchemaJSONTablesItemConstraintsItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBranchSchemaJSONTablesItemConstraintsItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBranchSchemaJSONTablesItemConstraintsItemMetadata::DECODERS
+# API model for BranchSchemaJSONTablesItemConstraintsItem.
+# Required object value serialized in the `constraints[]` wire field.
+class BranchSchemaJSONTablesItemConstraintsItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBranchSchemaJSONTablesItemConstraintsItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBranchSchemaJSONTablesItemConstraintsItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBranchSchemaJSONTablesItemConstraintsItemMetadata::DECODERS
 
-    # @return [String] Type of constraint. Possible values: `primary_key`, `unique`, `foreign_key`
-    attr_reader :type
-    # @return [Array_of_String] Column names participating in this constraint
-    attr_reader :columns
-    # @return [String] Optional name of the constraint
-    attr_reader :name
-    # @return [BranchSchemaJSONTablesItemConstraintsItemReferencedTable] For foreign keys - the referenced table information
-    attr_reader :referenced_table
+  # @return [String] Type of constraint. Possible values: `primary_key`, `unique`, `foreign_key`
+  attr_reader :type
+  # @return [Array_of_String] Column names participating in this constraint
+  attr_reader :columns
+  # @return [String] Optional name of the constraint
+  attr_reader :name
+  # @return [BranchSchemaJSONTablesItemConstraintsItemReferencedTable] For foreign keys - the referenced table information
+  attr_reader :referenced_table
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBranchSchemaJSONTablesItemMetadata
-    FIELDS = {
-      schema: 'schema',
-      name: 'name',
-      columns: 'columns',
-      constraints: 'constraints'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      schema
-      name
-      columns
-    ].freeze
-    DECODERS = {
-      columns: lambda do |value|
-        value&.map { |item| ::OctridevNeon::BranchSchemaJSONTablesItemColumnsItem.from_hash(item) }
-      end,
-      constraints: lambda do |value|
-        value&.map { |item| ::OctridevNeon::BranchSchemaJSONTablesItemConstraintsItem.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BranchSchemaJSONTablesItem.
-  # Required object value serialized in the `tables[]` wire field.
-  class BranchSchemaJSONTablesItem
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBranchSchemaJSONTablesItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBranchSchemaJSONTablesItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBranchSchemaJSONTablesItemMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] Postgres schema (namespace) that contains the table, for example `public`.
-    attr_reader :schema
-    # @return [String] Name of the table within the schema.
-    attr_reader :name
-    # @return [Array_of_BranchSchemaJSONTablesItemColumnsItem] Columns belonging to this table, each describing a column's name and attributes.
-    attr_reader :columns
-    # @return [Array_of_BranchSchemaJSONTablesItemConstraintsItem] Table constraints defined in the branch schema, such as primary key, foreign key, unique, and check constraints.
-    attr_reader :constraints
+# Internal model hydration metadata.
+class SdkInternalBranchSchemaJSONTablesItemMetadata
+  FIELDS = {
+    schema: "schema",
+    name: "name",
+    columns: "columns",
+    constraints: "constraints",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    schema
+    name
+    columns
+  ].freeze
+  DECODERS = {
+    columns: lambda do |value|
+      value&.map { |item| ::OctridevNeon::BranchSchemaJSONTablesItemColumnsItem.from_hash(item) }
+    end,
+    constraints: lambda do |value|
+      value&.map { |item| ::OctridevNeon::BranchSchemaJSONTablesItemConstraintsItem.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for BranchSchemaJSONTablesItem.
+# Required object value serialized in the `tables[]` wire field.
+class BranchSchemaJSONTablesItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBranchSchemaJSONTablesItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBranchSchemaJSONTablesItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBranchSchemaJSONTablesItemMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] Postgres schema (namespace) that contains the table, for example `public`.
+  attr_reader :schema
+  # @return [String] Name of the table within the schema.
+  attr_reader :name
+  # @return [Array_of_BranchSchemaJSONTablesItemColumnsItem] Columns belonging to this table, each describing a column's name and attributes.
+  attr_reader :columns
+  # @return [Array_of_BranchSchemaJSONTablesItemConstraintsItem] Table constraints defined in the branch schema, such as primary key, foreign key, unique, and check constraints.
+  attr_reader :constraints
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBranchSchemaJSONMetadata
-    FIELDS = {
-      tables: 'tables'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      tables
-    ].freeze
-    DECODERS = {
-      tables: lambda do |value|
-        value&.map { |item| ::OctridevNeon::BranchSchemaJSONTablesItem.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BranchSchemaJSON.
-  # Typed representation of the `BranchSchemaJSON` API schema.
-  class BranchSchemaJSON
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBranchSchemaJSONMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBranchSchemaJSONMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBranchSchemaJSONMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Array_of_BranchSchemaJSONTablesItem] Tables present in the branch schema.
-    attr_reader :tables
+# Internal model hydration metadata.
+class SdkInternalBranchSchemaJSONMetadata
+  FIELDS = {
+    tables: "tables",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    tables
+  ].freeze
+  DECODERS = {
+    tables: lambda do |value|
+      value&.map { |item| ::OctridevNeon::BranchSchemaJSONTablesItem.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for BranchSchemaJSON.
+# Typed representation of the `BranchSchemaJSON` API schema.
+class BranchSchemaJSON
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBranchSchemaJSONMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBranchSchemaJSONMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBranchSchemaJSONMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [Array_of_BranchSchemaJSONTablesItem] Tables present in the branch schema.
+  attr_reader :tables
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBranchSchemaResponseMetadata
-    FIELDS = {
-      sql: 'sql',
-      json: 'json'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      json: lambda do |value|
-        ::OctridevNeon::BranchSchemaJSON.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BranchSchemaResponse.
-  # Typed representation of the `BranchSchemaResponse` API schema.
-  class BranchSchemaResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBranchSchemaResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBranchSchemaResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBranchSchemaResponseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] Branch schema expressed as SQL DDL statements.
-    attr_reader :sql
-    # @return [BranchSchemaJSON] Branch schema represented as a structured JSON object, parallel to the SQL DDL in `sql`.
-    attr_reader :json
+# Internal model hydration metadata.
+class SdkInternalBranchSchemaResponseMetadata
+  FIELDS = {
+    sql: "sql",
+    json: "json",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    json: lambda do |value|
+      ::OctridevNeon::BranchSchemaJSON.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for BranchSchemaResponse.
+# Typed representation of the `BranchSchemaResponse` API schema.
+class BranchSchemaResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBranchSchemaResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBranchSchemaResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBranchSchemaResponseMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] Branch schema expressed as SQL DDL statements.
+  attr_reader :sql
+  # @return [BranchSchemaJSON] Branch schema represented as a structured JSON object, parallel to the SQL DDL in `sql`.
+  attr_reader :json
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBranchUpdateRequestBranchMetadata
-    FIELDS = {
-      name: 'name',
-      protected: 'protected',
-      expires_at: 'expires_at'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BranchUpdateRequestBranch.
-  # Branch attributes to update. Supply only the fields you want to change, for example `name` or `protected`.
-  class BranchUpdateRequestBranch
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBranchUpdateRequestBranchMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBranchUpdateRequestBranchMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBranchUpdateRequestBranchMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] New display name for the branch.
-    attr_reader :name
-    # @return [Boolean] Whether the branch is protected. Protected branches (and their computes) cannot be deleted, archived, or reset, and block deletion of the project. Can be gated by `protected_branches_only` in the IP allowlist. Paid plans only.
-    attr_reader :protected
-    # @return [String] The timestamp when the branch is scheduled to expire and be automatically deleted. Must be set by the client following the RFC 3339, section 5.6 format with precision up to seconds (such as 2025-06-09T18:02:16Z). Deletion is performed by a background job and may not occur exactly at the specified time. If this field is set to null, the expiration timestamp is removed. Access to this feature is currently limited to participants in the Early Access Program.
-    attr_reader :expires_at
+# Internal model hydration metadata.
+class SdkInternalBranchUpdateRequestBranchMetadata
+  FIELDS = {
+    name: "name",
+    protected: "protected",
+    expires_at: "expires_at",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for BranchUpdateRequestBranch.
+# Branch attributes to update. Supply only the fields you want to change, for example `name` or `protected`.
+class BranchUpdateRequestBranch
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBranchUpdateRequestBranchMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBranchUpdateRequestBranchMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBranchUpdateRequestBranchMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] New display name for the branch.
+  attr_reader :name
+  # @return [Boolean] Whether the branch is protected. Protected branches (and their computes) cannot be deleted, archived, or reset, and block deletion of the project. Can be gated by `protected_branches_only` in the IP allowlist. Paid plans only.
+  attr_reader :protected
+  # @return [String] The timestamp when the branch is scheduled to expire and be automatically deleted. Must be set by the client following the RFC 3339, section 5.6 format with precision up to seconds (such as 2025-06-09T18:02:16Z). Deletion is performed by a background job and may not occur exactly at the specified time. If this field is set to null, the expiration timestamp is removed. Access to this feature is currently limited to participants in the Early Access Program.
+  attr_reader :expires_at
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBranchUpdateRequestMetadata
-    FIELDS = {
-      branch: 'branch'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      branch
-    ].freeze
-    DECODERS = {
-      branch: lambda do |value|
-        ::OctridevNeon::BranchUpdateRequestBranch.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BranchUpdateRequest.
-  # Typed representation of the `BranchUpdateRequest` API schema.
-  class BranchUpdateRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBranchUpdateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBranchUpdateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBranchUpdateRequestMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [BranchUpdateRequestBranch] Branch attributes to update. Supply only the fields you want to change, for example `name` or `protected`.
-    attr_reader :branch
+# Internal model hydration metadata.
+class SdkInternalBranchUpdateRequestMetadata
+  FIELDS = {
+    branch: "branch",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    branch
+  ].freeze
+  DECODERS = {
+    branch: lambda do |value|
+      ::OctridevNeon::BranchUpdateRequestBranch.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for BranchUpdateRequest.
+# Typed representation of the `BranchUpdateRequest` API schema.
+class BranchUpdateRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBranchUpdateRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBranchUpdateRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBranchUpdateRequestMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [BranchUpdateRequestBranch] Branch attributes to update. Supply only the fields you want to change, for example `name` or `protected`.
+  attr_reader :branch
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConnectionURIsOptionalResponseMetadata
-    FIELDS = {
-      connection_uris: 'connection_uris'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      connection_uris: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConnectionDetails.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ConnectionURIsOptionalResponse.
-  # Typed representation of the `ConnectionURIsOptionalResponse` API schema.
-  class ConnectionURIsOptionalResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConnectionURIsOptionalResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConnectionURIsOptionalResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConnectionURIsOptionalResponseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Array_of_ConnectionDetails] Connection URIs for the compute endpoint, including credentials.
-    attr_reader :connection_uris
+# Internal model hydration metadata.
+class SdkInternalConnectionURIsOptionalResponseMetadata
+  FIELDS = {
+    connection_uris: "connection_uris",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    connection_uris: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConnectionDetails.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for ConnectionURIsOptionalResponse.
+# Typed representation of the `ConnectionURIsOptionalResponse` API schema.
+class ConnectionURIsOptionalResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConnectionURIsOptionalResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConnectionURIsOptionalResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConnectionURIsOptionalResponseMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [Array_of_ConnectionDetails] Connection URIs for the compute endpoint, including credentials.
+  attr_reader :connection_uris
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateBranchResponseMetadata
-    FIELDS = {
-      branch: 'branch',
-      endpoints: 'endpoints',
-      operations: 'operations',
-      roles: 'roles',
-      databases: 'databases',
-      connection_uris: 'connection_uris'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      branch
-      endpoints
-      operations
-      roles
-      databases
-    ].freeze
-    DECODERS = {
-      branch: lambda do |value|
-        ::OctridevNeon::Branch.from_hash(value)
-      end,
-      endpoints: lambda do |value|
-        value&.map { |item| ::OctridevNeon::Endpoint.from_hash(item) }
-      end,
-      operations: lambda do |value|
-        value&.map { |item| ::OctridevNeon::Operation.from_hash(item) }
-      end,
-      roles: lambda do |value|
-        value&.map { |item| ::OctridevNeon::Role.from_hash(item) }
-      end,
-      databases: lambda do |value|
-        value&.map { |item| ::OctridevNeon::Database.from_hash(item) }
-      end,
-      connection_uris: lambda do |value|
-        value&.map { |item| ::OctridevNeon::ConnectionDetails.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for CreateBranchResponse.
-  # Typed representation of the `CreateBranchResponse` API schema.
-  class CreateBranchResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateBranchResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateBranchResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateBranchResponseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Branch] Branch returned by the request.
-    attr_reader :branch
-    # @return [Array_of_Endpoint] Compute endpoints in the project. Each includes `id`, `branch_id`, `host`, and `type`.
-    attr_reader :endpoints
-    # @return [Array_of_Operation] Required array value serialized in the `operations` wire field.
-    attr_reader :operations
-    # @return [Array_of_Role] Roles belonging to the branch. Each role includes fields such as `branch_id`, `name`, `protected`, `created_at`, and `updated_at`.
-    attr_reader :roles
-    # @return [Array_of_Database] Databases on the branch. Each includes `id`, `name`, `owner_name`, and `created_at`.
-    attr_reader :databases
-    # @return [Array_of_ConnectionDetails] Connection URIs for the compute endpoint, including credentials.
-    attr_reader :connection_uris
+# Internal model hydration metadata.
+class SdkInternalCreateBranchResponseMetadata
+  FIELDS = {
+    branch: "branch",
+    endpoints: "endpoints",
+    operations: "operations",
+    roles: "roles",
+    databases: "databases",
+    connection_uris: "connection_uris",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    branch
+    endpoints
+    operations
+    roles
+    databases
+  ].freeze
+  DECODERS = {
+    branch: lambda do |value|
+      ::OctridevNeon::Branch.from_hash(value)
+    end,
+    endpoints: lambda do |value|
+      value&.map { |item| ::OctridevNeon::Endpoint.from_hash(item) }
+    end,
+    operations: lambda do |value|
+      value&.map { |item| ::OctridevNeon::Operation.from_hash(item) }
+    end,
+    roles: lambda do |value|
+      value&.map { |item| ::OctridevNeon::Role.from_hash(item) }
+    end,
+    databases: lambda do |value|
+      value&.map { |item| ::OctridevNeon::Database.from_hash(item) }
+    end,
+    connection_uris: lambda do |value|
+      value&.map { |item| ::OctridevNeon::ConnectionDetails.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for CreateBranchResponse.
+# Typed representation of the `CreateBranchResponse` API schema.
+class CreateBranchResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateBranchResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateBranchResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateBranchResponseMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [Branch] Branch returned by the request.
+  attr_reader :branch
+  # @return [Array_of_Endpoint] Compute endpoints in the project. Each includes `id`, `branch_id`, `host`, and `type`.
+  attr_reader :endpoints
+  # @return [Array_of_Operation] Required array value serialized in the `operations` wire field.
+  attr_reader :operations
+  # @return [Array_of_Role] Roles belonging to the branch. Each role includes fields such as `branch_id`, `name`, `protected`, `created_at`, and `updated_at`.
+  attr_reader :roles
+  # @return [Array_of_Database] Databases on the branch. Each includes `id`, `name`, `owner_name`, and `created_at`.
+  attr_reader :databases
+  # @return [Array_of_ConnectionDetails] Connection URIs for the compute endpoint, including credentials.
+  attr_reader :connection_uris
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDatabaseCreateRequestDatabaseMetadata
-    FIELDS = {
-      name: 'name',
-      owner_name: 'owner_name'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-      owner_name
-    ].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for DatabaseCreateRequestDatabase.
-  # Configuration for the new Postgres database.
-  class DatabaseCreateRequestDatabase
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDatabaseCreateRequestDatabaseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDatabaseCreateRequestDatabaseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDatabaseCreateRequestDatabaseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] Name of the database to create.
-    attr_reader :name
-    # @return [String] The name of the role that owns the database
-    attr_reader :owner_name
+# Internal model hydration metadata.
+class SdkInternalDatabaseCreateRequestDatabaseMetadata
+  FIELDS = {
+    name: "name",
+    owner_name: "owner_name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+    owner_name
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for DatabaseCreateRequestDatabase.
+# Configuration for the new Postgres database.
+class DatabaseCreateRequestDatabase
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDatabaseCreateRequestDatabaseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDatabaseCreateRequestDatabaseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDatabaseCreateRequestDatabaseMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] Name of the database to create.
+  attr_reader :name
+  # @return [String] The name of the role that owns the database
+  attr_reader :owner_name
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDatabaseCreateRequestMetadata
-    FIELDS = {
-      database: 'database'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      database
-    ].freeze
-    DECODERS = {
-      database: lambda do |value|
-        ::OctridevNeon::DatabaseCreateRequestDatabase.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for DatabaseCreateRequest.
-  # Typed representation of the `DatabaseCreateRequest` API schema.
-  class DatabaseCreateRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDatabaseCreateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDatabaseCreateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDatabaseCreateRequestMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [DatabaseCreateRequestDatabase] Configuration for the new Postgres database.
-    attr_reader :database
+# Internal model hydration metadata.
+class SdkInternalDatabaseCreateRequestMetadata
+  FIELDS = {
+    database: "database",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    database
+  ].freeze
+  DECODERS = {
+    database: lambda do |value|
+      ::OctridevNeon::DatabaseCreateRequestDatabase.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for DatabaseCreateRequest.
+# Typed representation of the `DatabaseCreateRequest` API schema.
+class DatabaseCreateRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDatabaseCreateRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDatabaseCreateRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDatabaseCreateRequestMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [DatabaseCreateRequestDatabase] Configuration for the new Postgres database.
+  attr_reader :database
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDatabaseOperationsMetadata
-    FIELDS = {
-      database: 'database',
-      operations: 'operations'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      database
-      operations
-    ].freeze
-    DECODERS = {
-      database: lambda do |value|
-        ::OctridevNeon::Database.from_hash(value)
-      end,
-      operations: lambda do |value|
-        value&.map { |item| ::OctridevNeon::Operation.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for DatabaseOperations.
-  # Typed representation of the `DatabaseOperations` API schema.
-  class DatabaseOperations
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDatabaseOperationsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDatabaseOperationsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDatabaseOperationsMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Database] Database object returned by the operation.
-    attr_reader :database
-    # @return [Array_of_Operation] Required array value serialized in the `operations` wire field.
-    attr_reader :operations
+# Internal model hydration metadata.
+class SdkInternalDatabaseOperationsMetadata
+  FIELDS = {
+    database: "database",
+    operations: "operations",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    database
+    operations
+  ].freeze
+  DECODERS = {
+    database: lambda do |value|
+      ::OctridevNeon::Database.from_hash(value)
+    end,
+    operations: lambda do |value|
+      value&.map { |item| ::OctridevNeon::Operation.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for DatabaseOperations.
+# Typed representation of the `DatabaseOperations` API schema.
+class DatabaseOperations
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDatabaseOperationsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDatabaseOperationsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDatabaseOperationsMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [Database] Database object returned by the operation.
+  attr_reader :database
+  # @return [Array_of_Operation] Required array value serialized in the `operations` wire field.
+  attr_reader :operations
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDatabaseResponseMetadata
-    FIELDS = {
-      database: 'database'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      database
-    ].freeze
-    DECODERS = {
-      database: lambda do |value|
-        ::OctridevNeon::Database.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for DatabaseResponse.
-  # Typed representation of the `DatabaseResponse` API schema.
-  class DatabaseResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDatabaseResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDatabaseResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDatabaseResponseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Database] Database object returned by the operation.
-    attr_reader :database
+# Internal model hydration metadata.
+class SdkInternalDatabaseResponseMetadata
+  FIELDS = {
+    database: "database",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    database
+  ].freeze
+  DECODERS = {
+    database: lambda do |value|
+      ::OctridevNeon::Database.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for DatabaseResponse.
+# Typed representation of the `DatabaseResponse` API schema.
+class DatabaseResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDatabaseResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDatabaseResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDatabaseResponseMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [Database] Database object returned by the operation.
+  attr_reader :database
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDatabaseUpdateRequestDatabaseMetadata
-    FIELDS = {
-      name: 'name',
-      owner_name: 'owner_name'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for DatabaseUpdateRequestDatabase.
-  # Properties to update on the database.
-  class DatabaseUpdateRequestDatabase
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDatabaseUpdateRequestDatabaseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDatabaseUpdateRequestDatabaseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDatabaseUpdateRequestDatabaseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] Name of the database to update.
-    attr_reader :name
-    # @return [String] The name of the role that owns the database
-    attr_reader :owner_name
+# Internal model hydration metadata.
+class SdkInternalDatabaseUpdateRequestDatabaseMetadata
+  FIELDS = {
+    name: "name",
+    owner_name: "owner_name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for DatabaseUpdateRequestDatabase.
+# Properties to update on the database.
+class DatabaseUpdateRequestDatabase
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDatabaseUpdateRequestDatabaseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDatabaseUpdateRequestDatabaseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDatabaseUpdateRequestDatabaseMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] Name of the database to update.
+  attr_reader :name
+  # @return [String] The name of the role that owns the database
+  attr_reader :owner_name
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDatabaseUpdateRequestMetadata
-    FIELDS = {
-      database: 'database'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      database
-    ].freeze
-    DECODERS = {
-      database: lambda do |value|
-        ::OctridevNeon::DatabaseUpdateRequestDatabase.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for DatabaseUpdateRequest.
-  # Typed representation of the `DatabaseUpdateRequest` API schema.
-  class DatabaseUpdateRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDatabaseUpdateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDatabaseUpdateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDatabaseUpdateRequestMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [DatabaseUpdateRequestDatabase] Properties to update on the database.
-    attr_reader :database
+# Internal model hydration metadata.
+class SdkInternalDatabaseUpdateRequestMetadata
+  FIELDS = {
+    database: "database",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    database
+  ].freeze
+  DECODERS = {
+    database: lambda do |value|
+      ::OctridevNeon::DatabaseUpdateRequestDatabase.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for DatabaseUpdateRequest.
+# Typed representation of the `DatabaseUpdateRequest` API schema.
+class DatabaseUpdateRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDatabaseUpdateRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDatabaseUpdateRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDatabaseUpdateRequestMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [DatabaseUpdateRequestDatabase] Properties to update on the database.
+  attr_reader :database
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGetBranchResponseMetadata
-    FIELDS = {
-      branch: 'branch',
-      annotation: 'annotation'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      branch
-      annotation
-    ].freeze
-    DECODERS = {
-      branch: lambda do |value|
-        ::OctridevNeon::Branch.from_hash(value)
-      end,
-      annotation: lambda do |value|
-        ::OctridevNeon::AnnotationData.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for GetBranchResponse.
-  # Typed representation of the `GetBranchResponse` API schema.
-  class GetBranchResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGetBranchResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGetBranchResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGetBranchResponseMetadata::DECODERS
-
-    # @return [Branch] Branch returned by the request.
-    attr_reader :branch
-    # @return [AnnotationData] Annotation data associated with the annotated object.
-    attr_reader :annotation
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGetBranchResponseMetadata
+  FIELDS = {
+    branch: "branch",
+    annotation: "annotation",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    branch
+    annotation
+  ].freeze
+  DECODERS = {
+    branch: lambda do |value|
+      ::OctridevNeon::Branch.from_hash(value)
+    end,
+    annotation: lambda do |value|
+      ::OctridevNeon::AnnotationData.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for GetBranchResponse.
+# Typed representation of the `GetBranchResponse` API schema.
+class GetBranchResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGetBranchResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGetBranchResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGetBranchResponseMetadata::DECODERS
+
+  # @return [Branch] Branch returned by the request.
+  attr_reader :branch
+  # @return [AnnotationData] Annotation data associated with the annotated object.
+  attr_reader :annotation
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 end

@@ -12,7 +12,7 @@ module OctridevNeon
       # Internal model hydration metadata.
       class SdkInternalGetProjectAdvisorSecurityIssuesResponseMetadata
         FIELDS = {
-          issues: 'issues'
+          issues: "issues",
         }.freeze
         REQUIRED_FIELDS = %i[
           issues
@@ -20,7 +20,7 @@ module OctridevNeon
         DECODERS = {
           issues: lambda do |value|
             value&.map { |item| ::OctridevNeon::AdvisorIssue.from_hash(item) }
-          end
+          end,
         }.freeze
       end
 
@@ -50,10 +50,12 @@ module OctridevNeon
       # Internal model hydration metadata.
       class SdkInternalCreateProjectTransferRequestMetadata
         FIELDS = {
-          ttl_seconds: 'ttl_seconds'
+          ttl_seconds: "ttl_seconds",
         }.freeze
-        REQUIRED_FIELDS = %i[].freeze
-        DECODERS = {}.freeze
+        REQUIRED_FIELDS = %i[
+        ].freeze
+        DECODERS = {
+        }.freeze
       end
 
       # API model for CreateProjectTransferRequest.
@@ -83,10 +85,12 @@ module OctridevNeon
       # Internal model hydration metadata.
       class SdkInternalAcceptProjectTransferRequestMetadata
         FIELDS = {
-          org_id: 'org_id'
+          org_id: "org_id",
         }.freeze
-        REQUIRED_FIELDS = %i[].freeze
-        DECODERS = {}.freeze
+        REQUIRED_FIELDS = %i[
+        ].freeze
+        DECODERS = {
+        }.freeze
       end
 
       # API model for AcceptProjectTransferRequest.
@@ -118,7 +122,7 @@ module OctridevNeon
         INFO = 'INFO'
         WARN = 'WARN'
         ERROR = 'ERROR'
-        VALUES = %w[INFO WARN ERROR].freeze
+        VALUES = ['INFO', 'WARN', 'ERROR'].freeze
         def self.from_value(value)
           value
         end

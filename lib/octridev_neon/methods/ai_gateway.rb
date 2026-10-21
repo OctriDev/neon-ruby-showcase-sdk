@@ -13,7 +13,13 @@ module OctridevNeon
       #
       # @param project_id [String] The Neon project ID
       # @param branch_id [String] The Neon branch ID
-      singleton_class.define_method(:get_ai_gateway) do |config:, project_id:, branch_id:, request_options: nil|
+      singleton_class.define_method(:get_ai_gateway) do |
+        config:,
+        project_id:,
+        branch_id:,
+        request_options: nil
+      |
+
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -21,18 +27,18 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/branches/',
+            "/branches/",
             SdkClient.encode_path_segment(branch_id),
-            '/ai_gateway'
+            "/ai_gateway"
           ].join,
           config: config,
           return_type: ::OctridevNeon::BranchAiGateway,
           decoder: :json,
           operation_id: 'get_ai_gateway',
           request_options: request_options,
-          errors: { '404' => ::OctridevNeon::BranchAiGatewayNotEnabled, 'default' => ::OctridevNeon::GeneralError }
+          errors: { '404' => ::OctridevNeon::BranchAiGatewayNotEnabled, 'default' => ::OctridevNeon::GeneralError },
         ).data
       end
     end
