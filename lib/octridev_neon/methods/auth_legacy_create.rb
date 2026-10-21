@@ -36,27 +36,26 @@ module OctridevNeon
         role_name: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
-          "/projects/auth/create",
+          '/projects/auth/create',
           config: config,
           body: {
             'auth_provider' => auth_provider,
             'project_id' => project_id,
             'branch_id' => branch_id,
             'database_name' => database_name,
-            'role_name' => role_name,
+            'role_name' => role_name
           },
           return_type: ::OctridevNeon::NeonAuthCreateIntegrationResponse,
           decoder: :json,
           operation_id: 'create_auth_legacy_integration',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

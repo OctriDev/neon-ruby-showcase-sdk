@@ -20,17 +20,7 @@ module OctridevNeon
       #   `endpoint_id` associated with the `branch_id` if not specified.
       # @param pooled [Boolean] Adds the `-pooler` option to the connection URI when
       #   set to `true`, creating a pooled connection URI.
-      singleton_class.define_method(:get_connection_uri) do |
-        config:,
-        project_id:,
-        database_name:,
-        role_name:,
-        branch_id: NOT_GIVEN,
-        endpoint_id: NOT_GIVEN,
-        pooled: NOT_GIVEN,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_connection_uri) do |config:, project_id:, database_name:, role_name:, branch_id: NOT_GIVEN, endpoint_id: NOT_GIVEN, pooled: NOT_GIVEN, request_options: nil|
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.if_given(branch_id) do
@@ -44,9 +34,9 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/connection_uri"
+            '/connection_uri'
           ].join,
           config: config,
           query: {
@@ -54,13 +44,13 @@ module OctridevNeon
             'role_name' => QueryValue.new(role_name, style: 'form', explode: true),
             'branch_id' => QueryValue.new(branch_id, style: 'form', explode: true),
             'endpoint_id' => QueryValue.new(endpoint_id, style: 'form', explode: true),
-            'pooled' => QueryValue.new(pooled, style: 'form', explode: true),
+            'pooled' => QueryValue.new(pooled, style: 'form', explode: true)
           },
           return_type: ::OctridevNeon::ConnectionURIResponse,
           decoder: :json,
           operation_id: 'get_connection_uri',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

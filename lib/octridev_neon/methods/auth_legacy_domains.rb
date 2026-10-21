@@ -19,22 +19,21 @@ module OctridevNeon
         project_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/auth/domains"
+            '/auth/domains'
           ].join,
           config: config,
           return_type: ::OctridevNeon::NeonAuthRedirectURIWhitelistResponse,
           decoder: :json,
           operation_id: 'list_auth_legacy_redirect_uri_whitelist_domains',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -57,7 +56,6 @@ module OctridevNeon
         auth_provider:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_uri('domain', domain)
@@ -65,19 +63,19 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/auth/domains"
+            '/auth/domains'
           ].join,
           config: config,
           body: {
             'domain' => domain,
-            'auth_provider' => auth_provider,
+            'auth_provider' => auth_provider
           },
           decoder: :empty,
           operation_id: 'add_auth_legacy_domain_to_redirect_uri_whitelist',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -101,25 +99,24 @@ module OctridevNeon
         domains:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/auth/domains"
+            '/auth/domains'
           ].join,
           config: config,
           body: {
             'auth_provider' => auth_provider,
-            'domains' => domains,
+            'domains' => domains
           },
           decoder: :empty,
           operation_id: 'delete_auth_legacy_domain_from_redirect_uri_whitelist',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

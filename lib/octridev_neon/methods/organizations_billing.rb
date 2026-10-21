@@ -12,27 +12,22 @@ module OctridevNeon
       # Returns the configured monthly spending limit for the specified organization. `spending_limit_cents: null` indicates that no limit is currently set. Available to organization members with read access on Launch and Scale plans only.
       #
       # @param org_id [String] The Neon organization ID
-      singleton_class.define_method(:get_organization_spending_limit) do |
-        config:,
-        org_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_organization_spending_limit) do |config:, org_id:, request_options: nil|
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/billing/spending_limit"
+            '/billing/spending_limit'
           ].join,
           config: config,
           return_type: ::OctridevNeon::SpendingLimitResponse,
           decoder: :json,
           operation_id: 'get_organization_spending_limit',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -52,7 +47,6 @@ module OctridevNeon
         spending_limit_cents:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_range('spending_limit_cents', spending_limit_cents, min: 1)
@@ -60,19 +54,19 @@ module OctridevNeon
         SdkClient.request(
           'PUT',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/billing/spending_limit"
+            '/billing/spending_limit'
           ].join,
           config: config,
           body: {
-            'spending_limit_cents' => spending_limit_cents,
+            'spending_limit_cents' => spending_limit_cents
           },
           return_type: ::OctridevNeon::SpendingLimitResponse,
           decoder: :json,
           operation_id: 'set_organization_spending_limit',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -84,22 +78,21 @@ module OctridevNeon
         org_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/billing/spending_limit"
+            '/billing/spending_limit'
           ].join,
           config: config,
           return_type: ::OctridevNeon::EmptyResponse,
           decoder: :json,
           operation_id: 'delete_organization_spending_limit',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

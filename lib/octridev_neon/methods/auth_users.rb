@@ -24,7 +24,6 @@ module OctridevNeon
         name: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -37,22 +36,22 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/auth/users"
+            '/auth/users'
           ].join,
           config: config,
           body: {
             'email' => email,
-            'name' => name,
+            'name' => name
           },
           return_type: ::OctridevNeon::NeonAuthCreateNewUserResponse,
           decoder: :json,
           operation_id: 'create_auth_user',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -68,7 +67,6 @@ module OctridevNeon
         auth_user_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -76,18 +74,18 @@ module OctridevNeon
         SdkClient.request(
           'DELETE',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/auth/users/",
+            '/auth/users/',
             SdkClient.encode_path_segment(auth_user_id)
           ].join,
           config: config,
           decoder: :empty,
           operation_id: 'delete_auth_user',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -107,7 +105,6 @@ module OctridevNeon
         roles:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -117,23 +114,23 @@ module OctridevNeon
         SdkClient.request(
           'PUT',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/auth/users/",
+            '/auth/users/',
             SdkClient.encode_path_segment(auth_user_id),
-            "/role"
+            '/role'
           ].join,
           config: config,
           body: {
-            'roles' => roles,
+            'roles' => roles
           },
           return_type: ::OctridevNeon::UpdateNeonAuthUserRoleResponse,
           decoder: :json,
           operation_id: 'update_auth_user_role',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

@@ -5,80 +5,79 @@
 
 # project_connection domain models
 module OctridevNeon
-# Internal model hydration metadata.
-class SdkInternalConnectionURIResponseMetadata
-  FIELDS = {
-    uri: "uri",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    uri
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ConnectionURIResponse.
-# Typed representation of the `ConnectionURIResponse` API schema.
-class ConnectionURIResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalConnectionURIResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalConnectionURIResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalConnectionURIResponseMetadata::DECODERS
-
-  # @return [String] The connection URI.
-  attr_reader :uri
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalConnectionURIResponseMetadata
+    FIELDS = {
+      uri: 'uri'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      uri
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ConnectionURIResponse.
+  # Typed representation of the `ConnectionURIResponse` API schema.
+  class ConnectionURIResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalConnectionURIResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalConnectionURIResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalConnectionURIResponseMetadata::DECODERS
+
+    # @return [String] The connection URI.
+    attr_reader :uri
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalConnectionURIsResponseMetadata
-  FIELDS = {
-    connection_uris: "connection_uris",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    connection_uris
-  ].freeze
-  DECODERS = {
-    connection_uris: lambda do |value|
-      value&.map { |item| ::OctridevNeon::ConnectionDetails.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for ConnectionURIsResponse.
-# Typed representation of the `ConnectionURIsResponse` API schema.
-class ConnectionURIsResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalConnectionURIsResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalConnectionURIsResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalConnectionURIsResponseMetadata::DECODERS
-
-  # @return [Array_of_ConnectionDetails] Connection URIs for the project. Each entry contains credentials and should be treated as sensitive.
-  attr_reader :connection_uris
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalConnectionURIsResponseMetadata
+    FIELDS = {
+      connection_uris: 'connection_uris'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      connection_uris
+    ].freeze
+    DECODERS = {
+      connection_uris: lambda do |value|
+        value&.map { |item| ::OctridevNeon::ConnectionDetails.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # API model for ConnectionURIsResponse.
+  # Typed representation of the `ConnectionURIsResponse` API schema.
+  class ConnectionURIsResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalConnectionURIsResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalConnectionURIsResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalConnectionURIsResponseMetadata::DECODERS
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+    # @return [Array_of_ConnectionDetails] Connection URIs for the project. Each entry contains credentials and should be treated as sensitive.
+    attr_reader :connection_uris
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

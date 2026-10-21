@@ -5,674 +5,672 @@
 
 # project_project domain models
 module OctridevNeon
-# Internal model hydration metadata.
-class SdkInternalProjectMetadata
-  FIELDS = {
-    data_storage_bytes_hour: "data_storage_bytes_hour",
-    data_transfer_bytes: "data_transfer_bytes",
-    written_data_bytes: "written_data_bytes",
-    compute_time_seconds: "compute_time_seconds",
-    active_time_seconds: "active_time_seconds",
-    cpu_used_sec: "cpu_used_sec",
-    id: "id",
-    platform_id: "platform_id",
-    region_id: "region_id",
-    name: "name",
-    provisioner: "provisioner",
-    default_endpoint_settings: "default_endpoint_settings",
-    settings: "settings",
-    pg_version: "pg_version",
-    proxy_host: "proxy_host",
-    branch_logical_size_limit: "branch_logical_size_limit",
-    branch_logical_size_limit_bytes: "branch_logical_size_limit_bytes",
-    store_passwords: "store_passwords",
-    maintenance_starts_at: "maintenance_starts_at",
-    creation_source: "creation_source",
-    history_retention_seconds: "history_retention_seconds",
-    created_at: "created_at",
-    updated_at: "updated_at",
-    synthetic_storage_size: "synthetic_storage_size",
-    consumption_period_start: "consumption_period_start",
-    consumption_period_end: "consumption_period_end",
-    quota_reset_at: "quota_reset_at",
-    owner_id: "owner_id",
-    owner: "owner",
-    compute_last_active_at: "compute_last_active_at",
-    org_id: "org_id",
-    maintenance_scheduled_for: "maintenance_scheduled_for",
-    hipaa_enabled_at: "hipaa_enabled_at",
-    effective_project_permission: "effective_project_permission",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    data_storage_bytes_hour
-    data_transfer_bytes
-    written_data_bytes
-    compute_time_seconds
-    active_time_seconds
-    cpu_used_sec
-    id
-    platform_id
-    region_id
-    name
-    provisioner
-    pg_version
-    proxy_host
-    branch_logical_size_limit
-    branch_logical_size_limit_bytes
-    store_passwords
-    creation_source
-    history_retention_seconds
-    created_at
-    updated_at
-    consumption_period_start
-    consumption_period_end
-    owner_id
-  ].freeze
-  DECODERS = {
-    provisioner: lambda do |value|
-      ::OctridevNeon::Provisioner.from_value(value)
-    end,
-    default_endpoint_settings: lambda do |value|
-      ::OctridevNeon::DefaultEndpointSettings.from_hash(value)
-    end,
-    settings: lambda do |value|
-      ::OctridevNeon::ProjectSettingsData.from_hash(value)
-    end,
-    pg_version: lambda do |value|
-      ::OctridevNeon::PgVersion.from_value(value)
-    end,
-    owner: lambda do |value|
-      ::OctridevNeon::ProjectOwnerData.from_hash(value)
-    end,
-    effective_project_permission: lambda do |value|
-      ::OctridevNeon::ProjectPermissionLevel.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for Project.
-# Typed representation of the `Project` API schema.
-class Project
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectMetadata::DECODERS
-
-  # @return [Integer] Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead. Bytes-Hour. Project consumed that much Postgres storage hourly during the billing period. The value has some lag. The value is reset at the beginning of each billing period.
-  attr_reader :data_storage_bytes_hour
-  # @return [Integer] Bytes. Egress traffic from the Neon cloud to the client for given project over the billing period. Includes deleted endpoints. The value has some lag. The value is reset at the beginning of each billing period.
-  attr_reader :data_transfer_bytes
-  # @return [Integer] Bytes. Amount of WAL that travelled through Postgres storage for given project across all branches. The value has some lag. The value is reset at the beginning of each billing period.
-  attr_reader :written_data_bytes
-  # @return [Integer] Seconds. The number of CPU seconds used by the project's compute endpoints, including compute endpoints that have been deleted. The value has some lag. The value is reset at the beginning of each billing period. Examples: 1. An endpoint that uses 1 CPU for 1 second is equal to `compute_time=1`. 2. An endpoint that uses 2 CPUs simultaneously for 1 second is equal to `compute_time=2`.
-  attr_reader :compute_time_seconds
-  # @return [Integer] Seconds. Control plane observed endpoints of this project being active this amount of wall-clock time. The value has some lag. The value is reset at the beginning of each billing period.
-  attr_reader :active_time_seconds
-  # @return [Integer] Deprecated. Use `compute_time_seconds` instead.
-  attr_reader :cpu_used_sec
-  # @return [String] The Neon project ID. Use as the `project_id` path parameter in other endpoints.
-  attr_reader :id
-  # @return [String] The cloud platform identifier. Currently, only AWS is supported, for which the identifier is `aws`.
-  attr_reader :platform_id
-  # @return [String] Cloud region where the resource's Postgres compute and storage reside (for example, `aws-us-east-1`). Valid values are returned by `GET /regions`.
-  attr_reader :region_id
-  # @return [String] The project name
-  attr_reader :name
-  # @return [Provisioner] Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.
-  attr_reader :provisioner
-  # @return [DefaultEndpointSettings] A collection of settings for a Neon endpoint
-  attr_reader :default_endpoint_settings
-  # @return [ProjectSettingsData] Project-level settings, for example `quota`, `allowed_ips`, `enable_logical_replication`, and `maintenance_window`.
-  attr_reader :settings
-  # @return [PgVersion] The major Postgres version number. Supported versions are `14`, `15`, `16`, `17`, and `18`. `19` is rolling out and is accepted only in regions where it is enabled; requesting it elsewhere returns an error.
-  attr_reader :pg_version
-  # @return [String] The proxy host for the project. This value combines the `region_id`, the `platform_id`, and the Neon domain (`neon.tech`).
-  attr_reader :proxy_host
-  # @return [Integer] The logical size limit for a branch. The value is in MiB.
-  attr_reader :branch_logical_size_limit
-  # @return [Integer] The logical size limit for a branch. The value is in B.
-  attr_reader :branch_logical_size_limit_bytes
-  # @return [Boolean] Whether or not passwords are stored for roles in the Neon project. Storing passwords facilitates access to Neon features that require authorization.
-  attr_reader :store_passwords
-  # @return [String] A timestamp indicating when project maintenance begins. If set, the project is placed into maintenance mode at this time.
-  attr_reader :maintenance_starts_at
-  # @return [String] The project creation source
-  attr_reader :creation_source
-  # @return [Integer] The number of seconds to retain the shared history for all branches in this project.
-  attr_reader :history_retention_seconds
-  # @return [String] A timestamp indicating when the project was created
-  attr_reader :created_at
-  # @return [String] A timestamp indicating when the project was last updated
-  attr_reader :updated_at
-  # @return [Integer] Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead. The current space occupied by the project in Postgres storage, in bytes. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches in a project.
-  attr_reader :synthetic_storage_size
-  # @return [String] A date-time indicating when Neon Cloud started measuring consumption for current consumption period.
-  attr_reader :consumption_period_start
-  # @return [String] A date-time indicating when Neon Cloud plans to stop measuring consumption for current consumption period.
-  attr_reader :consumption_period_end
-  # @return [String] Deprecated. Use the `consumption_period_end` field instead. A timestamp indicating when the project quota resets.
-  attr_reader :quota_reset_at
-  # @return [String] ID of the organization that owns the project.
-  attr_reader :owner_id
-  # @return [ProjectOwnerData] Ownership details for the project, including the owner's name and email.
-  attr_reader :owner
-  # @return [String] The most recent time when any endpoint of this project was active. Omitted when observed no activity for endpoints of this project.
-  attr_reader :compute_last_active_at
-  # @return [String] The Neon organization ID. Returned as `id` from `GET /users/me/organizations`.
-  attr_reader :org_id
-  # @return [String] A timestamp indicating when project update begins. If set, computes might experience a brief restart around this time.
-  attr_reader :maintenance_scheduled_for
-  # @return [String] A timestamp indicating when HIPAA was enabled for this project
-  attr_reader :hipaa_enabled_at
-  # @return [ProjectPermissionLevel] Optional `string` value serialized in the `effective_project_permission` wire field.
-  attr_reader :effective_project_permission
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalProjectMetadata
+    FIELDS = {
+      data_storage_bytes_hour: 'data_storage_bytes_hour',
+      data_transfer_bytes: 'data_transfer_bytes',
+      written_data_bytes: 'written_data_bytes',
+      compute_time_seconds: 'compute_time_seconds',
+      active_time_seconds: 'active_time_seconds',
+      cpu_used_sec: 'cpu_used_sec',
+      id: 'id',
+      platform_id: 'platform_id',
+      region_id: 'region_id',
+      name: 'name',
+      provisioner: 'provisioner',
+      default_endpoint_settings: 'default_endpoint_settings',
+      settings: 'settings',
+      pg_version: 'pg_version',
+      proxy_host: 'proxy_host',
+      branch_logical_size_limit: 'branch_logical_size_limit',
+      branch_logical_size_limit_bytes: 'branch_logical_size_limit_bytes',
+      store_passwords: 'store_passwords',
+      maintenance_starts_at: 'maintenance_starts_at',
+      creation_source: 'creation_source',
+      history_retention_seconds: 'history_retention_seconds',
+      created_at: 'created_at',
+      updated_at: 'updated_at',
+      synthetic_storage_size: 'synthetic_storage_size',
+      consumption_period_start: 'consumption_period_start',
+      consumption_period_end: 'consumption_period_end',
+      quota_reset_at: 'quota_reset_at',
+      owner_id: 'owner_id',
+      owner: 'owner',
+      compute_last_active_at: 'compute_last_active_at',
+      org_id: 'org_id',
+      maintenance_scheduled_for: 'maintenance_scheduled_for',
+      hipaa_enabled_at: 'hipaa_enabled_at',
+      effective_project_permission: 'effective_project_permission'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      data_storage_bytes_hour
+      data_transfer_bytes
+      written_data_bytes
+      compute_time_seconds
+      active_time_seconds
+      cpu_used_sec
+      id
+      platform_id
+      region_id
+      name
+      provisioner
+      pg_version
+      proxy_host
+      branch_logical_size_limit
+      branch_logical_size_limit_bytes
+      store_passwords
+      creation_source
+      history_retention_seconds
+      created_at
+      updated_at
+      consumption_period_start
+      consumption_period_end
+      owner_id
+    ].freeze
+    DECODERS = {
+      provisioner: lambda do |value|
+        ::OctridevNeon::Provisioner.from_value(value)
+      end,
+      default_endpoint_settings: lambda do |value|
+        ::OctridevNeon::DefaultEndpointSettings.from_hash(value)
+      end,
+      settings: lambda do |value|
+        ::OctridevNeon::ProjectSettingsData.from_hash(value)
+      end,
+      pg_version: lambda do |value|
+        ::OctridevNeon::PgVersion.from_value(value)
+      end,
+      owner: lambda do |value|
+        ::OctridevNeon::ProjectOwnerData.from_hash(value)
+      end,
+      effective_project_permission: lambda do |value|
+        ::OctridevNeon::ProjectPermissionLevel.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for Project.
+  # Typed representation of the `Project` API schema.
+  class Project
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectMetadata::DECODERS
+
+    # @return [Integer] Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead. Bytes-Hour. Project consumed that much Postgres storage hourly during the billing period. The value has some lag. The value is reset at the beginning of each billing period.
+    attr_reader :data_storage_bytes_hour
+    # @return [Integer] Bytes. Egress traffic from the Neon cloud to the client for given project over the billing period. Includes deleted endpoints. The value has some lag. The value is reset at the beginning of each billing period.
+    attr_reader :data_transfer_bytes
+    # @return [Integer] Bytes. Amount of WAL that travelled through Postgres storage for given project across all branches. The value has some lag. The value is reset at the beginning of each billing period.
+    attr_reader :written_data_bytes
+    # @return [Integer] Seconds. The number of CPU seconds used by the project's compute endpoints, including compute endpoints that have been deleted. The value has some lag. The value is reset at the beginning of each billing period. Examples: 1. An endpoint that uses 1 CPU for 1 second is equal to `compute_time=1`. 2. An endpoint that uses 2 CPUs simultaneously for 1 second is equal to `compute_time=2`.
+    attr_reader :compute_time_seconds
+    # @return [Integer] Seconds. Control plane observed endpoints of this project being active this amount of wall-clock time. The value has some lag. The value is reset at the beginning of each billing period.
+    attr_reader :active_time_seconds
+    # @return [Integer] Deprecated. Use `compute_time_seconds` instead.
+    attr_reader :cpu_used_sec
+    # @return [String] The Neon project ID. Use as the `project_id` path parameter in other endpoints.
+    attr_reader :id
+    # @return [String] The cloud platform identifier. Currently, only AWS is supported, for which the identifier is `aws`.
+    attr_reader :platform_id
+    # @return [String] Cloud region where the resource's Postgres compute and storage reside (for example, `aws-us-east-1`). Valid values are returned by `GET /regions`.
+    attr_reader :region_id
+    # @return [String] The project name
+    attr_reader :name
+    # @return [Provisioner] Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.
+    attr_reader :provisioner
+    # @return [DefaultEndpointSettings] A collection of settings for a Neon endpoint
+    attr_reader :default_endpoint_settings
+    # @return [ProjectSettingsData] Project-level settings, for example `quota`, `allowed_ips`, `enable_logical_replication`, and `maintenance_window`.
+    attr_reader :settings
+    # @return [PgVersion] The major Postgres version number. Supported versions are `14`, `15`, `16`, `17`, and `18`. `19` is rolling out and is accepted only in regions where it is enabled; requesting it elsewhere returns an error.
+    attr_reader :pg_version
+    # @return [String] The proxy host for the project. This value combines the `region_id`, the `platform_id`, and the Neon domain (`neon.tech`).
+    attr_reader :proxy_host
+    # @return [Integer] The logical size limit for a branch. The value is in MiB.
+    attr_reader :branch_logical_size_limit
+    # @return [Integer] The logical size limit for a branch. The value is in B.
+    attr_reader :branch_logical_size_limit_bytes
+    # @return [Boolean] Whether or not passwords are stored for roles in the Neon project. Storing passwords facilitates access to Neon features that require authorization.
+    attr_reader :store_passwords
+    # @return [String] A timestamp indicating when project maintenance begins. If set, the project is placed into maintenance mode at this time.
+    attr_reader :maintenance_starts_at
+    # @return [String] The project creation source
+    attr_reader :creation_source
+    # @return [Integer] The number of seconds to retain the shared history for all branches in this project.
+    attr_reader :history_retention_seconds
+    # @return [String] A timestamp indicating when the project was created
+    attr_reader :created_at
+    # @return [String] A timestamp indicating when the project was last updated
+    attr_reader :updated_at
+    # @return [Integer] Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead. The current space occupied by the project in Postgres storage, in bytes. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches in a project.
+    attr_reader :synthetic_storage_size
+    # @return [String] A date-time indicating when Neon Cloud started measuring consumption for current consumption period.
+    attr_reader :consumption_period_start
+    # @return [String] A date-time indicating when Neon Cloud plans to stop measuring consumption for current consumption period.
+    attr_reader :consumption_period_end
+    # @return [String] Deprecated. Use the `consumption_period_end` field instead. A timestamp indicating when the project quota resets.
+    attr_reader :quota_reset_at
+    # @return [String] ID of the organization that owns the project.
+    attr_reader :owner_id
+    # @return [ProjectOwnerData] Ownership details for the project, including the owner's name and email.
+    attr_reader :owner
+    # @return [String] The most recent time when any endpoint of this project was active. Omitted when observed no activity for endpoints of this project.
+    attr_reader :compute_last_active_at
+    # @return [String] The Neon organization ID. Returned as `id` from `GET /users/me/organizations`.
+    attr_reader :org_id
+    # @return [String] A timestamp indicating when project update begins. If set, computes might experience a brief restart around this time.
+    attr_reader :maintenance_scheduled_for
+    # @return [String] A timestamp indicating when HIPAA was enabled for this project
+    attr_reader :hipaa_enabled_at
+    # @return [ProjectPermissionLevel] Optional `string` value serialized in the `effective_project_permission` wire field.
+    attr_reader :effective_project_permission
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ProjectAuditLogLevel SDK namespace.
-module ProjectAuditLogLevel
-  BASE = 'base'
-  EXTENDED = 'extended'
-  FULL = 'full'
-  VALUES = ['base', 'extended', 'full'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalProjectCreateRequestProjectBranchMetadata
-  FIELDS = {
-    name: "name",
-    role_name: "role_name",
-    database_name: "database_name",
-    annotations: "annotations",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    annotations: lambda do |value|
-      ::OctridevNeon::AnnotationValueData.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ProjectCreateRequestProjectBranch.
-# Configuration for the initial branch created with the project.
-class ProjectCreateRequestProjectBranch
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectCreateRequestProjectBranchMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectCreateRequestProjectBranchMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectCreateRequestProjectBranchMetadata::DECODERS
-
-  # @return [String] The default branch name. If not specified, the default branch name, `main`, will be used.
-  attr_reader :name
-  # @return [String] The role name. If not specified, the default role name, `{database_name}_owner`, will be used.
-  attr_reader :role_name
-  # @return [String] The database name. If not specified, the default database name, `neondb`, will be used.
-  attr_reader :database_name
-  # @return [AnnotationValueData] Arbitrary key-value metadata to attach to the branch.
-  attr_reader :annotations
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ProjectAuditLogLevel SDK namespace.
+  module ProjectAuditLogLevel
+    BASE = 'base'
+    EXTENDED = 'extended'
+    FULL = 'full'
+    VALUES = %w[base extended full].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalProjectCreateRequestProjectBranchMetadata
+    FIELDS = {
+      name: 'name',
+      role_name: 'role_name',
+      database_name: 'database_name',
+      annotations: 'annotations'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      annotations: lambda do |value|
+        ::OctridevNeon::AnnotationValueData.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ProjectCreateRequestProjectBranch.
+  # Configuration for the initial branch created with the project.
+  class ProjectCreateRequestProjectBranch
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectCreateRequestProjectBranchMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectCreateRequestProjectBranchMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectCreateRequestProjectBranchMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalProjectCreateRequestProjectMetadata
-  FIELDS = {
-    settings: "settings",
-    name: "name",
-    realtime: "realtime",
-    branch: "branch",
-    autoscaling_limit_min_cu: "autoscaling_limit_min_cu",
-    autoscaling_limit_max_cu: "autoscaling_limit_max_cu",
-    provisioner: "provisioner",
-    region_id: "region_id",
-    default_endpoint_settings: "default_endpoint_settings",
-    pg_version: "pg_version",
-    store_passwords: "store_passwords",
-    history_retention_seconds: "history_retention_seconds",
-    org_id: "org_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    settings: lambda do |value|
-      ::OctridevNeon::ProjectSettingsData.from_hash(value)
-    end,
-    realtime: lambda do |value|
-      ::OctridevNeon::RealtimeOptions.from_hash(value)
-    end,
-    branch: lambda do |value|
-      ::OctridevNeon::ProjectCreateRequestProjectBranch.from_hash(value)
-    end,
-    autoscaling_limit_min_cu: lambda do |value|
-      ::OctridevNeon::ComputeUnit.from_value(value)
-    end,
-    autoscaling_limit_max_cu: lambda do |value|
-      ::OctridevNeon::ComputeUnit.from_value(value)
-    end,
-    provisioner: lambda do |value|
-      ::OctridevNeon::Provisioner.from_value(value)
-    end,
-    default_endpoint_settings: lambda do |value|
-      ::OctridevNeon::DefaultEndpointSettings.from_hash(value)
-    end,
-    pg_version: lambda do |value|
-      ::OctridevNeon::PgVersion.from_value(value)
-    end,
-  }.freeze
-end
+    # @return [String] The default branch name. If not specified, the default branch name, `main`, will be used.
+    attr_reader :name
+    # @return [String] The role name. If not specified, the default role name, `{database_name}_owner`, will be used.
+    attr_reader :role_name
+    # @return [String] The database name. If not specified, the default database name, `neondb`, will be used.
+    attr_reader :database_name
+    # @return [AnnotationValueData] Arbitrary key-value metadata to attach to the branch.
+    attr_reader :annotations
 
-# API model for ProjectCreateRequestProject.
-# Configuration for the new project, including name, region, and Postgres compute and storage settings.
-class ProjectCreateRequestProject
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectCreateRequestProjectMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectCreateRequestProjectMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectCreateRequestProjectMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [ProjectSettingsData] Project-level settings applied at creation.
-  attr_reader :settings
-  # @return [String] The project name. If not specified, the name will be identical to the generated project ID
-  attr_reader :name
-  # @return [RealtimeOptions] Enable Realtime for the default branch with these options.
-  attr_reader :realtime
-  # @return [ProjectCreateRequestProjectBranch] Configuration for the initial branch created with the project.
-  attr_reader :branch
-  # @return [ComputeUnit] Deprecated. Use `default_endpoint_settings.autoscaling_limit_min_cu` instead. The minimum number of Compute Units. The minimum value is `0.25`. See Compute size and Autoscaling configuration for more information.
-  attr_reader :autoscaling_limit_min_cu
-  # @return [ComputeUnit] Deprecated. Use `default_endpoint_settings.autoscaling_limit_max_cu` instead. The maximum number of Compute Units. See Compute size and Autoscaling configuration for more information.
-  attr_reader :autoscaling_limit_max_cu
-  # @return [Provisioner] Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.
-  attr_reader :provisioner
-  # @return [String] The region identifier. Refer to our Regions documentation for supported regions. Values are specified in this format: `aws-us-east-1`
-  attr_reader :region_id
-  # @return [DefaultEndpointSettings] A collection of settings for a Neon endpoint
-  attr_reader :default_endpoint_settings
-  # @return [PgVersion] The major Postgres version number. Supported versions are `14`, `15`, `16`, `17`, and `18`. `19` is rolling out and is accepted only in regions where it is enabled; requesting it elsewhere returns an error.
-  attr_reader :pg_version
-  # @return [Boolean] Whether or not passwords are stored for roles in the Neon project. Storing passwords facilitates access to Neon features that require authorization.
-  attr_reader :store_passwords
-  # @return [Integer] History window (point-in-time restore range) for all branches, in seconds. `0` disables it. Default 1 day (Free: 6 hours). Maximum depends on plan: Free 6 hours (21600), Launch 7 days (604800), Scale 30 days (2592000).
-  attr_reader :history_retention_seconds
-  # @return [String] ID of the organization that will own the project. If omitted when using an organization API key, it is inferred from the key.
-  attr_reader :org_id
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalProjectCreateRequestProjectMetadata
+    FIELDS = {
+      settings: 'settings',
+      name: 'name',
+      realtime: 'realtime',
+      branch: 'branch',
+      autoscaling_limit_min_cu: 'autoscaling_limit_min_cu',
+      autoscaling_limit_max_cu: 'autoscaling_limit_max_cu',
+      provisioner: 'provisioner',
+      region_id: 'region_id',
+      default_endpoint_settings: 'default_endpoint_settings',
+      pg_version: 'pg_version',
+      store_passwords: 'store_passwords',
+      history_retention_seconds: 'history_retention_seconds',
+      org_id: 'org_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      settings: lambda do |value|
+        ::OctridevNeon::ProjectSettingsData.from_hash(value)
+      end,
+      realtime: lambda do |value|
+        ::OctridevNeon::RealtimeOptions.from_hash(value)
+      end,
+      branch: lambda do |value|
+        ::OctridevNeon::ProjectCreateRequestProjectBranch.from_hash(value)
+      end,
+      autoscaling_limit_min_cu: lambda do |value|
+        ::OctridevNeon::ComputeUnit.from_value(value)
+      end,
+      autoscaling_limit_max_cu: lambda do |value|
+        ::OctridevNeon::ComputeUnit.from_value(value)
+      end,
+      provisioner: lambda do |value|
+        ::OctridevNeon::Provisioner.from_value(value)
+      end,
+      default_endpoint_settings: lambda do |value|
+        ::OctridevNeon::DefaultEndpointSettings.from_hash(value)
+      end,
+      pg_version: lambda do |value|
+        ::OctridevNeon::PgVersion.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ProjectCreateRequestProject.
+  # Configuration for the new project, including name, region, and Postgres compute and storage settings.
+  class ProjectCreateRequestProject
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectCreateRequestProjectMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectCreateRequestProjectMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectCreateRequestProjectMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalProjectCreateRequestMetadata
-  FIELDS = {
-    project: "project",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    project
-  ].freeze
-  DECODERS = {
-    project: lambda do |value|
-      ::OctridevNeon::ProjectCreateRequestProject.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [ProjectSettingsData] Project-level settings applied at creation.
+    attr_reader :settings
+    # @return [String] The project name. If not specified, the name will be identical to the generated project ID
+    attr_reader :name
+    # @return [RealtimeOptions] Enable Realtime for the default branch with these options.
+    attr_reader :realtime
+    # @return [ProjectCreateRequestProjectBranch] Configuration for the initial branch created with the project.
+    attr_reader :branch
+    # @return [ComputeUnit] Deprecated. Use `default_endpoint_settings.autoscaling_limit_min_cu` instead. The minimum number of Compute Units. The minimum value is `0.25`. See Compute size and Autoscaling configuration for more information.
+    attr_reader :autoscaling_limit_min_cu
+    # @return [ComputeUnit] Deprecated. Use `default_endpoint_settings.autoscaling_limit_max_cu` instead. The maximum number of Compute Units. See Compute size and Autoscaling configuration for more information.
+    attr_reader :autoscaling_limit_max_cu
+    # @return [Provisioner] Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.
+    attr_reader :provisioner
+    # @return [String] The region identifier. Refer to our Regions documentation for supported regions. Values are specified in this format: `aws-us-east-1`
+    attr_reader :region_id
+    # @return [DefaultEndpointSettings] A collection of settings for a Neon endpoint
+    attr_reader :default_endpoint_settings
+    # @return [PgVersion] The major Postgres version number. Supported versions are `14`, `15`, `16`, `17`, and `18`. `19` is rolling out and is accepted only in regions where it is enabled; requesting it elsewhere returns an error.
+    attr_reader :pg_version
+    # @return [Boolean] Whether or not passwords are stored for roles in the Neon project. Storing passwords facilitates access to Neon features that require authorization.
+    attr_reader :store_passwords
+    # @return [Integer] History window (point-in-time restore range) for all branches, in seconds. `0` disables it. Default 1 day (Free: 6 hours). Maximum depends on plan: Free 6 hours (21600), Launch 7 days (604800), Scale 30 days (2592000).
+    attr_reader :history_retention_seconds
+    # @return [String] ID of the organization that will own the project. If omitted when using an organization API key, it is inferred from the key.
+    attr_reader :org_id
 
-# API model for ProjectCreateRequest.
-# Typed representation of the `ProjectCreateRequest` API schema.
-class ProjectCreateRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectCreateRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectCreateRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectCreateRequestMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [ProjectCreateRequestProject] Configuration for the new project, including name, region, and Postgres compute and storage settings.
-  attr_reader :project
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalProjectJWKSResponseMetadata
-  FIELDS = {
-    jwks: "jwks",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    jwks
-  ].freeze
-  DECODERS = {
-    jwks: lambda do |value|
-      value&.map { |item| ::OctridevNeon::JWKS.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for ProjectJWKSResponse.
-# The list of configured JWKS definitions for a project
-class ProjectJWKSResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectJWKSResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectJWKSResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectJWKSResponseMetadata::DECODERS
-
-  # @return [Array_of_JWKS] JWKS configurations associated with the project.
-  attr_reader :jwks
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalProjectCreateRequestMetadata
+    FIELDS = {
+      project: 'project'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      project
+    ].freeze
+    DECODERS = {
+      project: lambda do |value|
+        ::OctridevNeon::ProjectCreateRequestProject.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ProjectCreateRequest.
+  # Typed representation of the `ProjectCreateRequest` API schema.
+  class ProjectCreateRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectCreateRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectCreateRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectCreateRequestMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalProjectListItemMetadata
-  FIELDS = {
-    id: "id",
-    platform_id: "platform_id",
-    region_id: "region_id",
-    name: "name",
-    provisioner: "provisioner",
-    default_endpoint_settings: "default_endpoint_settings",
-    settings: "settings",
-    pg_version: "pg_version",
-    proxy_host: "proxy_host",
-    branch_logical_size_limit: "branch_logical_size_limit",
-    branch_logical_size_limit_bytes: "branch_logical_size_limit_bytes",
-    store_passwords: "store_passwords",
-    active_time: "active_time",
-    cpu_used_sec: "cpu_used_sec",
-    maintenance_starts_at: "maintenance_starts_at",
-    creation_source: "creation_source",
-    created_at: "created_at",
-    updated_at: "updated_at",
-    synthetic_storage_size: "synthetic_storage_size",
-    quota_reset_at: "quota_reset_at",
-    owner_id: "owner_id",
-    compute_last_active_at: "compute_last_active_at",
-    org_id: "org_id",
-    org_name: "org_name",
-    history_retention_seconds: "history_retention_seconds",
-    hipaa_enabled_at: "hipaa_enabled_at",
-    deleted_at: "deleted_at",
-    recoverable_until: "recoverable_until",
-    effective_project_permission: "effective_project_permission",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    platform_id
-    region_id
-    name
-    provisioner
-    pg_version
-    proxy_host
-    branch_logical_size_limit
-    branch_logical_size_limit_bytes
-    store_passwords
-    active_time
-    cpu_used_sec
-    creation_source
-    created_at
-    updated_at
-    owner_id
-  ].freeze
-  DECODERS = {
-    provisioner: lambda do |value|
-      ::OctridevNeon::Provisioner.from_value(value)
-    end,
-    default_endpoint_settings: lambda do |value|
-      ::OctridevNeon::DefaultEndpointSettings.from_hash(value)
-    end,
-    settings: lambda do |value|
-      ::OctridevNeon::ProjectSettingsData.from_hash(value)
-    end,
-    pg_version: lambda do |value|
-      ::OctridevNeon::PgVersion.from_value(value)
-    end,
-    effective_project_permission: lambda do |value|
-      ::OctridevNeon::ProjectPermissionLevel.from_value(value)
-    end,
-  }.freeze
-end
+    # @return [ProjectCreateRequestProject] Configuration for the new project, including name, region, and Postgres compute and storage settings.
+    attr_reader :project
 
-# API model for ProjectListItem.
-# Essential data about the project. Full data is available at `GET /projects/{project_id}`.
-class ProjectListItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectListItemMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectListItemMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectListItemMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The Neon project ID. Use as the `project_id` path parameter in other endpoints.
-  attr_reader :id
-  # @return [String] The cloud platform identifier. Currently, only AWS is supported, for which the identifier is `aws`.
-  attr_reader :platform_id
-  # @return [String] Cloud region where the project's Postgres compute and storage reside (for example, `aws-us-east-2`). Valid values are returned by `GET /regions`.
-  attr_reader :region_id
-  # @return [String] The project name
-  attr_reader :name
-  # @return [Provisioner] Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.
-  attr_reader :provisioner
-  # @return [DefaultEndpointSettings] A collection of settings for a Neon endpoint
-  attr_reader :default_endpoint_settings
-  # @return [ProjectSettingsData] Project-level settings, for example `quota`, `allowed_ips`, `enable_logical_replication`, and `maintenance_window`.
-  attr_reader :settings
-  # @return [PgVersion] The major Postgres version number. Supported versions are `14`, `15`, `16`, `17`, and `18`. `19` is rolling out and is accepted only in regions where it is enabled; requesting it elsewhere returns an error.
-  attr_reader :pg_version
-  # @return [String] The proxy host for the project. This value combines the `region_id`, the `platform_id`, and the Neon domain (`neon.tech`).
-  attr_reader :proxy_host
-  # @return [Integer] The logical size limit for a branch. The value is in MiB.
-  attr_reader :branch_logical_size_limit
-  # @return [Integer] The logical size limit for a branch. The value is in B.
-  attr_reader :branch_logical_size_limit_bytes
-  # @return [Boolean] Whether or not passwords are stored for roles in the Neon project. Storing passwords facilitates access to Neon features that require authorization.
-  attr_reader :store_passwords
-  # @return [Integer] Control plane observed endpoints of this project being active this amount of wall-clock time.
-  attr_reader :active_time
-  # @return [Integer] Deprecated. Use `compute_time_seconds` from `GET /projects/{project_id}` instead.
-  attr_reader :cpu_used_sec
-  # @return [String] A timestamp indicating when project maintenance begins. If set, the project is placed into maintenance mode at this time.
-  attr_reader :maintenance_starts_at
-  # @return [String] The project creation source
-  attr_reader :creation_source
-  # @return [String] A timestamp indicating when the project was created
-  attr_reader :created_at
-  # @return [String] A timestamp indicating when the project was last updated
-  attr_reader :updated_at
-  # @return [Integer] Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead. The current space occupied by the project in Postgres storage, in bytes. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches in a project.
-  attr_reader :synthetic_storage_size
-  # @return [String] Deprecated. Use `consumption_period_end` from `GET /projects/{project_id}` instead. A timestamp indicating when the project quota resets.
-  attr_reader :quota_reset_at
-  # @return [String] ID of the organization that owns the project.
-  attr_reader :owner_id
-  # @return [String] The most recent time when any endpoint of this project was active. Omitted when observed no activity for endpoints of this project.
-  attr_reader :compute_last_active_at
-  # @return [String] ID of the organization that owns the project. Project permissions are granted to organization members as configured by the organization's admins, independent of which member created the project.
-  attr_reader :org_id
-  # @return [String] Name of the organization that owns the project.
-  attr_reader :org_name
-  # @return [Integer] The number of seconds to retain the shared history for all branches in this project.
-  attr_reader :history_retention_seconds
-  # @return [String] A timestamp indicating when HIPAA was enabled for this project
-  attr_reader :hipaa_enabled_at
-  # @return [String] A timestamp indicating when the project was deleted
-  attr_reader :deleted_at
-  # @return [String] A timestamp indicating the project will be recoverable until this date and time.
-  attr_reader :recoverable_until
-  # @return [ProjectPermissionLevel] Optional `string` value serialized in the `effective_project_permission` wire field.
-  attr_reader :effective_project_permission
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalProjectJWKSResponseMetadata
+    FIELDS = {
+      jwks: 'jwks'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      jwks
+    ].freeze
+    DECODERS = {
+      jwks: lambda do |value|
+        value&.map { |item| ::OctridevNeon::JWKS.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ProjectJWKSResponse.
+  # The list of configured JWKS definitions for a project
+  class ProjectJWKSResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectJWKSResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectJWKSResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectJWKSResponseMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalProjectMemberMetadata
-  FIELDS = {
-    member_id: "member_id",
-    user_id: "user_id",
-    email: "email",
-    name: "name",
-    org_role: "org_role",
-    project_role: "project_role",
-    org_default_project_permission: "org_default_project_permission",
-    explicit_project_permission: "explicit_project_permission",
-    effective_project_permission: "effective_project_permission",
-    grant_source: "grant_source",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    member_id
-    user_id
-    org_role
-  ].freeze
-  DECODERS = {
-    org_role: lambda do |value|
-      ::OctridevNeon::ProjectMemberOrgRole.from_value(value)
-    end,
-    project_role: lambda do |value|
-      ::OctridevNeon::ProjectRole.from_value(value)
-    end,
-    org_default_project_permission: lambda do |value|
-      ::OctridevNeon::ProjectPermissionLevel.from_value(value)
-    end,
-    explicit_project_permission: lambda do |value|
-      ::OctridevNeon::ProjectPermissionLevel.from_value(value)
-    end,
-    effective_project_permission: lambda do |value|
-      ::OctridevNeon::ProjectPermissionLevel.from_value(value)
-    end,
-    grant_source: lambda do |value|
-      ::OctridevNeon::ProjectMemberGrantSource.from_value(value)
-    end,
-  }.freeze
-end
+    # @return [Array_of_JWKS] JWKS configurations associated with the project.
+    attr_reader :jwks
 
-# API model for ProjectMember.
-# Typed representation of the `ProjectMember` API schema.
-class ProjectMember
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectMemberMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectMemberMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectMemberMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The organization member ID.
-  attr_reader :member_id
-  # @return [String] The user ID for the organization member.
-  attr_reader :user_id
-  # @return [String] Email address of the user who has been granted access to the project.
-  attr_reader :email
-  # @return [String] The user's display name.
-  attr_reader :name
-  # @return [ProjectMemberOrgRole] Organization-level role used by project member role management.
-  attr_reader :org_role
-  # @return [ProjectRole] Per-project role. `viewer` maps to `VIEWER`, `editor` maps to `EDITOR`, and `admin` maps to `ADMIN`.
-  attr_reader :project_role
-  # @return [ProjectPermissionLevel] The caller's effective permission for a project when per-project permissions are enabled. `VIEWER` grants read access, `EDITOR` adds update access, and `ADMIN` grants full management. Omitted for personal projects, flag-off organizations, and non-user subjects.
-  attr_reader :org_default_project_permission
-  # @return [ProjectPermissionLevel] The caller's effective permission for a project when per-project permissions are enabled. `VIEWER` grants read access, `EDITOR` adds update access, and `ADMIN` grants full management. Omitted for personal projects, flag-off organizations, and non-user subjects.
-  attr_reader :explicit_project_permission
-  # @return [ProjectPermissionLevel] The caller's effective permission for a project when per-project permissions are enabled. `VIEWER` grants read access, `EDITOR` adds update access, and `ADMIN` grants full management. Omitted for personal projects, flag-off organizations, and non-user subjects.
-  attr_reader :effective_project_permission
-  # @return [ProjectMemberGrantSource] How a member's project access is granted.
-  attr_reader :grant_source
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalProjectListItemMetadata
+    FIELDS = {
+      id: 'id',
+      platform_id: 'platform_id',
+      region_id: 'region_id',
+      name: 'name',
+      provisioner: 'provisioner',
+      default_endpoint_settings: 'default_endpoint_settings',
+      settings: 'settings',
+      pg_version: 'pg_version',
+      proxy_host: 'proxy_host',
+      branch_logical_size_limit: 'branch_logical_size_limit',
+      branch_logical_size_limit_bytes: 'branch_logical_size_limit_bytes',
+      store_passwords: 'store_passwords',
+      active_time: 'active_time',
+      cpu_used_sec: 'cpu_used_sec',
+      maintenance_starts_at: 'maintenance_starts_at',
+      creation_source: 'creation_source',
+      created_at: 'created_at',
+      updated_at: 'updated_at',
+      synthetic_storage_size: 'synthetic_storage_size',
+      quota_reset_at: 'quota_reset_at',
+      owner_id: 'owner_id',
+      compute_last_active_at: 'compute_last_active_at',
+      org_id: 'org_id',
+      org_name: 'org_name',
+      history_retention_seconds: 'history_retention_seconds',
+      hipaa_enabled_at: 'hipaa_enabled_at',
+      deleted_at: 'deleted_at',
+      recoverable_until: 'recoverable_until',
+      effective_project_permission: 'effective_project_permission'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      platform_id
+      region_id
+      name
+      provisioner
+      pg_version
+      proxy_host
+      branch_logical_size_limit
+      branch_logical_size_limit_bytes
+      store_passwords
+      active_time
+      cpu_used_sec
+      creation_source
+      created_at
+      updated_at
+      owner_id
+    ].freeze
+    DECODERS = {
+      provisioner: lambda do |value|
+        ::OctridevNeon::Provisioner.from_value(value)
+      end,
+      default_endpoint_settings: lambda do |value|
+        ::OctridevNeon::DefaultEndpointSettings.from_hash(value)
+      end,
+      settings: lambda do |value|
+        ::OctridevNeon::ProjectSettingsData.from_hash(value)
+      end,
+      pg_version: lambda do |value|
+        ::OctridevNeon::PgVersion.from_value(value)
+      end,
+      effective_project_permission: lambda do |value|
+        ::OctridevNeon::ProjectPermissionLevel.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ProjectListItem.
+  # Essential data about the project. Full data is available at `GET /projects/{project_id}`.
+  class ProjectListItem
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectListItemMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectListItemMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectListItemMetadata::DECODERS
 
-# Defines the ProjectMemberGrantSource SDK namespace.
-module ProjectMemberGrantSource
-  EXPLICIT = 'explicit'
-  ORG_ROLE_DEFAULT = 'org_role_default'
-  ORG_ADMIN_OVERRIDE = 'org_admin_override'
-  UNASSIGNED = 'unassigned'
-  VALUES = ['explicit', 'org_role_default', 'org_admin_override', 'unassigned'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] The Neon project ID. Use as the `project_id` path parameter in other endpoints.
+    attr_reader :id
+    # @return [String] The cloud platform identifier. Currently, only AWS is supported, for which the identifier is `aws`.
+    attr_reader :platform_id
+    # @return [String] Cloud region where the project's Postgres compute and storage reside (for example, `aws-us-east-2`). Valid values are returned by `GET /regions`.
+    attr_reader :region_id
+    # @return [String] The project name
+    attr_reader :name
+    # @return [Provisioner] Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.
+    attr_reader :provisioner
+    # @return [DefaultEndpointSettings] A collection of settings for a Neon endpoint
+    attr_reader :default_endpoint_settings
+    # @return [ProjectSettingsData] Project-level settings, for example `quota`, `allowed_ips`, `enable_logical_replication`, and `maintenance_window`.
+    attr_reader :settings
+    # @return [PgVersion] The major Postgres version number. Supported versions are `14`, `15`, `16`, `17`, and `18`. `19` is rolling out and is accepted only in regions where it is enabled; requesting it elsewhere returns an error.
+    attr_reader :pg_version
+    # @return [String] The proxy host for the project. This value combines the `region_id`, the `platform_id`, and the Neon domain (`neon.tech`).
+    attr_reader :proxy_host
+    # @return [Integer] The logical size limit for a branch. The value is in MiB.
+    attr_reader :branch_logical_size_limit
+    # @return [Integer] The logical size limit for a branch. The value is in B.
+    attr_reader :branch_logical_size_limit_bytes
+    # @return [Boolean] Whether or not passwords are stored for roles in the Neon project. Storing passwords facilitates access to Neon features that require authorization.
+    attr_reader :store_passwords
+    # @return [Integer] Control plane observed endpoints of this project being active this amount of wall-clock time.
+    attr_reader :active_time
+    # @return [Integer] Deprecated. Use `compute_time_seconds` from `GET /projects/{project_id}` instead.
+    attr_reader :cpu_used_sec
+    # @return [String] A timestamp indicating when project maintenance begins. If set, the project is placed into maintenance mode at this time.
+    attr_reader :maintenance_starts_at
+    # @return [String] The project creation source
+    attr_reader :creation_source
+    # @return [String] A timestamp indicating when the project was created
+    attr_reader :created_at
+    # @return [String] A timestamp indicating when the project was last updated
+    attr_reader :updated_at
+    # @return [Integer] Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead. The current space occupied by the project in Postgres storage, in bytes. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches in a project.
+    attr_reader :synthetic_storage_size
+    # @return [String] Deprecated. Use `consumption_period_end` from `GET /projects/{project_id}` instead. A timestamp indicating when the project quota resets.
+    attr_reader :quota_reset_at
+    # @return [String] ID of the organization that owns the project.
+    attr_reader :owner_id
+    # @return [String] The most recent time when any endpoint of this project was active. Omitted when observed no activity for endpoints of this project.
+    attr_reader :compute_last_active_at
+    # @return [String] ID of the organization that owns the project. Project permissions are granted to organization members as configured by the organization's admins, independent of which member created the project.
+    attr_reader :org_id
+    # @return [String] Name of the organization that owns the project.
+    attr_reader :org_name
+    # @return [Integer] The number of seconds to retain the shared history for all branches in this project.
+    attr_reader :history_retention_seconds
+    # @return [String] A timestamp indicating when HIPAA was enabled for this project
+    attr_reader :hipaa_enabled_at
+    # @return [String] A timestamp indicating when the project was deleted
+    attr_reader :deleted_at
+    # @return [String] A timestamp indicating the project will be recoverable until this date and time.
+    attr_reader :recoverable_until
+    # @return [ProjectPermissionLevel] Optional `string` value serialized in the `effective_project_permission` wire field.
+    attr_reader :effective_project_permission
 
-# Defines the ProjectMemberOrgRole SDK namespace.
-module ProjectMemberOrgRole
-  ADMIN = 'admin'
-  MEMBER = 'member'
-  EDITOR = 'editor'
-  VIEWER = 'viewer'
-  COLLABORATOR = 'collaborator'
-  VALUES = ['admin', 'member', 'editor', 'viewer', 'collaborator'].freeze
-  def self.from_value(value)
-    value
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalProjectMemberMetadata
+    FIELDS = {
+      member_id: 'member_id',
+      user_id: 'user_id',
+      email: 'email',
+      name: 'name',
+      org_role: 'org_role',
+      project_role: 'project_role',
+      org_default_project_permission: 'org_default_project_permission',
+      explicit_project_permission: 'explicit_project_permission',
+      effective_project_permission: 'effective_project_permission',
+      grant_source: 'grant_source'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      member_id
+      user_id
+      org_role
+    ].freeze
+    DECODERS = {
+      org_role: lambda do |value|
+        ::OctridevNeon::ProjectMemberOrgRole.from_value(value)
+      end,
+      project_role: lambda do |value|
+        ::OctridevNeon::ProjectRole.from_value(value)
+      end,
+      org_default_project_permission: lambda do |value|
+        ::OctridevNeon::ProjectPermissionLevel.from_value(value)
+      end,
+      explicit_project_permission: lambda do |value|
+        ::OctridevNeon::ProjectPermissionLevel.from_value(value)
+      end,
+      effective_project_permission: lambda do |value|
+        ::OctridevNeon::ProjectPermissionLevel.from_value(value)
+      end,
+      grant_source: lambda do |value|
+        ::OctridevNeon::ProjectMemberGrantSource.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for ProjectMember.
+  # Typed representation of the `ProjectMember` API schema.
+  class ProjectMember
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectMemberMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectMemberMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectMemberMetadata::DECODERS
+
+    # @return [String] The organization member ID.
+    attr_reader :member_id
+    # @return [String] The user ID for the organization member.
+    attr_reader :user_id
+    # @return [String] Email address of the user who has been granted access to the project.
+    attr_reader :email
+    # @return [String] The user's display name.
+    attr_reader :name
+    # @return [ProjectMemberOrgRole] Organization-level role used by project member role management.
+    attr_reader :org_role
+    # @return [ProjectRole] Per-project role. `viewer` maps to `VIEWER`, `editor` maps to `EDITOR`, and `admin` maps to `ADMIN`.
+    attr_reader :project_role
+    # @return [ProjectPermissionLevel] The caller's effective permission for a project when per-project permissions are enabled. `VIEWER` grants read access, `EDITOR` adds update access, and `ADMIN` grants full management. Omitted for personal projects, flag-off organizations, and non-user subjects.
+    attr_reader :org_default_project_permission
+    # @return [ProjectPermissionLevel] The caller's effective permission for a project when per-project permissions are enabled. `VIEWER` grants read access, `EDITOR` adds update access, and `ADMIN` grants full management. Omitted for personal projects, flag-off organizations, and non-user subjects.
+    attr_reader :explicit_project_permission
+    # @return [ProjectPermissionLevel] The caller's effective permission for a project when per-project permissions are enabled. `VIEWER` grants read access, `EDITOR` adds update access, and `ADMIN` grants full management. Omitted for personal projects, flag-off organizations, and non-user subjects.
+    attr_reader :effective_project_permission
+    # @return [ProjectMemberGrantSource] How a member's project access is granted.
+    attr_reader :grant_source
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the ProjectMemberGrantSource SDK namespace.
+  module ProjectMemberGrantSource
+    EXPLICIT = 'explicit'
+    ORG_ROLE_DEFAULT = 'org_role_default'
+    ORG_ADMIN_OVERRIDE = 'org_admin_override'
+    UNASSIGNED = 'unassigned'
+    VALUES = %w[explicit org_role_default org_admin_override unassigned].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the ProjectMemberOrgRole SDK namespace.
+  module ProjectMemberOrgRole
+    ADMIN = 'admin'
+    MEMBER = 'member'
+    EDITOR = 'editor'
+    VIEWER = 'viewer'
+    COLLABORATOR = 'collaborator'
+    VALUES = %w[admin member editor viewer collaborator].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

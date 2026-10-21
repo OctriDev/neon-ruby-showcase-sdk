@@ -14,7 +14,7 @@ module OctridevNeon
         EMAIL = 'email'
         ROLE = 'role'
         JOINED_AT = 'joined_at'
-        VALUES = ['email', 'role', 'joined_at'].freeze
+        VALUES = %w[email role joined_at].freeze
         def self.from_value(value)
           value
         end

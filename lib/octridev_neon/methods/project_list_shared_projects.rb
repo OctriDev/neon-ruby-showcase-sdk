@@ -30,26 +30,25 @@ module OctridevNeon
         timeout: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 400) }
 
-        Validation.if_given(timeout) { Validation.validate_range('timeout', timeout, min: 100, max: 30000) }
+        Validation.if_given(timeout) { Validation.validate_range('timeout', timeout, min: 100, max: 30_000) }
 
         SdkClient.request(
           'GET',
-          "/projects/shared",
+          '/projects/shared',
           config: config,
           query: {
             'cursor' => QueryValue.new(cursor, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'search' => QueryValue.new(search, style: 'form', explode: true),
-            'timeout' => QueryValue.new(timeout, style: 'form', explode: true),
+            'timeout' => QueryValue.new(timeout, style: 'form', explode: true)
           },
           return_type: ::OctridevNeon::ListSharedProjectsResponse,
           decoder: :json,
           operation_id: 'list_shared_projects',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

@@ -31,7 +31,6 @@ module OctridevNeon
         name: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_length('email', email, min: 1, max: 256)
@@ -41,19 +40,19 @@ module OctridevNeon
 
         SdkClient.request(
           'POST',
-          "/projects/auth/user",
+          '/projects/auth/user',
           config: config,
           body: {
             'project_id' => project_id,
             'auth_provider' => auth_provider,
             'email' => email,
-            'name' => name,
+            'name' => name
           },
           return_type: ::OctridevNeon::NeonAuthCreateNewUserResponse,
           decoder: :json,
           operation_id: 'create_auth_legacy_user',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

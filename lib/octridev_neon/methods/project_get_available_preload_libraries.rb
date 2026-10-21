@@ -12,27 +12,22 @@ module OctridevNeon
       # Lists the shared preload libraries available for the specified project's Postgres version. Use the list to choose libraries for the project's `settings.preload_libraries` configuration; activating these libraries requires a compute restart.
       #
       # Returns the shared preload libraries available for the specified project's Postgres version. Shared preload libraries are Postgres extensions that require the `shared_preload_libraries` setting and a compute restart to activate. Use this list to determine which libraries can be enabled in the project's `settings.preload_libraries` configuration.
-      singleton_class.define_method(:get_available_preload_libraries) do |
-        config:,
-        project_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_available_preload_libraries) do |config:, project_id:, request_options: nil|
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/available_preload_libraries"
+            '/available_preload_libraries'
           ].join,
           config: config,
           return_type: ::OctridevNeon::AvailablePreloadLibraries,
           decoder: :json,
           operation_id: 'get_available_preload_libraries',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

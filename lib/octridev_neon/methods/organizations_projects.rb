@@ -23,7 +23,6 @@ module OctridevNeon
         project_ids:,
         request_options: nil
       )
-
         Validation.validate_pattern('source_org_id', source_org_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('destination_org_id', destination_org_id, '^[a-z0-9-]{1,60}$')
@@ -33,20 +32,20 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(source_org_id),
-            "/projects/transfer"
+            '/projects/transfer'
           ].join,
           config: config,
           body: {
             'destination_org_id' => destination_org_id,
-            'project_ids' => project_ids,
+            'project_ids' => project_ids
           },
           return_type: ::OctridevNeon::EmptyResponse,
           decoder: :json,
           operation_id: 'transfer_organizations_projects',
           request_options: request_options,
-          errors: { '406' => ::OctridevNeon::LimitsUnsatisfiedResponse, '422' => ::OctridevNeon::ProjectsWithIntegrationResponse, 'default' => ::OctridevNeon::GeneralError },
+          errors: { '406' => ::OctridevNeon::LimitsUnsatisfiedResponse, '422' => ::OctridevNeon::ProjectsWithIntegrationResponse, 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

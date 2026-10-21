@@ -17,22 +17,21 @@ module OctridevNeon
         org_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/api_keys"
+            '/api_keys'
           ].join,
           config: config,
           return_type: [::OctridevNeon::OrgApiKeysListResponseItem],
           decoder: :json,
           operation_id: 'list_organizations_api_keys',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -45,15 +44,14 @@ module OctridevNeon
         body:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'POST',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/api_keys"
+            '/api_keys'
           ].join,
           config: config,
           body: body,
@@ -61,7 +59,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'create_organizations_api_key',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -75,15 +73,14 @@ module OctridevNeon
         key_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('org_id', org_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            "/organizations/",
+            '/organizations/',
             SdkClient.encode_path_segment(org_id),
-            "/api_keys/",
+            '/api_keys/',
             SdkClient.encode_path_segment(key_id)
           ].join,
           config: config,
@@ -91,7 +88,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'revoke_organizations_api_key',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

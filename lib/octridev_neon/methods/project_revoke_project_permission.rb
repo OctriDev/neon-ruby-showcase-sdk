@@ -18,15 +18,14 @@ module OctridevNeon
         permission_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'DELETE',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/permissions/",
+            '/permissions/',
             SdkClient.encode_path_segment(permission_id)
           ].join,
           config: config,
@@ -34,7 +33,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'revoke_project_permission',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

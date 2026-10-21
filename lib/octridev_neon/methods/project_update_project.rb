@@ -22,24 +22,23 @@ module OctridevNeon
         project:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'PATCH',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id)
           ].join,
           config: config,
           body: {
-            'project' => project,
+            'project' => project
           },
           return_type: ::OctridevNeon::UpdateProjectResponse,
           decoder: :json,
           operation_id: 'update_project',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end

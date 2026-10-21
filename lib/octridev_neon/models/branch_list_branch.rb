@@ -5,395 +5,392 @@
 
 # branch domain models
 module OctridevNeon
-# Internal model hydration metadata.
-class SdkInternalListBranchResponseMetadata
-  FIELDS = {
-    branches: "branches",
-    annotations: "annotations",
-    pagination: "pagination",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    branches
-    annotations
-  ].freeze
-  DECODERS = {
-    branches: lambda do |value|
-      value&.map { |item| ::OctridevNeon::Branch.from_hash(item) }
-    end,
-    annotations: lambda do |value|
-      value&.transform_values { |item| ::OctridevNeon::AnnotationData.from_hash(item) }
-    end,
-    pagination: lambda do |value|
-      ::OctridevNeon::CursorPagination.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ListBranchResponse.
-# Typed representation of the `ListBranchResponse` API schema.
-class ListBranchResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalListBranchResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalListBranchResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalListBranchResponseMetadata::DECODERS
-
-  # @return [Array_of_Branch] Branches in the project. Each includes `id`, `name`, `current_state`, and `created_at`.
-  attr_reader :branches
-  # @return [Hash] Map of annotations keyed by resource identifier, where each value contains the annotation data for that resource.
-  attr_reader :annotations
-  # @return [CursorPagination] To paginate the response, issue an initial request with `limit` value. Then, add the value returned in the response `.pagination.next` attribute into the request under the `cursor` query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor `next` are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.
-  attr_reader :pagination
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalListBranchResponseMetadata
+    FIELDS = {
+      branches: 'branches',
+      annotations: 'annotations',
+      pagination: 'pagination'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      branches
+      annotations
+    ].freeze
+    DECODERS = {
+      branches: lambda do |value|
+        value&.map { |item| ::OctridevNeon::Branch.from_hash(item) }
+      end,
+      annotations: lambda do |value|
+        value&.transform_values { |item| ::OctridevNeon::AnnotationData.from_hash(item) }
+      end,
+      pagination: lambda do |value|
+        ::OctridevNeon::CursorPagination.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ListBranchResponse.
+  # Typed representation of the `ListBranchResponse` API schema.
+  class ListBranchResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalListBranchResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalListBranchResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalListBranchResponseMetadata::DECODERS
+
+    # @return [Array_of_Branch] Branches in the project. Each includes `id`, `name`, `current_state`, and `created_at`.
+    attr_reader :branches
+    # @return [Hash] Map of annotations keyed by resource identifier, where each value contains the annotation data for that resource.
+    attr_reader :annotations
+    # @return [CursorPagination] To paginate the response, issue an initial request with `limit` value. Then, add the value returned in the response `.pagination.next` attribute into the request under the `cursor` query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor `next` are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.
+    attr_reader :pagination
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalMaskingRuleMetadata
-  FIELDS = {
-    database_name: "database_name",
-    schema_name: "schema_name",
-    table_name: "table_name",
-    column_name: "column_name",
-    masking_function: "masking_function",
-    masking_value: "masking_value",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    database_name
-    schema_name
-    table_name
-    column_name
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for MaskingRule.
-# Typed representation of the `MaskingRule` API schema.
-class MaskingRule
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalMaskingRuleMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalMaskingRuleMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalMaskingRuleMetadata::DECODERS
-
-  # @return [String] The name of the database containing the table to be masked
-  attr_reader :database_name
-  # @return [String] The name of the schema containing the table to be masked
-  attr_reader :schema_name
-  # @return [String] The name of the table containing the column to be masked
-  attr_reader :table_name
-  # @return [String] The name of the column to be masked
-  attr_reader :column_name
-  # @return [String] The PostgreSQL Anonymizer masking function to apply. Can be a predefined function (e.g., 'anon.random_string(10)', 'anon.fake_email()') or a custom function definition (e.g., 'anon.hash(column_name)')
-  attr_reader :masking_function
-  # @return [String] A literal value to set on the column when masking.
-  attr_reader :masking_value
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalMaskingRuleMetadata
+    FIELDS = {
+      database_name: 'database_name',
+      schema_name: 'schema_name',
+      table_name: 'table_name',
+      column_name: 'column_name',
+      masking_function: 'masking_function',
+      masking_value: 'masking_value'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      database_name
+      schema_name
+      table_name
+      column_name
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for MaskingRule.
+  # Typed representation of the `MaskingRule` API schema.
+  class MaskingRule
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalMaskingRuleMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalMaskingRuleMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalMaskingRuleMetadata::DECODERS
+
+    # @return [String] The name of the database containing the table to be masked
+    attr_reader :database_name
+    # @return [String] The name of the schema containing the table to be masked
+    attr_reader :schema_name
+    # @return [String] The name of the table containing the column to be masked
+    attr_reader :table_name
+    # @return [String] The name of the column to be masked
+    attr_reader :column_name
+    # @return [String] The PostgreSQL Anonymizer masking function to apply. Can be a predefined function (e.g., 'anon.random_string(10)', 'anon.fake_email()') or a custom function definition (e.g., 'anon.hash(column_name)')
+    attr_reader :masking_function
+    # @return [String] A literal value to set on the column when masking.
+    attr_reader :masking_value
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalMaskingRulesResponseMetadata
-  FIELDS = {
-    masking_rules: "masking_rules",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    masking_rules
-  ].freeze
-  DECODERS = {
-    masking_rules: lambda do |value|
-      value&.map { |item| ::OctridevNeon::MaskingRule.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for MaskingRulesResponse.
-# Typed representation of the `MaskingRulesResponse` API schema.
-class MaskingRulesResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalMaskingRulesResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalMaskingRulesResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalMaskingRulesResponseMetadata::DECODERS
-
-  # @return [Array_of_MaskingRule] List of masking rules for the branch
-  attr_reader :masking_rules
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalMaskingRulesResponseMetadata
+    FIELDS = {
+      masking_rules: 'masking_rules'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      masking_rules
+    ].freeze
+    DECODERS = {
+      masking_rules: lambda do |value|
+        value&.map { |item| ::OctridevNeon::MaskingRule.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for MaskingRulesResponse.
+  # Typed representation of the `MaskingRulesResponse` API schema.
+  class MaskingRulesResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalMaskingRulesResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalMaskingRulesResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalMaskingRulesResponseMetadata::DECODERS
+
+    # @return [Array_of_MaskingRule] List of masking rules for the branch
+    attr_reader :masking_rules
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalMaskingRulesUpdateRequestMetadata
-  FIELDS = {
-    masking_rules: "masking_rules",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    masking_rules
-  ].freeze
-  DECODERS = {
-    masking_rules: lambda do |value|
-      value&.map { |item| ::OctridevNeon::MaskingRule.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for MaskingRulesUpdateRequest.
-# Typed representation of the `MaskingRulesUpdateRequest` API schema.
-class MaskingRulesUpdateRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalMaskingRulesUpdateRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalMaskingRulesUpdateRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalMaskingRulesUpdateRequestMetadata::DECODERS
-
-  # @return [Array_of_MaskingRule] List of masking rules to apply to the branch. This will replace all existing masking rules for the branch.
-  attr_reader :masking_rules
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalMaskingRulesUpdateRequestMetadata
+    FIELDS = {
+      masking_rules: 'masking_rules'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      masking_rules
+    ].freeze
+    DECODERS = {
+      masking_rules: lambda do |value|
+        value&.map { |item| ::OctridevNeon::MaskingRule.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for MaskingRulesUpdateRequest.
+  # Typed representation of the `MaskingRulesUpdateRequest` API schema.
+  class MaskingRulesUpdateRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalMaskingRulesUpdateRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalMaskingRulesUpdateRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalMaskingRulesUpdateRequestMetadata::DECODERS
+
+    # @return [Array_of_MaskingRule] List of masking rules to apply to the branch. This will replace all existing masking rules for the branch.
+    attr_reader :masking_rules
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRoleCreateRequestRoleMetadata
-  FIELDS = {
-    name: "name",
-    no_login: "no_login",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    name
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for RoleCreateRequestRole.
-# Properties of the role to create.
-class RoleCreateRequestRole
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRoleCreateRequestRoleMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRoleCreateRequestRoleMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRoleCreateRequestRoleMetadata::DECODERS
-
-  # @return [String] The role name. Cannot exceed 63 bytes in length.
-  attr_reader :name
-  # @return [Boolean] Whether to create a role that cannot login.
-  attr_reader :no_login
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRoleCreateRequestRoleMetadata
+    FIELDS = {
+      name: 'name',
+      no_login: 'no_login'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      name
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RoleCreateRequestRole.
+  # Properties of the role to create.
+  class RoleCreateRequestRole
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRoleCreateRequestRoleMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRoleCreateRequestRoleMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRoleCreateRequestRoleMetadata::DECODERS
+
+    # @return [String] The role name. Cannot exceed 63 bytes in length.
+    attr_reader :name
+    # @return [Boolean] Whether to create a role that cannot login.
+    attr_reader :no_login
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRoleCreateRequestMetadata
-  FIELDS = {
-    role: "role",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    role
-  ].freeze
-  DECODERS = {
-    role: lambda do |value|
-      ::OctridevNeon::RoleCreateRequestRole.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RoleCreateRequest.
-# Typed representation of the `RoleCreateRequest` API schema.
-class RoleCreateRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRoleCreateRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRoleCreateRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRoleCreateRequestMetadata::DECODERS
-
-  # @return [RoleCreateRequestRole] Properties of the role to create.
-  attr_reader :role
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRoleCreateRequestMetadata
+    FIELDS = {
+      role: 'role'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      role
+    ].freeze
+    DECODERS = {
+      role: lambda do |value|
+        ::OctridevNeon::RoleCreateRequestRole.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RoleCreateRequest.
+  # Typed representation of the `RoleCreateRequest` API schema.
+  class RoleCreateRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRoleCreateRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRoleCreateRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRoleCreateRequestMetadata::DECODERS
+
+    # @return [RoleCreateRequestRole] Properties of the role to create.
+    attr_reader :role
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRoleOperationsMetadata
-  FIELDS = {
-    role: "role",
-    operations: "operations",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    role
-    operations
-  ].freeze
-  DECODERS = {
-    role: lambda do |value|
-      ::OctridevNeon::Role.from_hash(value)
-    end,
-    operations: lambda do |value|
-      value&.map { |item| ::OctridevNeon::Operation.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for RoleOperations.
-# Typed representation of the `RoleOperations` API schema.
-class RoleOperations
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRoleOperationsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRoleOperationsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRoleOperationsMetadata::DECODERS
-
-  # @return [Role] Role details for the requested database role. The `password` field is included in the response when a role is created or its password is reset, and is not returned in subsequent read requests. Store it securely at that time.
-  attr_reader :role
-  # @return [Array_of_Operation] Required array value serialized in the `operations` wire field.
-  attr_reader :operations
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRoleOperationsMetadata
+    FIELDS = {
+      role: 'role',
+      operations: 'operations'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      role
+      operations
+    ].freeze
+    DECODERS = {
+      role: lambda do |value|
+        ::OctridevNeon::Role.from_hash(value)
+      end,
+      operations: lambda do |value|
+        value&.map { |item| ::OctridevNeon::Operation.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RoleOperations.
+  # Typed representation of the `RoleOperations` API schema.
+  class RoleOperations
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRoleOperationsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRoleOperationsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRoleOperationsMetadata::DECODERS
+
+    # @return [Role] Role details for the requested database role. The `password` field is included in the response when a role is created or its password is reset, and is not returned in subsequent read requests. Store it securely at that time.
+    attr_reader :role
+    # @return [Array_of_Operation] Required array value serialized in the `operations` wire field.
+    attr_reader :operations
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRolePasswordResponseMetadata
-  FIELDS = {
-    password: "password",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    password
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for RolePasswordResponse.
-# Typed representation of the `RolePasswordResponse` API schema.
-class RolePasswordResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRolePasswordResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRolePasswordResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRolePasswordResponseMetadata::DECODERS
-
-  # @return [String] The role password
-  attr_reader :password
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRolePasswordResponseMetadata
+    FIELDS = {
+      password: 'password'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      password
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RolePasswordResponse.
+  # Typed representation of the `RolePasswordResponse` API schema.
+  class RolePasswordResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRolePasswordResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRolePasswordResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRolePasswordResponseMetadata::DECODERS
+
+    # @return [String] The role password
+    attr_reader :password
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRoleResponseMetadata
-  FIELDS = {
-    role: "role",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    role
-  ].freeze
-  DECODERS = {
-    role: lambda do |value|
-      ::OctridevNeon::Role.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RoleResponse.
-# Typed representation of the `RoleResponse` API schema.
-class RoleResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRoleResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRoleResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRoleResponseMetadata::DECODERS
-
-  # @return [Role] Role details for the requested database role. The `password` field is included in the response when a role is created or its password is reset, and is not returned in subsequent read requests. Store it securely at that time.
-  attr_reader :role
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRoleResponseMetadata
+    FIELDS = {
+      role: 'role'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      role
+    ].freeze
+    DECODERS = {
+      role: lambda do |value|
+        ::OctridevNeon::Role.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # API model for RoleResponse.
+  # Typed representation of the `RoleResponse` API schema.
+  class RoleResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRoleResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRoleResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRoleResponseMetadata::DECODERS
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+    # @return [Role] Role details for the requested database role. The `password` field is included in the response when a role is created or its password is reset, and is not returned in subsequent read requests. Store it securely at that time.
+    attr_reader :role
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

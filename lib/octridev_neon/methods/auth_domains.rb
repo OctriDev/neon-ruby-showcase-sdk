@@ -19,7 +19,6 @@ module OctridevNeon
         branch_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -27,18 +26,18 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/auth/domains"
+            '/auth/domains'
           ].join,
           config: config,
           return_type: ::OctridevNeon::NeonAuthRedirectURIWhitelistResponse,
           decoder: :json,
           operation_id: 'list_auth_trusted_domains',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -61,7 +60,6 @@ module OctridevNeon
         auth_provider:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -71,21 +69,21 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/auth/domains"
+            '/auth/domains'
           ].join,
           config: config,
           body: {
             'domain' => domain,
-            'auth_provider' => auth_provider,
+            'auth_provider' => auth_provider
           },
           decoder: :empty,
           operation_id: 'add_auth_trusted_domain',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
 
@@ -109,7 +107,6 @@ module OctridevNeon
         domains:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -117,21 +114,21 @@ module OctridevNeon
         SdkClient.request(
           'DELETE',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/auth/domains"
+            '/auth/domains'
           ].join,
           config: config,
           body: {
             'auth_provider' => auth_provider,
-            'domains' => domains,
+            'domains' => domains
           },
           decoder: :empty,
           operation_id: 'delete_auth_trusted_domain',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).data
       end
     end
