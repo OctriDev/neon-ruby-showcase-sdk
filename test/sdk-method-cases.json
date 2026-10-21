@@ -16160,9 +16160,9 @@
       "fileFieldsBase64": true
     },
     {
-      "id": "updateFunctionsTrigger:update_functions_trigger",
-      "operationId": "updateFunctionsTrigger",
-      "methodName": "update_functions_trigger",
+      "id": "updateFunctionTrigger:update_function_trigger",
+      "operationId": "updateFunctionTrigger",
+      "methodName": "update_function_trigger",
       "namespace": [
         "functions"
       ],
@@ -16219,9 +16219,9 @@
       "fileFieldsBase64": true
     },
     {
-      "id": "updateFunctionsTrigger:update_functions_trigger:418",
-      "operationId": "updateFunctionsTrigger",
-      "methodName": "update_functions_trigger",
+      "id": "updateFunctionTrigger:update_function_trigger:418",
+      "operationId": "updateFunctionTrigger",
+      "methodName": "update_function_trigger",
       "namespace": [
         "functions"
       ],
