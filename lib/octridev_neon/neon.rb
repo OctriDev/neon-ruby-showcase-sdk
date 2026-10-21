@@ -3310,7 +3310,7 @@ module OctridevNeon
       body:,
       request_options: nil
     )
-      ::OctridevNeon::Methods::Functions.update_functions_trigger(
+      ::OctridevNeon::Methods::Functions.update_function_trigger(
         config: @config,
         project_id: project_id,
         branch_id: branch_id,

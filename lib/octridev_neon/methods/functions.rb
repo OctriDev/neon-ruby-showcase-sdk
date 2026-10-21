@@ -358,7 +358,7 @@ module OctridevNeon
       # @param project_id [String] The Neon project ID
       # @param branch_id [String] The Neon branch ID
       # @param trigger_id [TriggerID] The opaque, project-wide trigger ID
-      def self.update_functions_trigger(
+      def self.update_function_trigger(
         config:,
         project_id:,
         branch_id:,
@@ -388,7 +388,7 @@ module OctridevNeon
           body: body,
           return_type: ::OctridevNeon::TriggerResponse,
           decoder: :json,
-          operation_id: 'update_functions_trigger',
+          operation_id: 'update_function_trigger',
           request_options: request_options,
           errors: { 'default' => ::OctridevNeon::GeneralError },
         ).data
