@@ -12,12 +12,10 @@ module OctridevNeon
       # Internal model hydration metadata.
       class SdkInternalDisableAuthMetadata
         FIELDS = {
-          delete_data: "delete_data",
+          delete_data: 'delete_data'
         }.freeze
-        REQUIRED_FIELDS = %i[
-        ].freeze
-        DECODERS = {
-        }.freeze
+        REQUIRED_FIELDS = %i[].freeze
+        DECODERS = {}.freeze
       end
 
       # API model for DisableAuth.

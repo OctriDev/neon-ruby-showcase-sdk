@@ -12,8 +12,8 @@ module OctridevNeon
       # Internal model hydration metadata.
       class SdkInternalCreateSnapshotResponseMetadata
         FIELDS = {
-          snapshot: "snapshot",
-          operations: "operations",
+          snapshot: 'snapshot',
+          operations: 'operations'
         }.freeze
         REQUIRED_FIELDS = %i[
           snapshot
@@ -25,7 +25,7 @@ module OctridevNeon
           end,
           operations: lambda do |value|
             value&.map { |item| ::OctridevNeon::Operation.from_hash(item) }
-          end,
+          end
         }.freeze
       end
 
@@ -59,7 +59,7 @@ module OctridevNeon
       # Internal model hydration metadata.
       class SdkInternalListSnapshotsResponseMetadata
         FIELDS = {
-          snapshots: "snapshots",
+          snapshots: 'snapshots'
         }.freeze
         REQUIRED_FIELDS = %i[
           snapshots
@@ -67,7 +67,7 @@ module OctridevNeon
         DECODERS = {
           snapshots: lambda do |value|
             value&.map { |item| ::OctridevNeon::Snapshot.from_hash(item) }
-          end,
+          end
         }.freeze
       end
 
@@ -101,7 +101,7 @@ module OctridevNeon
       # Internal model hydration metadata.
       class SdkInternalUpdateSnapshotResponseMetadata
         FIELDS = {
-          snapshot: "snapshot",
+          snapshot: 'snapshot'
         }.freeze
         REQUIRED_FIELDS = %i[
           snapshot
@@ -109,7 +109,7 @@ module OctridevNeon
         DECODERS = {
           snapshot: lambda do |value|
             ::OctridevNeon::Snapshot.from_hash(value)
-          end,
+          end
         }.freeze
       end
 
@@ -143,14 +143,12 @@ module OctridevNeon
       # Internal model hydration metadata.
       class SdkInternalRestoreSnapshotMetadata
         FIELDS = {
-          name: "name",
-          target_branch_id: "target_branch_id",
-          finalize_restore: "finalize_restore",
+          name: 'name',
+          target_branch_id: 'target_branch_id',
+          finalize_restore: 'finalize_restore'
         }.freeze
-        REQUIRED_FIELDS = %i[
-        ].freeze
-        DECODERS = {
-        }.freeze
+        REQUIRED_FIELDS = %i[].freeze
+        DECODERS = {}.freeze
       end
 
       # API model for RestoreSnapshot.
@@ -207,7 +205,6 @@ module OctridevNeon
         expires_at: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -215,24 +212,24 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/snapshot"
+            '/snapshot'
           ].join,
           config: config,
           query: {
             'lsn' => QueryValue.new(lsn, style: 'form', explode: true),
             'timestamp' => QueryValue.new(timestamp, style: 'form', explode: true),
             'name' => QueryValue.new(name, style: 'form', explode: true),
-            'expires_at' => QueryValue.new(expires_at, style: 'form', explode: true),
+            'expires_at' => QueryValue.new(expires_at, style: 'form', explode: true)
           },
           return_type: ::OctridevNeon::Methods::Snapshot::CreateSnapshotResponse,
           decoder: :json,
           operation_id: 'create_snapshot',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).result
       end
 
@@ -244,22 +241,21 @@ module OctridevNeon
         project_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/snapshots"
+            '/snapshots'
           ].join,
           config: config,
           return_type: ::OctridevNeon::Methods::Snapshot::ListSnapshotsResponse,
           decoder: :json,
           operation_id: 'list_snapshots',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).result
       end
 
@@ -275,7 +271,6 @@ module OctridevNeon
         snapshot_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('snapshot_id', snapshot_id, '^[a-z0-9-]{1,60}$')
@@ -283,9 +278,9 @@ module OctridevNeon
         SdkClient.request(
           'DELETE',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/snapshots/",
+            '/snapshots/',
             SdkClient.encode_path_segment(snapshot_id)
           ].join,
           config: config,
@@ -293,7 +288,7 @@ module OctridevNeon
           decoder: :json,
           operation_id: 'delete_snapshot',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).result
       end
 
@@ -312,7 +307,6 @@ module OctridevNeon
         snapshot:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('snapshot_id', snapshot_id, '^[a-z0-9-]{1,60}$')
@@ -320,20 +314,20 @@ module OctridevNeon
         SdkClient.request(
           'PATCH',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/snapshots/",
+            '/snapshots/',
             SdkClient.encode_path_segment(snapshot_id)
           ].join,
           config: config,
           body: {
-            'snapshot' => snapshot,
+            'snapshot' => snapshot
           },
           return_type: ::OctridevNeon::Methods::Snapshot::UpdateSnapshotResponse,
           decoder: :json,
           operation_id: 'update_snapshot',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).result
       end
 
@@ -364,7 +358,6 @@ module OctridevNeon
         finalize_restore: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('snapshot_id', snapshot_id, '^[a-z0-9-]{1,60}$')
@@ -372,26 +365,26 @@ module OctridevNeon
         SdkClient.request(
           'POST',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/snapshots/",
+            '/snapshots/',
             SdkClient.encode_path_segment(snapshot_id),
-            "/restore"
+            '/restore'
           ].join,
           config: config,
           query: {
-            'name' => QueryValue.new(name, style: 'form', explode: true),
+            'name' => QueryValue.new(name, style: 'form', explode: true)
           },
           body: {
             'name' => name2,
             'target_branch_id' => target_branch_id,
-            'finalize_restore' => finalize_restore,
+            'finalize_restore' => finalize_restore
           },
           return_type: ::OctridevNeon::RestoreSnapshotResponse,
           decoder: :json,
           operation_id: 'restore_snapshot',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).result
       end
 
@@ -399,13 +392,7 @@ module OctridevNeon
       #
       # @param project_id [String] The Neon project ID
       # @param branch_id [String] The branch ID
-      singleton_class.define_method(:get_snapshot_schedule) do |
-        config:,
-        project_id:,
-        branch_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_snapshot_schedule) do |config:, project_id:, branch_id:, request_options: nil|
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -413,18 +400,18 @@ module OctridevNeon
         SdkClient.request(
           'GET',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/backup_schedule"
+            '/backup_schedule'
           ].join,
           config: config,
           return_type: ::OctridevNeon::BackupSchedule,
           decoder: :json,
           operation_id: 'get_snapshot_schedule',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).result
       end
 
@@ -441,7 +428,6 @@ module OctridevNeon
         schedule:,
         request_options: nil
       )
-
         Validation.validate_pattern('project_id', project_id, '^[a-z0-9-]{1,60}$')
 
         Validation.validate_pattern('branch_id', branch_id, '^[a-z0-9-]{1,60}$')
@@ -449,21 +435,21 @@ module OctridevNeon
         SdkClient.request(
           'PUT',
           [
-            "/projects/",
+            '/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/branches/",
+            '/branches/',
             SdkClient.encode_path_segment(branch_id),
-            "/backup_schedule"
+            '/backup_schedule'
           ].join,
           config: config,
           body: {
-            'schedule' => schedule,
+            'schedule' => schedule
           },
           return_type: ::OctridevNeon::EmptyResponse,
           decoder: :json,
           operation_id: 'set_snapshot_schedule',
           request_options: request_options,
-          errors: { 'default' => ::OctridevNeon::GeneralError },
+          errors: { 'default' => ::OctridevNeon::GeneralError }
         ).result
       end
     end

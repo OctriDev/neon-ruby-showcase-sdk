@@ -5,32 +5,32 @@
 
 # project_project domain models
 module OctridevNeon
-# API model for ProjectUpdateRequest.
-# Typed representation of the `ProjectUpdateRequest` API schema.
-class ProjectUpdateRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectUpdateRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectUpdateRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectUpdateRequestMetadata::DECODERS
+  # API model for ProjectUpdateRequest.
+  # Typed representation of the `ProjectUpdateRequest` API schema.
+  class ProjectUpdateRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectUpdateRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectUpdateRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectUpdateRequestMetadata::DECODERS
 
-  # @return [ProjectUpdateRequestProject] Required object value serialized in the `project` wire field.
-  attr_reader :project
+    # @return [ProjectUpdateRequestProject] Required object value serialized in the `project` wire field.
+    attr_reader :project
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
 end
